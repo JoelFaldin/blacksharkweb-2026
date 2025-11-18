@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+
 import "./globals.css";
 import Navbar from "@/components/navbar/navbar";
+import { BackgroundEffect } from "@/components/background/BackgroundEffect";
 
 
 export const metadata: Metadata = {
@@ -16,6 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <BackgroundEffect />
         <Navbar />
 
         {children}
