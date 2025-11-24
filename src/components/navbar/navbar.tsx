@@ -14,7 +14,7 @@ const Navbar = () => {
   }
 
   return (
-    <header className="grid grid-cols-3 items-center w-full bg-transparent py-3 border-b border-b-[var(--primary)]">
+    <header className="grid grid-cols-3 items-center w-full backdrop-blur-md py-3 border-b border-b-(--primary)">
       <Link href="/" className="flex flex-row justify-center items-center gap-x-1">
         <Image
           src="/images/bsw_logo_icon.webp"
@@ -31,19 +31,19 @@ const Navbar = () => {
 
       <nav>
         <ul className="flex flex-row justify-center gap-x-8 font-semibold text-md">
-          <Link className={`${matchesPathname("/")} hover:text-[var(--secondary)] transition-colors`} href="/">Inicio</Link>
-          <Link className={`${matchesPathname("/servicios")} hover:text-[var(--secondary)] transition-colors`} href="/servicios">Servicios</Link>
-          <Link className={`${matchesPathname("/portafolio")} hover:text-[var(--secondary)] transition-colors`} href="/portafolio">Portafolio</Link>
-          <Link className={`${matchesPathname("/nosotros")} hover:text-[var(--secondary)] transition-colors`} href="/nosotros">Nosotros</Link>
+          <Link className={`${matchesPathname("/")} hover:text-(--secondary) transition-colors`} href="/">Inicio</Link>
+          <Link className={`${matchesPathname("/servicios")} hover:text-(--secondary) transition-colors`} href="/servicios">Servicios</Link>
+          <Link className={`${matchesPathname("/portafolio")} hover:text-(--secondary) transition-colors`} href="/portafolio">Portafolio</Link>
+          <Link className={`${matchesPathname("/nosotros")} hover:text-(--secondary) transition-colors`} href="/nosotros">Nosotros</Link>
         </ul>
       </nav>
 
       <div className="text-center">
         <ul className="flex flex-row justify-center items-center gap-x-4 font-semibold text-xl">
-          <Link href="/login" className="p-1 hover:bg-[var(--primary)] transition-colors rounded ">
+          <Link href="/login" className="p-1 hover:bg-(--primary) transition-colors rounded ">
             <User />
           </Link>
-          <Link href="/carrito" className="p-1 hover:bg-[var(--primary)] transition-colors rounded">
+          <Link href="/carrito" className="p-1 hover:bg-(--primary) transition-colors rounded">
             <ShoppingCart />
           </Link>
         </ul>
