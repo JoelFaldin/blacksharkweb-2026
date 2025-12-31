@@ -1,28 +1,28 @@
 # BlackSharkWeb 2025
 
-Welcome to the new version of BlackSharkWeb!
+¡Bienvenido a la nueva versión de BlackSharkWeb!
 
-This repository contains an "updated" version of the BlackSharkWeb project, originally created on 2024.
+Este repositorio contiene una variante actualizada del proyecto BlackSharkWeb, originalmente creado en 2024.
 
-The web application contains home, login, about us, portfolio, register, and services. More to add in the near future!
+Esta aplicación web contiene las rutas /home, /login, /about, /portfolio, /register y /services. ¡Es posible añadir más en el futuro!
 
-Built using [NextJS](https://nextjs.org/) and [TailwindCSS](https://tailwindcss.com/). Design created by [v0](https://v0.app/)!
+Construido utilizando [NextJS](https://nextjs.org/) y [TailwindCSS](https://tailwindcss.com/). Diseño creado utilizando [v0](https://v0.app/).
 
-## Contributors:
+## Contribuidores:
 
 - [Samuel Sotomayor](https://github.com/SamuelSotomayor1)
 - [Joel Faldín](https://github.com/JoelFaldin)
 
-## Routes
+## Rutas
 
-- Home: The main page, with information and links to the other pages.
-- Login: Form to log in to the app.
-- Register: Form to register in the app.
-- About us: Information about BlackSharkWeb project, branding and nice-to-know topics.
-- Portfolio: Page dedicated to showcase previus work from the brand.
-- Services: Page dedicated to list all available services, with information (images, prices, etc).
+- Home: Página principal, con información y links a otras páginas.
+- Login: Formulario para inciar sesión en la aplicación.
+- Register: Formulario para registrarse en la aplicación.
+- About us: Información sobre el proyecto BlackSharkWeb, la marca y datos útiles.
+- Portfolio: Página dedicada a exponer trabajo realizado por la marca.
+- Services: Página dedicada a listar todos los servicios disponibles, con información (imágenes, precios, etc).
 
-## Stack
+## Stack Tecnológico
 
 <div align="center">
 
@@ -35,31 +35,31 @@ Built using [NextJS](https://nextjs.org/) and [TailwindCSS](https://tailwindcss.
 
 ---
 
-## Installation
+## Instalación
 
-To get the web application running on your machine, follow the next steps:
+Para ejecutar la aplicación en tu equipo, sigue los siguientes pasos:
 
-1- Clone the repo and go to the folder:
+1- Clona el repositorio y entra en el directorio:
 
 ```bash
 git clone https://github.com/JoelFaldin/blacksharkweb-2025.git
 cd blacksharkweb-2025
 ```
 
-2- Install dependencies:
+2- Instala las dependencias:
 
 ```bash
 npm install
 ```
 
-3- Start the project in development mode:
+3- Levanta el proyecto en modo desarrollo:
 
 ```bash
 npm run dev
 ```
 
-4- Now the project is running on your machine! Go to `http://localhost:3000` to visualize it.
+4- ¡Ahora el proyecto está funcionando en tu equipo! Dirígete a `http://localhost:3000` para visualizarlo.
 
 ---
 
-## Thanks for visiting! 🦈🦈🦈
+## ¡Gracias por visitar! 🦈🦈🦈
