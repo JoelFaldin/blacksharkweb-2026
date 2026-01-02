@@ -62,7 +62,7 @@ const Nosotros = () => {
         </ul>
       </section>
 
-      <section className="max-w-2xl mx-auto flex flex-col gap-4">
+      <section className="max-w-xl mx-auto flex flex-col gap-4 mb-50">
         <h3 className="text-3xl">Nuestro equipo 🥇</h3>
         
         <div className="grid grid-cols-1 gap-4">
@@ -91,6 +91,15 @@ const Nosotros = () => {
             ))
           }
         </div>
+      </section>
+
+      <section className="flex flex-col items-center justify-center mb-50">
+        <h3 className="text-4xl my-5">BlackSharkStudios</h3>
+
+        <span>
+          <p className="italic text-center">Cuando las estrellas compiten</p>
+          <p className="italic text-center">Destaca la que brilla con luz propia</p>
+        </span>
       </section>
     </div>
   )
