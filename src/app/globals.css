@@ -23,6 +23,11 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    
+    --card: oklch(1 0 0);
+
+    --muted: oklch(0.96 0 0);
+    --muted-foreground: oklch(0.5 0 0);
   }
 }
 

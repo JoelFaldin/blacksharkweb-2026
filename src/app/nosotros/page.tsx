@@ -1,29 +1,39 @@
+import Image from "next/image"
+
 interface TeamInterface {
   image: string,
   name: string,
-  description: string,
+  role: string,
+  description?: string,
+  contact: string,
 }
 
 const team: TeamInterface[] = [
   {
-    image: "",
+    image: "/images/about/logotipo_blacksharkstudios.webp",
     name: "Andrés",
-    description: "Diseñador"
+    role: "Diseñador",
+    description: "Dueño de la marca",
+    contact: "https://www.instagram.com/blackshark.studios/"
+    
   },
   {
-    image: "",
+    image: "/images/about/carlos-pic.webp",
     name: "Carlos",
-    description: "Desarrollador web"
+    role: "Desarrollador web",
+    contact: "https://github.com/carloscj20"
   },
   {
-    image: "",
+    image: "/images/about/joel-pic.webp",
     name: "Joel",
-    description: "Desarrollador web"
+    role: "Desarrollador web",
+    contact: "https://github.com/JoelFaldin"
   },
   {
-    image: "",
+    image: "/images/about/samuel-pic.webp",
     name: "Samuel",
-    description: "Desarrollador web"
+    role: "Desarrollador web",
+    contact: "https://github.com/SamuelSotomayor1"
   },
 ]
 
@@ -44,7 +54,7 @@ const Nosotros = () => {
       <section className="max-w-lg mx-auto flex flex-col gap-4 mb-10">
         <h2 className="text-3xl">Presentación 👋</h2>
 
-        <ul className="flex flex-col gap-y-1 p-4 rounded-lg border border-white/30">
+        <ul className="bg-(--card)/5 flex flex-col gap-y-1 p-4 rounded-lg border border-white/30">
           <li>🎯 Agencia creativa 5.0 en Iquique 🇨🇱</li>
           <li>📷 Diseño gráfico, marketing digital, fotografía, estampados y más.</li>
           <li>🚀 Hacemos que tu marca crezca con estrategia, identidad y estilo.</li>
@@ -55,14 +65,28 @@ const Nosotros = () => {
       <section className="max-w-2xl mx-auto flex flex-col gap-4">
         <h3 className="text-3xl">Nuestro equipo 🥇</h3>
         
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 gap-4">
           {
             team.map((member: TeamInterface) => (
-              <div className="p-4 rounded-lg border border-white/30">
-                {/* Imagen de cada integrante: */}
-                <div className="h-10 w-10 bg-white/30"></div>
-                <p>{member.name}</p>
-                <p>{member.description}</p>
+              <div key={`team-member-${member.name}`} className="bg-(--card)/5 flex flex-row gap-4 p-4 rounded-lg border border-white/30">
+                <Image
+                  alt="Imagen del integrante"
+                  src={member.image}
+                  width={100}
+                  height={100}
+                  className="rounded-full"
+                />
+                <span>
+                  <p className="text-xl font-bold text-(--muted) leading-relaxed">{member.name}</p>
+                  <p className="text-md text-(--muted-foreground) leading-relaxed">
+                    {member.role}
+                    {
+                      member.description ? ` - ${member.description}` : ""
+                    }
+                  </p>
+                  <p>Contacto: <a className="text-(--secondary) hover:cursor-pointer">{member.contact}</a>
+                  </p>
+                </span>
               </div>
             ))
           }
