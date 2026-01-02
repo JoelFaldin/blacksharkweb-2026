@@ -1,4 +1,4 @@
-# 🦈 Actualizar la metadata del proyecto
+# 🦈 Pull Request template
 
 ## 📌 Detalles
 
