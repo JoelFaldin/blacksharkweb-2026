@@ -1,7 +1,7 @@
 const Registro = () => {
   return (
     <div>
-      This is the register component
+      New register design
     </div>
   )
 }
