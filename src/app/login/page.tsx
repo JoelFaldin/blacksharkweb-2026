@@ -18,7 +18,7 @@ const Login = () => {
         </div>
 
         {/* Title */}
-        <h1 className="text-center text-2xl font-medium text-[#10243c]">
+        <h1 className="text-center text-2xl font-medium text-black">
           Bienvenido
         </h1>
         <p className="mt-1 text-center text-sm text-[#8f8f8f]">
@@ -31,18 +31,18 @@ const Login = () => {
           <input
             type="email"
             placeholder="Email"
-            className="w-full rounded-xl border border-[#10243c]/20 bg-[#ffffff]
-                      px-4 py-3 text-sm text-[#10243c]
+            className="w-full rounded-xl border border-[#10243c]/20
+                      px-4 py-3 text-sm text-black
                       outline-none transition
                       placeholder:text-[#8f8f8f]
-                      focus:border-[#0186ff] focus:ring-1 focus:ring-[#0186ff]/40"
+                      focus:border-[#0186ff] focus:ring-[#0186ff]/40"
           />
 
           <input
             type="password"
             placeholder="Contraseña"
-            className="w-full rounded-xl border border-[#10243c]/20 bg-[#ffffff]
-                      px-4 py-3 text-sm text-[#10243c]
+            className="w-full rounded-xl border border-[#10243c]/20
+                      px-4 py-3 text-sm text-black
                       outline-none transition
                       placeholder:text-[#8f8f8f]
                       focus:border-[#0186ff] focus:ring-1 focus:ring-[#0186ff]/40"
@@ -51,14 +51,14 @@ const Login = () => {
 
         {/* Forgot */}
         <div className="mt-3 text-right">
-          <button className="text-sm text-[#0186ff] hover:underline">
+          <button className="text-sm text-[#0186ff] hover:underline cursor-pointer">
             ¿Has olvidado tu contraseña?
           </button>
         </div>
 
         {/* Button */}
         <button
-          className="mt-6 w-full rounded-xl bg-[#0186ff] py-3 text-sm font-medium 
+          className="mt-6 w-full rounded-xl bg-[#0186ff] py-3 text-sm font-medium cursor-pointer
                     text-white transition
                     hover:bg-[#0186ff]/90 active:scale-[0.98]"
         >
