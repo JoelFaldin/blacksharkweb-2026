@@ -1,8 +1,10 @@
 const Registro = () => {
   return (
-    <div>
-      New register design
-    </div>
+    <>
+      <div>
+        New register design
+      </div>
+    </>
   )
 }
 
