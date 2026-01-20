@@ -3,6 +3,7 @@
 import { getSupabaseBrowserClient } from "@/lib/supabase/browser-client";
 import {User} from "@supabase/supabase-js";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 type EmailPasswordDemoProps = {
     user: User | null;
@@ -11,6 +12,7 @@ type EmailPasswordDemoProps = {
 type Mode = "signup" | "signin";
 
 export default function EmailPasswordDemo ({user}: EmailPasswordDemoProps) {
+    const router = useRouter();
     const [mode, setMode] = useState("signup");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -19,6 +21,7 @@ export default function EmailPasswordDemo ({user}: EmailPasswordDemoProps) {
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
+        setStatus("");
 
         if(mode == "signup") {
             const {error, data} = await supabase.auth.signUp({
@@ -33,10 +36,17 @@ export default function EmailPasswordDemo ({user}: EmailPasswordDemoProps) {
             }
             console.log({data});
         } else {
-            await supabase.auth.signInWithPassword({
+            const {error} = await supabase.auth.signInWithPassword({
                 email,
                 password,
             });
+
+            if (error) {
+                setStatus(error.message);
+            } else {
+                router.push("/");
+                router.refresh();
+            }
         }
     }
 
