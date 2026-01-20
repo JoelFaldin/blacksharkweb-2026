@@ -2,21 +2,21 @@ import { createSupabaseServerClient } from "@/lib/supabase/server-client";
 import Image from "next/image";
 
 interface ServicioInterface {
-  id: string;
+  id: number;
   precio: string;
   descripcion_corta: string;
-  imagenes: {
+  imagen: {
     url: string;
-  }[];
+  } | null;
 }
 
 const Servicios = async () => {
   const supabase = await createSupabaseServerClient();
   const { data } = await supabase
     .from("servicios")
-    .select(`id, precio, descripcion_corta, imagenes("url")`);
+    .select(`id, precio, descripcion_corta, imagen:imagenes(url)`);
 
-  const servicios = data as ServicioInterface[];
+  const servicios = data as unknown as ServicioInterface[];
 
   console.log(data);
   return (
@@ -30,9 +30,9 @@ const Servicios = async () => {
           >
             {/* Imagen */}
             <div className="relative w-full h-56">
-              {servicio.imagenes?.[0]?.url && (
+              {servicio.imagen?.url && (
                 <Image
-                  src={servicio.imagenes[0].url}
+                  src={servicio.imagen.url}
                   alt="Servicio"
                   fill
                   className="object-cover rounded-t-xl"
