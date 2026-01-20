@@ -1,8 +1,9 @@
 'use client'
 
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
+import { getSupabaseBrowserClient } from "@/lib/supabase/browser-client";
 
 import User from "../icons/User"
 import ShoppingCart from "../icons/ShoppingCart"
@@ -17,6 +18,14 @@ const Navbar = ({ isAuthenticated, userName }: NavbarProps) => {
   const matchesPathname = (path: string): string => {
     return path == pathname ? "text-[var(--foreground)]" : "text-[var(--muted-foreground)]"
   }
+
+  const router = useRouter();
+  const supabase = getSupabaseBrowserClient();
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    router.refresh(); 
+  };
 
 
   return (
@@ -69,6 +78,7 @@ const Navbar = ({ isAuthenticated, userName }: NavbarProps) => {
                   </li>
 
                   <button
+                    onClick={handleLogout}
                     className="px-3 py-1 rounded hover:bg-(--primary) transition-colors text-sm"
                   >
                     Logout
