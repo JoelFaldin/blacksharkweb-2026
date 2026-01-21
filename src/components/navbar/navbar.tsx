@@ -1,17 +1,32 @@
 'use client'
 
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
+import { getSupabaseBrowserClient } from "@/lib/supabase/browser-client";
 
 import User from "../icons/User"
 import ShoppingCart from "../icons/ShoppingCart"
 
-const Navbar = () => {
+type NavbarProps = {
+  isAuthenticated: boolean;
+  userName?: string;
+};
+
+const Navbar = ({ isAuthenticated, userName }: NavbarProps) => {
   const pathname = usePathname();
   const matchesPathname = (path: string): string => {
     return path == pathname ? "text-[var(--foreground)]" : "text-[var(--muted-foreground)]"
   }
+
+  const router = useRouter();
+  const supabase = getSupabaseBrowserClient();
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    router.refresh(); 
+  };
+
 
   return (
     <header className="grid grid-cols-3 items-center w-full backdrop-blur-md py-3 border-b border-b-(--primary)">
@@ -40,12 +55,36 @@ const Navbar = () => {
 
       <div className="text-center">
         <ul className="flex flex-row justify-center items-center gap-x-4 font-semibold text-xl">
-          <Link href="/login" className="p-1 hover:bg-(--primary) transition-colors rounded ">
-            <User />
-          </Link>
-          <Link href="/carrito" className="p-1 hover:bg-(--primary) transition-colors rounded">
-            <ShoppingCart />
-          </Link>
+          {!isAuthenticated ? (
+                <>
+                  <Link
+                    href="/email-password"
+                    className="p-1 hover:bg-(--primary) transition-colors rounded"
+                  >
+                    <User />
+                  </Link>
+
+                  <Link
+                    href="/carrito"
+                    className="p-1 hover:bg-(--primary) transition-colors rounded"
+                  >
+                    <ShoppingCart />
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <li className="px-3 py-1 rounded bg-(--primary) text-sm">
+                    {userName}
+                  </li>
+
+                  <button
+                    onClick={handleLogout}
+                    className="px-3 py-1 rounded hover:bg-(--primary) transition-colors text-sm"
+                  >
+                    Logout
+                  </button>
+                </>
+              )}
         </ul>
       </div>
     </header>
