@@ -1,43 +1,25 @@
+import { createSupabaseServerClient } from "@/lib/supabase/server-client"
 import Image from "next/image"
 
 interface TeamInterface {
-  image: string,
+  id: string,
   name: string,
   role: string,
-  description?: string,
   contact: string,
+  description?: string,
+  imagenes: {
+    url: string,
+  },
 }
 
-const team: TeamInterface[] = [
-  {
-    image: "/images/about/logotipo_blacksharkstudios.webp",
-    name: "Andrés",
-    role: "Diseñador",
-    description: "Dueño de la marca",
-    contact: "https://www.instagram.com/blackshark.studios/"
-    
-  },
-  {
-    image: "/images/about/carlos-pic.webp",
-    name: "Carlos",
-    role: "Desarrollador web",
-    contact: "https://github.com/carloscj20"
-  },
-  {
-    image: "/images/about/joel-pic.webp",
-    name: "Joel",
-    role: "Desarrollador web",
-    contact: "https://github.com/JoelFaldin"
-  },
-  {
-    image: "/images/about/samuel-pic.webp",
-    name: "Samuel",
-    role: "Desarrollador web",
-    contact: "https://github.com/SamuelSotomayor1"
-  },
-]
+const Nosotros = async () => {
+  const supabase = await createSupabaseServerClient();
+  const { data } = await supabase
+    .from("nosotros")
+    .select(`id, name, role, contact, description, imagenes("url")`);
 
-const Nosotros = () => {
+  const team: TeamInterface[] = data as unknown as TeamInterface[];
+
   return (
     <div className="container mx-auto px-4 pt-32 pb-20">
       <h1 className="text-5xl font-bold text-center mb-10">
@@ -71,7 +53,7 @@ const Nosotros = () => {
               <div key={`team-member-${member.name}`} className="bg-(--card)/5 flex flex-row gap-4 p-4 rounded-lg border border-white/30">
                 <Image
                   alt="Imagen del integrante"
-                  src={member.image}
+                  src={member.imagenes.url}
                   width={100}
                   height={100}
                   className="rounded-full"
