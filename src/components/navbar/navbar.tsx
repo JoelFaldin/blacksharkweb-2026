@@ -64,12 +64,6 @@ const Navbar = ({ isAuthenticated, userName }: NavbarProps) => {
                     <User />
                   </Link>
 
-                  <Link
-                    href="/carrito"
-                    className="p-1 hover:bg-(--primary) transition-colors rounded"
-                  >
-                    <ShoppingCart />
-                  </Link>
                 </>
               ) : (
                 <>
@@ -81,8 +75,15 @@ const Navbar = ({ isAuthenticated, userName }: NavbarProps) => {
                     onClick={handleLogout}
                     className="px-3 py-1 rounded hover:bg-(--primary) transition-colors text-sm"
                   >
-                    Logout
+                    Cerrar Sesión
                   </button>
+
+                  <Link
+                    href="/carrito"
+                    className="p-1 hover:bg-(--primary) transition-colors rounded"
+                  >
+                    <ShoppingCart />
+                  </Link>
                 </>
               )}
         </ul>

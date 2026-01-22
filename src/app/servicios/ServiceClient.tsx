@@ -112,7 +112,7 @@ const ServiceClient = ({ servicios, isAuthenticated }: Props) => {
                 <button
                    onClick={() => handleAddToCart(servicio.id)}
                   className="rounded-lg border border-blue-500/30
-                  bg-blue-500/10 text-blue-300
+                  bg-blue-500/10 text-blue-300 cursor-pointer
                   py-2 font-medium
                   hover:bg-blue-500/20 hover:text-white transition"
                 >
@@ -122,7 +122,7 @@ const ServiceClient = ({ servicios, isAuthenticated }: Props) => {
                 <button
                    onClick={() => handleAddToCart(servicio.id)}
                   className="rounded-lg bg-blue-600 text-white
-                  py-2 font-medium
+                  py-2 font-medium cursor-pointer
                   hover:bg-blue-500 transition shadow-lg shadow-blue-600/30"
                 >
                   Comprar
