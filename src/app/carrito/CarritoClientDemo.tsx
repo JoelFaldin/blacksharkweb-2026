@@ -63,44 +63,40 @@ export default function Carrito({ items }: { items: CarritoItem[] }) {
                             bg-white/5 backdrop-blur-md
                             p-6 transition"
                             >
-                            {/* Imagen */}
-                            <div className="relative w-full md:w-48 h-40 rounded-xl overflow-hidden">
-                                {item.servicio.imagen?.url && (
-                                <Image
-                                    src={item.servicio.imagen.url}
-                                    alt={item.servicio.nombre}
-                                    fill
-                                    className="object-cover"
-                                />
-                                )}
-                            </div>
-
-                            {/* Info */}
-                            <div className="flex-1 flex flex-col justify-between">
-                                <div>
-                                <p className="text-lg font-semibold text-white">
-                                    {item.servicio.nombre}
-                                </p>
-                                <p className="text-sm text-slate-400 mt-1">
-                                    Servicio agregado al carrito
-                                </p>
+                                {/* Imagen */}
+                                <div className="relative w-full md:w-48 h-40 rounded-xl overflow-hidden">
+                                    {item.servicio.imagen?.url && (
+                                    <Image
+                                        src={item.servicio.imagen.url}
+                                        alt={item.servicio.nombre}
+                                        fill
+                                        className="object-cover"
+                                    />
+                                    )}
                                 </div>
 
-                                <button
-                                className="mt-4 w-fit text-sm flex items-center gap-2
-                                text-slate-400 hover:text-red-400 transition"
-                                onClick={() => handleRemoveFromCart(item.id)}
-                                >
-                                Eliminar servicio
-                                </button>
-                            </div>
+                                {/* Info */}
+                                <div className="flex-1 flex flex-col justify-between">
+                                    <div>
+                                    <p className="text-lg font-semibold text-white">
+                                        {item.servicio.nombre}
+                                    </p>
+                                    <p className="text-sm text-slate-400 mt-1">
+                                        {item.servicio.descripcion_corta}
+                                    </p>
+                                    <p className="text-2xl font-bold text-[#c09028] pt-4">
+                                        ${item.servicio.precio}
+                                    </p>
+                                    </div>
 
-                            {/* Precio */}
-                            <div className="flex items-center justify-end">
-                                <p className="text-2xl font-bold text-blue-400">
-                                ${item.servicio.precio}
-                                </p>
-                            </div>
+                                    <button
+                                    className="mt-4 w-fit text-sm gap-2 cursor-pointer
+                                    text-slate-400 hover:text-red-400 transition flex items-center justify-end underline"
+                                    onClick={() => handleRemoveFromCart(item.id)}
+                                    >
+                                    Eliminar
+                                    </button>
+                                </div>
                             </div>
                         ))
                         )}
@@ -129,9 +125,9 @@ export default function Carrito({ items }: { items: CarritoItem[] }) {
 
                         <button
                         className="mt-8 w-full rounded-xl
-                        bg-blue-600 hover:bg-blue-500
+                        bg-[#c09028] hover:bg-yellow-600
                         py-3 font-semibold text-white
-                        transition shadow-lg shadow-blue-600/30"
+                        transition cursor-pointer"
                         >
                         Continuar con la compra →
                         </button>

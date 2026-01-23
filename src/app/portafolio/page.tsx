@@ -7,7 +7,7 @@ import { images } from "@/data/images";
 export default function Portafolio() {
   const [filtro, setFiltro] = useState("Todo");
 
-  const categorias = ["Todo", "Fotografía Profesional", "Diseño Gráfico", "Servicios Extra"];
+  const categorias = ["Todo", "Fotografía Profesional", "Diseño Gráfico", "Servicios Extra", "Matrimonio"];
 
   return (
     <section className="w-full flex flex-col items-center py-12">
