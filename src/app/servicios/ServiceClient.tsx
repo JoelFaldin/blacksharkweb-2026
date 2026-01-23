@@ -3,7 +3,10 @@
 import Image from "next/image";
 import { useState } from "react";
 import { getSupabaseBrowserClient } from "@/lib/supabase/browser-client";
+import type { Database } from "@/lib/supabase/types";
+import type { SupabaseClient } from "@supabase/supabase-js";
 
+const supabase: SupabaseClient<Database> = getSupabaseBrowserClient();
 
 interface ServicioInterface {
   id: number;
@@ -20,25 +23,40 @@ interface Props {
   isAuthenticated: boolean;
 }
 
+
 const ServiceClient = ({ servicios, isAuthenticated }: Props) => {
     const [showAuthAlert, setShowAuthAlert] = useState(false);
-    const supabase = getSupabaseBrowserClient();
 
     const handleAddToCart = async (servicioId: number) => {
-    if (!isAuthenticated) {
-        setShowAuthAlert(true);
-        return;
-    }
+      if (!isAuthenticated) {
+          setShowAuthAlert(true);
+          return;
+      }
 
-    const {
-        data: { user },
-    } = await supabase.auth.getUser();
+      const {
+          data: { user },
+      } = await supabase.auth.getUser();
 
-    if (!user) {
-        setShowAuthAlert(true);
-        return;
-    }
-    };
+      console.log("USER:", user);
+
+      if (!user) {
+          setShowAuthAlert(true);
+          return;
+      }
+
+      const { error } = await supabase
+        .from("carrito")
+        .insert({
+          usuario_id: user.id,
+          servicio_id: servicioId,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } as any);
+
+       if (error) {
+         console.error("Error insert carrito:", error);
+       } else {
+         console.log("Servicio añadido al carrito");
+    };}
 
   return (
     <div className="w-full px-8 py-16">
@@ -137,4 +155,3 @@ const ServiceClient = ({ servicios, isAuthenticated }: Props) => {
 };
 
 export default ServiceClient;
-
