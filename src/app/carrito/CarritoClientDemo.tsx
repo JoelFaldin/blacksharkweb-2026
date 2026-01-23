@@ -1,6 +1,8 @@
 "use client"
 
+import { getSupabaseBrowserClient } from "@/lib/supabase/browser-client";
 import Image from "next/image";
+import { useState } from "react";
 
 interface CarritoItem {
     id: number;
@@ -18,6 +20,24 @@ interface CarritoItem {
 
 
 export default function Carrito({ items }: { items: CarritoItem[] }) {
+    const [cartItems, setCartItems] = useState<CarritoItem[]>(items);
+    const supabase = getSupabaseBrowserClient();
+
+    const handleRemoveFromCart = async (carritoId: number) => {
+    setCartItems((prev) => prev.filter((item) => item.id !== carritoId));
+
+    const { error } = await supabase
+    .from("carrito")
+    .delete()
+    .eq("id", carritoId);
+
+    if (error) {
+    console.error("Error al eliminar del carrito:", error);
+
+    setCartItems(items);
+    alert("No se pudo eliminar el servicio");
+    }
+};
     
     return (
         <>
@@ -31,18 +51,16 @@ export default function Carrito({ items }: { items: CarritoItem[] }) {
 
                 {/* ITEMS */}
                     <div className="lg:col-span-2 space-y-6">
-                        {items.length === 0 ? (
+                        {cartItems.length === 0 ? (
                         <p className="text-center text-slate-400">
                             Tu carrito está vacío
                         </p>
                         ) : (
-                        items.map((item) => (
+                        cartItems.map((item) => (
                             <div
                             key={item.id}
                             className="flex flex-col md:flex-row gap-6 rounded-2xl
                             bg-white/5 backdrop-blur-md
-                            border border-blue-500/10
-                            shadow-[0_0_30px_rgba(59,130,246,0.15)]
                             p-6 transition"
                             >
                             {/* Imagen */}
@@ -71,8 +89,9 @@ export default function Carrito({ items }: { items: CarritoItem[] }) {
                                 <button
                                 className="mt-4 w-fit text-sm flex items-center gap-2
                                 text-slate-400 hover:text-red-400 transition"
+                                onClick={() => handleRemoveFromCart(item.id)}
                                 >
-                                🗑️ Quitar del carrito
+                                Eliminar servicio
                                 </button>
                             </div>
 
@@ -90,8 +109,6 @@ export default function Carrito({ items }: { items: CarritoItem[] }) {
                     {/* RESUMEN */}
                     <div
                         className="rounded-2xl bg-white/5 backdrop-blur-md
-                        border border-blue-500/10
-                        shadow-[0_0_30px_rgba(59,130,246,0.15)]
                         p-6 h-fit"
                     >
                         <p className="text-xl font-semibold text-white mb-6">
