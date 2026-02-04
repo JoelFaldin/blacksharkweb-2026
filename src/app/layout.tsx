@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/navbar/navbar";
 import { BackgroundEffect } from "@/components/background/BackgroundEffect";
 import { createSupabaseServerClient } from "@/lib/supabase/server-client";
+import WhatsappButton from "@/components/WhatsappButton";
 
 export const metadata: Metadata = {
   title: {
@@ -44,6 +45,8 @@ export default async function RootLayout({
         />
 
         {children}
+
+        <WhatsappButton />
       </body>
     </html>
   );
