@@ -52,7 +52,7 @@ export default function Carrito({ items }: { items: CarritoItem[] }) {
                 {/* ITEMS */}
                     <div className="lg:col-span-2 space-y-6">
                         {cartItems.length === 0 ? (
-                        <p className="text-center text-slate-400">
+                        <p className="text-center text-slate-500">
                             Tu carrito está vacío
                         </p>
                         ) : (
