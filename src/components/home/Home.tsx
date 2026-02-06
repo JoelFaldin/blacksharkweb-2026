@@ -2,18 +2,9 @@ import Link from "next/link";
 
 import ArrowRight from "@/components/icons/ArrowRight";
 
-const services = [
-  "Publicidad digital",
-  "Fotografía Profesional",
-  "Diseño Gráfico",
-  "Estampados",
-  "Estampados x Mayor",
-  "Servicios extras",
-]
-
 const Home = () => {
   return (
-    <div className="container mx-auto px-4 pt-36 pb-20">
+    <div className="mx-auto px-4 pt-36 pb-20">
       <p className="text-2xl text-(--secondary) text-center mb-5">Agencia Publicitaria</p>
       <h1 className="text-8xl font-bold text-center mb-10">
         Diseños que <br />
