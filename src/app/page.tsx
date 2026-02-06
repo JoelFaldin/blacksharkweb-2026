@@ -4,14 +4,15 @@ import ArrowRight from "@/components/icons/ArrowRight";
 
 export default function Home() {
   return (
-    <div className="container mx-auto px-4 pt-32 pb-20">
-      <h1 className="text-7xl font-bold text-center mb-10">
+    <div className="container mx-auto px-4 pt-36 pb-20">
+      <p className="text-2xl text-(--secondary) text-center mb-5">Agencia Publicitaria</p>
+      <h1 className="text-8xl font-bold text-center mb-10">
         Diseños que <br />
         <span className="text-(--secondary)"> impulsan </span>
         tu marca
       </h1>
-      <p className="max-w-xl text-xl text-center text-pretty mb-10 mx-auto">
-        Nos encargamos de crear y transformar la imagen de tu marca para capturar la atención de tus clientes.
+      <p className="max-w-2xl text-2xl text-center text-pretty mb-10 mx-auto">
+        Transformamos la imagen de tu marca para capturar la atención de tus clientes.
         Desde el concepto hasta la ejecución, traemos tus ideas a la realidad con calidad excelente.
       </p>
 
