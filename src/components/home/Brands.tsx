@@ -1,4 +1,3 @@
-import { div } from "framer-motion/client"
 import Image from "next/image"
 
 const brands = [
