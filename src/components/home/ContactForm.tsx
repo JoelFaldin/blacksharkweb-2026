@@ -1,6 +1,7 @@
 import Link from "next/link"
 
 import ArrowRight from "../icons/ArrowRight"
+import Button from "../Button"
 
 const ContactForm = () => {
   return (
@@ -15,18 +16,18 @@ const ContactForm = () => {
         Cuéntanos tu idea y trabajemos juntos para que tu marca crezca con estrategia, identidad y estilo.
       </p>
 
-      <span className="flex flex-row gap-8">
-        <Link href="/nosotros" className="flex flex-row gap-x-2 bg-(--secondary) hover:bg-(--secondary)/80 px-4 py-2 rounded-lg border border-white/30">
-          <span className="font-bold text-(--primary)">
+      <span className="flex flex-row gap-8 py-10">
+        <Button type="primary" href="/nosotros" className="flex flex-row items-center justify-center gap-x-2 bg-(--secondary) hover:bg-(--secondary)/80 p-6 rounded-lg border border-white/30">
+          <span className="text-(--primary) text-2xl font-bold ">
             Contáctanos
           </span>
           <ArrowRight className="text-black group-hover:translate-x-1 transition-transform" />
-        </Link>
-        <Link href={"/servicios"} className="flex flex-row items-center justify-center border border-(--border) rounded-lg px-4 py-2">
-          <span className="text-(--primary-foreground)">
+        </Button>
+        <Button type="secondary" href="/servicios" className="flex flex-row items-center justify-center rounded-lg p-6">
+          <span className="text-(--primary-foreground) text-2xl font-bold">
             Servicios
           </span>
-        </Link>
+        </Button>
       </span>
     </section>
   )

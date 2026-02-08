@@ -1,6 +1,5 @@
-import Link from "next/link";
-
 import ArrowRight from "@/components/icons/ArrowRight";
+import Button from "../Button";
 
 const Home = () => {
   return (
@@ -16,18 +15,18 @@ const Home = () => {
         Desde el concepto hasta la ejecución, traemos tus ideas a la realidad con calidad excelente.
       </p>
 
-      <section className="flex flex-row justify-center items-center gap-3 mb-20">
-        <Link href="/portafolio" className="group flex flex-row items-center justify-center gap-x-2 bg-(--secondary) hover:bg-(--secondary)/90 px-4 py-2 rounded-lg opacity-100">
-          <span className="text-black text-md font-bold">
+      <section className="flex flex-row justify-center items-center gap-6 mb-20">
+        <Button type="primary" href="/portafolio" className="group flex flex-row items-center justify-center gap-x-2 p-6">
+          <span className="text-(--primary) text-2xl font-bold">
             Portafolio
           </span>
           <ArrowRight className="text-black group-hover:translate-x-1 transition-transform" />
-        </Link>
-        <Link href="/nosotros" className="bg-black hover:bg-neutral-900 px-4 py-2 rounded-lg border border-white/30">
-          <span className="font-bold">
+        </Button>
+        <Button type="secondary" href="/nosotros" className="flex flex-row p-6">
+          <span className="text-(--primary-foreground) text-2xl font-bold">
             Contáctanos
           </span>
-        </Link>
+        </Button>
       </section>
 
       <section className="flex flex-col justify-center items-center gap-5">
