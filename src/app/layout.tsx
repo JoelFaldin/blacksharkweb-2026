@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/navbar/navbar";
 import { BackgroundEffect } from "@/components/background/BackgroundEffect";
 import { createSupabaseServerClient } from "@/lib/supabase/server-client";
+import Footer from "@/components/footer/footer";
 
 export const metadata: Metadata = {
   title: {
@@ -42,8 +43,8 @@ export default async function RootLayout({
           isAuthenticated={isAuthenticated}
           userName={userName}
         />
-
         {children}
+        <Footer />
       </body>
     </html>
   );
