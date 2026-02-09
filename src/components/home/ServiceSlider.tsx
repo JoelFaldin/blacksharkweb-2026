@@ -21,7 +21,7 @@ const ServiceSlider = () => {
                 <span className="text-(--muted-foreground) whitespace-nowrap px-6 text-sm font-medium tracking-[0.2em] uppercase">
                   {service}
                 </span>
-                <span aria-hidden className="text-(--secondary)">
+                <span aria-hidden className="text-(--primary)">
                   {"///"}
                 </span>
               </div>
@@ -34,7 +34,7 @@ const ServiceSlider = () => {
                 <span className="text-(--muted-foreground) whitespace-nowrap px-6 text-sm font-medium tracking-[0.2em] uppercase">
                   {service}
                 </span>
-                <span aria-hidden className="text-(--secondary)">
+                <span aria-hidden className="text-(--primary)">
                   {"///"}
                 </span>
               </div>

@@ -9,7 +9,7 @@ interface ButtonInterface {
 }
 
 const Button = ({ type, href, className, children }: ButtonInterface) => {
-  const styles = type === "primary" ? "bg-(--secondary)" : "bg-transparent hover:bg-(--primary) border border-(--border)";
+  const styles = type === "primary" ? "bg-(--primary)" : "bg-transparent hover:bg-(--) border border-(--border)";
 
   return (
     <span className={`${styles}`}>
