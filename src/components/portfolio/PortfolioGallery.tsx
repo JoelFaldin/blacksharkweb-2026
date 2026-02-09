@@ -33,10 +33,10 @@ const PortfolioGallery = ({ imagenes }: PortfolioGalleryInterface) => {
     : imagenes.filter(item => item.imagenes.categoria == filtro)
 
   return (
-    <section className="bg-(--background) py-16">
+    <section className="bg-(--background) py-16 border-b border-(--border)">
        {/* 🔹 Navbar de filtros */}
       <div className="mx-auto max-w-7xl px-6 pb-20">
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="mb-12 flex flex-wrap items-center gap-3">
           {categorias.map((cat) => (
             <button
               key={cat}
@@ -50,6 +50,11 @@ const PortfolioGallery = ({ imagenes }: PortfolioGalleryInterface) => {
               {cat}
             </button>
           ))}
+
+          {/* Cantidad de imágenes */}
+          <span className="ml-auto text-sm uppercase tracking-[0.2em] text-(--muted-foreground)">
+            {filteredItems.length} {filteredItems.length === 1 ? "imagen" : "imágenes"}
+          </span>
         </div>
       </div>
 

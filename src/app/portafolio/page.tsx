@@ -1,5 +1,6 @@
 import PortfolioHero from "@/components/portfolio/PortfolioHero";
 import PortfolioGallery from "@/components/portfolio/PortfolioGallery";
+import ContactForm from "@/components/home/ContactForm";
 import { createSupabaseServerClient } from "@/lib/supabase/server-client";
 
 interface GalleryInterface {
@@ -24,6 +25,7 @@ export default async function Portafolio() {
     <>
       <PortfolioHero />
       <PortfolioGallery imagenes={images} />
+      <ContactForm />
     </>
   );
 }
