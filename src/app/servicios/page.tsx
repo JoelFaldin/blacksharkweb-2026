@@ -1,7 +1,7 @@
 import ContactForm from "@/components/home/ContactForm";
-import ServiceGrid from "@/components/service/ServiceGrid";
-import ServiceHero from "@/components/service/ServiceHero";
-import ServiceProcess from "@/components/service/ServiceProcess";
+import ServiceGrid from "@/components/services/ServiceGrid";
+import ServiceHero from "@/components/services/ServiceHero";
+import ServiceProcess from "@/components/services/ServiceProcess";
 import { createSupabaseServerClient } from "@/lib/supabase/server-client";
 
 interface ServicioInterface {
