@@ -6,7 +6,7 @@ const brands = [
 
 const Brands = () => {
   return (
-    <section className="border-b border-(--border) py-36 flex flex-col items-center justify-center">
+    <section className="bg-(--background) border-b border-(--border) py-36 flex flex-col items-center justify-center">
 			<p className="pb-10 text-(--primary) font-medium text-2xl uppercase tracking-widest">
         Trabajamos con
       </p>
