@@ -17,7 +17,7 @@ interface ServiceTemplateInterface {
 
 const ServiceTemplate = ({ precio, descripcion_corta, nombre, imagen, index }: ServiceTemplateInterface) => {
   return (
-    <div className="group relative flex flex-col border border-(--border) bg-(--background transition-colors) hover:border-(--primary)/40">
+    <div className="group relative flex flex-col border border-(--border) bg-(--background) transition-colors hover:border-(--primary)/40">
       {/* Index */}
       <div className="absolute left-4 top-4 z-10">
         <span className="text-md font-medium tracking-widest text-(--foreground)/40">
