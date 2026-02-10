@@ -13,7 +13,7 @@ interface CarritoItem {
     precio: string;
     descripcion_corta: string;
     imagen: {
-      url: string;
+        url: string;
     } | null;
     }
 }

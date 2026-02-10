@@ -1,5 +1,3 @@
-import Link from "next/link"
-
 import ArrowRight from "../icons/ArrowRight"
 import Button from "../Button"
 

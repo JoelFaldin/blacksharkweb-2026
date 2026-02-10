@@ -52,10 +52,10 @@ const ServiceClient = ({ servicios, isAuthenticated }: Props) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } as any);
 
-       if (error) {
-         console.error("Error insert carrito:", error);
-       } else {
-         console.log("Servicio añadido al carrito");
+      if (error) {
+        console.error("Error insert carrito:", error);
+      } else {
+        console.log("Servicio añadido al carrito");
     };}
 
   return (

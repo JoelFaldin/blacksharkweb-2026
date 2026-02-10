@@ -3,6 +3,7 @@
 import { usePathname, useRouter } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
+import { toast } from "sonner"
 
 import User from "../icons/User"
 import ShoppingCart from "../icons/ShoppingCart"
@@ -23,7 +24,12 @@ const Navbar = ({ isAuthenticated, userName }: NavbarProps) => {
   const supabase = getSupabaseBrowserClient();
 
   const handleLogout = async () => {
+    const loading = toast.loading("Cerrando sesión...");
+
     await supabase.auth.signOut();
+    toast.success("Sesión finalizada");
+    toast.dismiss(loading);
+
     router.refresh(); 
   };
 
@@ -79,7 +85,7 @@ const Navbar = ({ isAuthenticated, userName }: NavbarProps) => {
 
                   <button
                     onClick={handleLogout}
-                    className="px-3 py-1 rounded hover:bg-(--secondary) transition-colors text-sm"
+                    className="px-3 py-1 rounded hover:bg-(--secondary) transition-colors text-sm cursor-pointer"
                   >
                     Cerrar Sesión
                   </button>
