@@ -3,10 +3,10 @@
 import { usePathname, useRouter } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
-import { getSupabaseBrowserClient } from "@/lib/supabase/browser-client";
 
 import User from "../icons/User"
 import ShoppingCart from "../icons/ShoppingCart"
+import { getSupabaseBrowserClient } from "@/lib/supabase/browser-client";
 
 type NavbarProps = {
   isAuthenticated: boolean;
@@ -81,8 +81,15 @@ const Navbar = ({ isAuthenticated, userName }: NavbarProps) => {
                     onClick={handleLogout}
                     className="px-3 py-1 rounded hover:bg-(--secondary) transition-colors text-sm"
                   >
-                    Logout
+                    Cerrar Sesión
                   </button>
+
+                  <Link
+                    href="/carrito"
+                    className="p-1 hover:bg-(--primary) transition-colors rounded"
+                  >
+                    <ShoppingCart />
+                  </Link>
                 </>
               )}
         </ul>

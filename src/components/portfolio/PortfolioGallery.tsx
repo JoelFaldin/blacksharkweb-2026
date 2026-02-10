@@ -8,7 +8,8 @@ const categorias = [
   "Fotografía Profesional",
   "Diseño Gráfico",
   "Servicios Extra",
-  "Paisaje"
+  "Paisaje",
+  "Matrimonio",
 ];
 
 type Category = (typeof categorias)[number];

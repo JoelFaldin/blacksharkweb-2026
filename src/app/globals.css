@@ -46,6 +46,26 @@ body {
   color: var(--foreground);
 }
 
+.brands-wrapper {
+  display: flex;
+  flex-shrink: 0;
+  min-width: 100%;
+  align-items: center;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 50s linear infinite;
+}
+
 @keyframes loop {
   0% {
     transform: translateX(0);
