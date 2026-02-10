@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Toaster } from "sonner";
 
 import "./globals.css";
 import Navbar from "@/components/navbar/navbar";
@@ -42,6 +43,8 @@ export default async function RootLayout({
         />
         {children}
         <Footer />
+
+        <Toaster />
       </body>
     </html>
   );
