@@ -7,5 +7,5 @@ export const images = [
   { src: "/images/disenografico2.jpg", alt: "Diseño", categoria: "Diseño Gráfico" },
   { src: "/images/disenografico3.jpg", alt: "Diseño", categoria: "Diseño Gráfico" },
   { src: "/images/jugador1.jpg", alt: "Jugador", categoria: "Servicios Extra" },
-  { src: "/images/jugador2.jpg", alt: "Jugador2", categoria: "Servicios Extra" },
+  { src: "/images/jugador2.jpg", alt: "Jugador2", categoria: "Matrimonio" },
 ];
