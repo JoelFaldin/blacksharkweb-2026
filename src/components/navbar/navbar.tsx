@@ -8,13 +8,14 @@ import { toast } from "sonner"
 import User from "../icons/User"
 import ShoppingCart from "../icons/ShoppingCart"
 import { getSupabaseBrowserClient } from "@/lib/supabase/browser-client";
+import { useAuthStore } from "@/lib/store/useAuthStore"
 
-type NavbarProps = {
-  isAuthenticated: boolean;
-  userName?: string;
-};
+interface UserInterface {
+  username?: string,
+  email: string,
+}
 
-const Navbar = ({ isAuthenticated, userName }: NavbarProps) => {
+const Navbar = () => {
   const pathname = usePathname();
   const matchesPathname = (path: string): string => {
     return path == pathname ? "text-[var(--foreground)]" : "text-[var(--muted-foreground)]"
@@ -23,16 +24,20 @@ const Navbar = ({ isAuthenticated, userName }: NavbarProps) => {
   const router = useRouter();
   const supabase = getSupabaseBrowserClient();
 
+  const user: UserInterface | null = useAuthStore((s) => s.user);
+  const clearUser = useAuthStore((s) => s.clearUser);
+
   const handleLogout = async () => {
     const loading = toast.loading("Cerrando sesión...");
 
     await supabase.auth.signOut();
+    clearUser();
+
     toast.success("Sesión finalizada");
     toast.dismiss(loading);
 
     router.refresh(); 
   };
-
 
   return (
     <header className="grid grid-cols-3 items-center w-full backdrop-blur-md py-3 border-b border-b-(--muted-foreground)">
@@ -61,26 +66,10 @@ const Navbar = ({ isAuthenticated, userName }: NavbarProps) => {
 
       <div className="text-center">
         <ul className="flex flex-row justify-center items-center gap-x-4 font-semibold text-xl">
-          {!isAuthenticated ? (
-                <>
-                  <Link
-                    href="/email-password"
-                    className="p-1 hover:bg-(--secondary) transition-colors rounded"
-                  >
-                    <User />
-                  </Link>
-
-                  <Link
-                    href="/carrito"
-                    className="p-1 hover:bg-(--secondary) transition-colors rounded"
-                  >
-                    <ShoppingCart />
-                  </Link>
-                </>
-              ) : (
+          {user?.email || user?.username ? (
                 <>
                   <li className="px-3 py-1 rounded bg-(--secondary) text-sm">
-                    {userName}
+                    {user.username}
                   </li>
 
                   <button
@@ -93,6 +82,23 @@ const Navbar = ({ isAuthenticated, userName }: NavbarProps) => {
                   <Link
                     href="/carrito"
                     className="p-1 hover:bg-(--primary) transition-colors rounded"
+                  >
+                    <ShoppingCart />
+                  </Link>
+                  
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/email-password"
+                    className="p-1 hover:bg-(--secondary) transition-colors rounded"
+                  >
+                    <User />
+                  </Link>
+
+                  <Link
+                    href="/carrito"
+                    className="p-1 hover:bg-(--secondary) transition-colors rounded"
                   >
                     <ShoppingCart />
                   </Link>

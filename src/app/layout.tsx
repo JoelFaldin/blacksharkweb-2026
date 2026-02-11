@@ -5,6 +5,7 @@ import "./globals.css";
 import Navbar from "@/components/navbar/navbar";
 import { createSupabaseServerClient } from "@/lib/supabase/server-client";
 import Footer from "@/components/footer/footer";
+import AuthProvider from "@/components/AuthProvider";
 
 export const metadata: Metadata = {
   title: {
@@ -23,24 +24,19 @@ export default async function RootLayout({
 
   const supabase = await createSupabaseServerClient();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { data: { user }} = await supabase.auth.getUser();
 
-  const isAuthenticated = !!user;
-
-  const userName =
-    user?.user_metadata?.full_name ||
-    user?.email?.split("@")[0] ||
-    undefined;
+  const userData = {
+    username: user?.user_metadata?.email.split("@")[0],
+    email: user?.user_metadata?.email,
+  }
 
   return (
     <html lang="es">
       <body>
-        <Navbar
-          isAuthenticated={isAuthenticated}
-          userName={userName}
-        />
+        <AuthProvider initialUser={userData} />
+
+        <Navbar />
         {children}
         <Footer />
 
