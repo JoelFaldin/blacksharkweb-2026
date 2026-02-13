@@ -1,8 +1,10 @@
 "use client"
 
+import Image from "next/image";
+
 import { useCartStore } from "@/lib/store/useCartStore";
 import priceFormat from "@/lib/utils/priceFormat";
-import Image from "next/image";
+import { toast } from "sonner";
 
 type CartItem = {
     id: number,
@@ -17,25 +19,22 @@ type CartItem = {
 
 export default function Carrito() {
     const items: CartItem[] = useCartStore((s) => s.items);
+    const remove = useCartStore((s) => s.removeItem);
 
     const computedPrice: number = items.reduce((acc: number, item: CartItem) => {
         return acc + (item.precio * item.cantidad);
     }, 0)
 
     const handleRemoveFromCart = async (carritoId: number) => {
-        // setCartItems((prev) => prev.filter((item) => item.id !== carritoId));
+        const confirm = window.confirm("¿Estás seguro que quieres eliminar este servicio del carrito?");
 
-    //     const { error } = await supabase
-    //     .from("carrito")
-    //     .delete()
-    //     .eq("id", carritoId);
+        if (confirm) {
+            const loading = toast.loading("Eliminando servicio...");
 
-    //     if (error) {
-    //     console.error("Error al eliminar del carrito:", error);
-
-    //     setCartItems(items);
-    //     alert("No se pudo eliminar el servicio");
-    //     }
+            remove(carritoId);
+            toast.dismiss(loading);
+            toast.success("Se ha quitado el servicio del carrito!");
+        }
     };
     
     return (

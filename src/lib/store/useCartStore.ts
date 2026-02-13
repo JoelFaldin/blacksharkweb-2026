@@ -1,5 +1,7 @@
 import { create } from "zustand"
 
+import { removeCartItem } from "@/app/actions/cart";
+
 type CartItem = {
   id: number,
   usuario_id: string,
@@ -19,7 +21,7 @@ type CartState = {
   setCart: (items: CartItem[]) => void,
 }
 
-export const useCartStore = create<CartState>(set => ({
+export const useCartStore = create<CartState>((set, get) => ({
   items: [],
   addItem: (item) => set((state) => {
     const existing = state.items.find(i => i.servicio_id === item.servicio_id);
@@ -36,9 +38,18 @@ export const useCartStore = create<CartState>(set => ({
 
     return { items: [...state.items, item] };
   }),
-  removeItem: (service_id) => set(state => ({
-      items: state.items.filter(i => i.servicio_id !== service_id)
-    })),
+  removeItem: async (carrito_id) => {
+    const { items } = get();
+    const item = items.find(i => i.id === carrito_id);
+
+    if (item) {
+      await removeCartItem(carrito_id)
+    }
+
+    set((state) => {
+      const result = state.items.filter(i => i.id !== carrito_id);
+      return { items: result };
+  })},
   clearCart: () => set({ items: [] }),
   setCart: (items) => set({ items })
 }))
