@@ -1,43 +1,42 @@
 "use client"
 
-import { getSupabaseBrowserClient } from "@/lib/supabase/browser-client";
+import { useCartStore } from "@/lib/store/useCartStore";
+import priceFormat from "@/lib/utils/priceFormat";
 import Image from "next/image";
-import { useState } from "react";
 
-interface CarritoItem {
-    id: number;
-    usuario_id: string;
-    servicio: {
-    id: number;
-    nombre: string;
-    precio: string;
-    descripcion_corta: string;
-    imagen: {
-        url: string;
-    } | null;
-    }
+type CartItem = {
+    id: number,
+    usuario_id: string,
+    servicio_id: number,
+    precio: number,
+    nombre: string,
+    cantidad: number,
+    img_url: string,
+    desc?: string,
 }
 
+export default function Carrito() {
+    const items: CartItem[] = useCartStore((s) => s.items);
 
-export default function Carrito({ items }: { items: CarritoItem[] }) {
-    const [cartItems, setCartItems] = useState<CarritoItem[]>(items);
-    const supabase = getSupabaseBrowserClient();
+    const computedPrice: number = items.reduce((acc: number, item: CartItem) => {
+        return acc + (item.precio * item.cantidad);
+    }, 0)
 
     const handleRemoveFromCart = async (carritoId: number) => {
-    setCartItems((prev) => prev.filter((item) => item.id !== carritoId));
+        // setCartItems((prev) => prev.filter((item) => item.id !== carritoId));
 
-    const { error } = await supabase
-    .from("carrito")
-    .delete()
-    .eq("id", carritoId);
+    //     const { error } = await supabase
+    //     .from("carrito")
+    //     .delete()
+    //     .eq("id", carritoId);
 
-    if (error) {
-    console.error("Error al eliminar del carrito:", error);
+    //     if (error) {
+    //     console.error("Error al eliminar del carrito:", error);
 
-    setCartItems(items);
-    alert("No se pudo eliminar el servicio");
-    }
-};
+    //     setCartItems(items);
+    //     alert("No se pudo eliminar el servicio");
+    //     }
+    };
     
     return (
         <>
@@ -51,12 +50,12 @@ export default function Carrito({ items }: { items: CarritoItem[] }) {
 
                 {/* ITEMS */}
                     <div className="lg:col-span-2 space-y-6">
-                        {cartItems.length === 0 ? (
+                        {items.length === 0 ? (
                         <p className="text-center text-slate-500">
                             Tu carrito está vacío
                         </p>
                         ) : (
-                        cartItems.map((item) => (
+                        items.map((item) => (
                             <div
                             key={item.id}
                             className="flex flex-col md:flex-row gap-6 rounded-2xl
@@ -65,10 +64,10 @@ export default function Carrito({ items }: { items: CarritoItem[] }) {
                             >
                                 {/* Imagen */}
                                 <div className="relative w-full md:w-48 h-40 rounded-xl overflow-hidden">
-                                    {item.servicio.imagen?.url && (
+                                    {item.img_url && (
                                     <Image
-                                        src={item.servicio.imagen.url}
-                                        alt={item.servicio.nombre}
+                                        src={item.img_url}
+                                        alt={item.nombre}
                                         fill
                                         className="object-cover"
                                     />
@@ -79,13 +78,16 @@ export default function Carrito({ items }: { items: CarritoItem[] }) {
                                 <div className="flex-1 flex flex-col justify-between">
                                     <div>
                                     <p className="text-lg font-semibold text-white">
-                                        {item.servicio.nombre}
+                                        {item.nombre}
                                     </p>
                                     <p className="text-sm text-slate-400 mt-1">
-                                        {item.servicio.descripcion_corta}
+                                        {item.desc}
                                     </p>
                                     <p className="text-2xl font-bold text-[#c09028] pt-4">
-                                        ${item.servicio.precio}
+                                        {priceFormat(item.precio)}
+                                    </p>
+                                    <p className="text-md pt-2">
+                                        Cantidad: {item.cantidad}
                                     </p>
                                     </div>
 
@@ -112,22 +114,32 @@ export default function Carrito({ items }: { items: CarritoItem[] }) {
                         </p>
 
                         <div className="space-y-4 text-slate-300">
-                        <div className="flex justify-between">
-                            <span>Subtotal</span>
-                            <span className="font-medium">$100.000</span>
+                        {items.map(item => (
+                            <section key={`item-cart-${item.id}`} className="flex flex-row justify-between">
+                                <span className="flex flex-col gap-2">
+                                    <p>{item.nombre}</p>
+                                    <p>Cantidad</p>
+                                </span>
+                                <span>
+                                    <p>{priceFormat(item.precio)}</p>
+                                    <p className="text-end">{item.cantidad}</p>
+                                </span>
+                            </section>
+                        ))}
+                        <div>
                         </div>
 
                         <div className="flex justify-between border-t border-white/10 pt-4">
                             <span className="text-lg font-semibold text-white">Total</span>
-                            <span className="text-lg font-bold text-blue-400">$100.000</span>
+                            <span className="text-lg font-bold text-blue-400">{priceFormat(computedPrice)}</span>
                         </div>
                         </div>
 
                         <button
-                        className="mt-8 w-full rounded-xl
-                        bg-[#c09028] hover:bg-yellow-600
-                        py-3 font-semibold text-white
-                        transition cursor-pointer"
+                            className="mt-8 w-full rounded-xl
+                            bg-[#c09028] hover:bg-yellow-600
+                            py-3 font-semibold text-white
+                            transition cursor-pointer"
                         >
                         Continuar con la compra →
                         </button>

@@ -4,9 +4,11 @@ type CartItem = {
   id: number,
   usuario_id: string,
   servicio_id: number,
-  precio: string,
+  precio: number,
   nombre: string,
   cantidad: number,
+  img_url: string,
+  desc?: string,
 }
 
 type CartState = {

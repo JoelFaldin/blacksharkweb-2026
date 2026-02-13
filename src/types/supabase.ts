@@ -145,25 +145,25 @@ export type Database = {
           created_at: string
           descripcion_corta: string | null
           id: number
-          imagen: number | null
+          imagen: number
           nombre: string
-          precio: string
+          precio: number
         }
         Insert: {
           created_at?: string
           descripcion_corta?: string | null
           id?: number
-          imagen?: number | null
+          imagen: number
           nombre: string
-          precio: string
+          precio?: number
         }
         Update: {
           created_at?: string
           descripcion_corta?: string | null
           id?: number
-          imagen?: number | null
+          imagen?: number
           nombre?: string
-          precio?: string
+          precio?: number
         }
         Relationships: [
           {

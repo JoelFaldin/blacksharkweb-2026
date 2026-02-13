@@ -34,7 +34,7 @@ export default async function RootLayout({
 
   const { data: carritoData } = await supabase
     .from("carrito")
-    .select("id, usuario_id, servicio_id, servicios(precio, nombre), cantidad");
+    .select("id, usuario_id, servicio_id, servicios(precio, nombre, imagenes(url), descripcion_corta), cantidad");
   
   const flatten = carritoData?.map(item => ({
       id: item.id,
@@ -43,6 +43,8 @@ export default async function RootLayout({
       precio: item.servicios.precio,
       nombre: item.servicios.nombre,
       cantidad: item.cantidad,
+      img_url: item.servicios.imagenes.url,
+      desc: item.servicios.descripcion_corta || undefined,
     })
   ) ?? []
 
