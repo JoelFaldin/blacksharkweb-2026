@@ -24,12 +24,12 @@ const Nosotros = async () => {
     <div className="container mx-auto px-4 pt-32 pb-20">
       <h1 className="text-5xl font-bold text-center mb-10">
         Acerca de
-        <span className="text-(--secondary)"> BlackSharkStudios </span>
+        <span className="text-(--primary)"> BlackSharkStudios </span>
       </h1>
 
       <p className="max-w-xl text-lg text-center text-pretty mb-10 mx-auto">
         En
-        <span className="text-(--secondary)"> BlackSharkStudios </span>
+        <span className="text-(--primary)"> BlackSharkStudios </span>
         creamos sitios web modernos, rápidos y adaptados a lo que tu negocio necesita.
       </p>
 
@@ -66,7 +66,7 @@ const Nosotros = async () => {
                       member.description ? ` - ${member.description}` : ""
                     }
                   </p>
-                  <p>Contacto: <a className="text-(--secondary) hover:cursor-pointer">{member.contact}</a>
+                  <p>Contacto: <a className="text-(--primary) hover:cursor-pointer">{member.contact}</a>
                   </p>
                 </span>
               </div>

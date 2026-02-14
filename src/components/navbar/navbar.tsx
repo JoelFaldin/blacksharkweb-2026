@@ -3,10 +3,11 @@
 import { usePathname, useRouter } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
-import { getSupabaseBrowserClient } from "@/lib/supabase/browser-client";
+import { toast } from "sonner"
 
 import User from "../icons/User"
 import ShoppingCart from "../icons/ShoppingCart"
+import { getSupabaseBrowserClient } from "@/lib/supabase/browser-client";
 
 type NavbarProps = {
   isAuthenticated: boolean;
@@ -23,13 +24,18 @@ const Navbar = ({ isAuthenticated, userName }: NavbarProps) => {
   const supabase = getSupabaseBrowserClient();
 
   const handleLogout = async () => {
+    const loading = toast.loading("Cerrando sesión...");
+
     await supabase.auth.signOut();
+    toast.success("Sesión finalizada");
+    toast.dismiss(loading);
+
     router.refresh(); 
   };
 
 
   return (
-    <header className="grid grid-cols-3 items-center w-full backdrop-blur-md py-3 border-b border-b-(--primary)">
+    <header className="grid grid-cols-3 items-center w-full backdrop-blur-md py-3 border-b border-b-(--muted-foreground)">
       <Link href="/" className="flex flex-row justify-center items-center gap-x-1">
         <Image
           src="/images/bsw_logo_icon.webp"
@@ -46,10 +52,10 @@ const Navbar = ({ isAuthenticated, userName }: NavbarProps) => {
 
       <nav>
         <ul className="flex flex-row justify-center gap-x-8 font-semibold text-md">
-          <Link className={`${matchesPathname("/")} hover:text-(--secondary) transition-colors`} href="/">Inicio</Link>
-          <Link className={`${matchesPathname("/servicios")} hover:text-(--secondary) transition-colors`} href="/servicios">Servicios</Link>
-          <Link className={`${matchesPathname("/portafolio")} hover:text-(--secondary) transition-colors`} href="/portafolio">Portafolio</Link>
-          <Link className={`${matchesPathname("/nosotros")} hover:text-(--secondary) transition-colors`} href="/nosotros">Nosotros</Link>
+          <Link className={`${matchesPathname("/")} hover:text-(--primary) transition-colors`} href="/">Inicio</Link>
+          <Link className={`${matchesPathname("/servicios")} hover:text-(--primary) transition-colors`} href="/servicios">Servicios</Link>
+          <Link className={`${matchesPathname("/portafolio")} hover:text-(--primary) transition-colors`} href="/portafolio">Portafolio</Link>
+          <Link className={`${matchesPathname("/nosotros")} hover:text-(--primary) transition-colors`} href="/nosotros">Nosotros</Link>
         </ul>
       </nav>
 
@@ -59,21 +65,27 @@ const Navbar = ({ isAuthenticated, userName }: NavbarProps) => {
                 <>
                   <Link
                     href="/email-password"
-                    className="p-1 hover:bg-(--primary) transition-colors rounded"
+                    className="p-1 hover:bg-(--secondary) transition-colors rounded"
                   >
                     <User />
                   </Link>
 
+                  <Link
+                    href="/carrito"
+                    className="p-1 hover:bg-(--secondary) transition-colors rounded"
+                  >
+                    <ShoppingCart />
+                  </Link>
                 </>
               ) : (
                 <>
-                  <li className="px-3 py-1 rounded bg-(--primary) text-sm">
+                  <li className="px-3 py-1 rounded bg-(--secondary) text-sm">
                     {userName}
                   </li>
 
                   <button
                     onClick={handleLogout}
-                    className="px-3 py-1 rounded hover:bg-(--primary) transition-colors text-sm"
+                    className="px-3 py-1 rounded hover:bg-(--secondary) transition-colors text-sm cursor-pointer"
                   >
                     Cerrar Sesión
                   </button>

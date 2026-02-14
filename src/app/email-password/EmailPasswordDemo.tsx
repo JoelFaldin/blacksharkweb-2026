@@ -4,6 +4,7 @@ import { getSupabaseBrowserClient } from "@/lib/supabase/browser-client";
 import {User} from "@supabase/supabase-js";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 type EmailPasswordDemoProps = {
     user: User | null;
@@ -17,25 +18,26 @@ export default function EmailPasswordDemo ({user}: EmailPasswordDemoProps) {
     const [mode, setMode] = useState("signup");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [status, setStatus] = useState("");
     const supabase = getSupabaseBrowserClient();
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        setStatus("");
+
+        const loading = toast.loading(mode === "signup" ? "Creando cuenta..." : "Iniciando sesión...");
 
         if(mode == "signup") {
-            const {error, data} = await supabase.auth.signUp({
+            const { data, error } = await supabase.auth.signUp({
                 email,
                 password
             });
 
             if(error){
-                setStatus(error.message);
+              toast.dismiss(loading);
+              toast.error(error.message);
             } else {
-                setStatus("Revisa tu inbox para confirmar la nueva cuenta")
+              toast.dismiss(loading);
+              toast.success("Revisa tu inbox para confirmar la nueva cuenta");
             }
-            console.log({data});
         } else {
             const {error} = await supabase.auth.signInWithPassword({
                 email,
@@ -43,10 +45,14 @@ export default function EmailPasswordDemo ({user}: EmailPasswordDemoProps) {
             });
 
             if (error) {
-                setStatus(error.message);
+              toast.dismiss(loading);
+              toast.error(error.message);
             } else {
-                router.push("/");
-                router.refresh();
+              toast.dismiss(loading);
+              toast.success("¡Bienvenido!");
+
+              router.push("/");
+              router.refresh();
             }
         }
     }
@@ -54,7 +60,7 @@ export default function EmailPasswordDemo ({user}: EmailPasswordDemoProps) {
 
     return (
         <>
-         <form
+          <form
             className="relative mx-auto mt-16 w-full max-w-md overflow-hidden rounded-[32px] border border-blue-900 bg-gradient-to-br from-[#000000] via-[#10243c] to-[#0186ff] p-8 text-slate-100 shadow-[0_35px_90px_rgba(2,6,23,0.65)]"
             onSubmit={handleSubmit}
             >
@@ -125,11 +131,6 @@ export default function EmailPasswordDemo ({user}: EmailPasswordDemoProps) {
             >
               {mode === "signup" ? "Crear cuenta" : "Iniciar sesión"}
             </button>
-            {status && (
-              <p className="mt-4 text-sm text-slate-300" role="status" aria-live="polite">
-                {status}
-              </p>
-            )}
           </form>
         </>
     )

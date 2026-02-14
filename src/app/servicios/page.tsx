@@ -1,3 +1,7 @@
+import ContactForm from "@/components/home/ContactForm";
+import ServiceGrid from "@/components/services/ServiceGrid";
+import ServiceHero from "@/components/services/ServiceHero";
+import ServiceProcess from "@/components/services/ServiceProcess";
 import { createSupabaseServerClient } from "@/lib/supabase/server-client";
 import ServiceClient from "./ServiceClient";
 
@@ -25,11 +29,17 @@ const ServiciosPage = async () => {
   const servicios = serviciosData as unknown as ServicioInterface[];
 
   return (
-    <ServiceClient
-      servicios={servicios}
-      isAuthenticated={!!session}
-    />
-  );
-};
+    <>
+      <ServiceHero />
+      <ServiceGrid servicios={servicios} />
+      <ServiceProcess />
+      <ContactForm />
+      <ServiceClient
+        servicios={servicios}
+        isAuthenticated={!!session}
+      />
+    </>
+  )
+}
 
 export default ServiciosPage;
