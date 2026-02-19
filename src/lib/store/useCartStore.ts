@@ -1,6 +1,6 @@
 import { create } from "zustand"
 
-import { removeCartItem } from "@/app/actions/cart";
+import scheduleQuantitySync from "../utils/cartSync";
 
 type CartItem = {
   id: number,
@@ -23,21 +23,30 @@ type CartState = {
 
 export const useCartStore = create<CartState>((set, get) => ({
   items: [],
-  addItem: (item_id) => {
-    set((state) => ({
+  addItem: async (item_id) => {
+    let quantity = 0;
+
+    set((state) => {
+      const item = state.items.find(i => i.id === item_id);
+      quantity = item?.cantidad ?? 0;
+
+      return {
       items: state.items.map(item =>
         item.id === item_id
           ? { ...item, cantidad: item.cantidad + 1 }
           : item
       ),
-    }));
+    }});
     
-    // Función para guardar la cantidad en la db!|
+    await scheduleQuantitySync(item_id, quantity + 1)
   },
   removeItem: async (carrito_id) => {
     const { items } = get();
     const item = items.find(i => i.id === carrito_id);
-    const cantidad = item?.cantidad;
+
+    if (!item) return;
+
+    const cantidad = item.cantidad;
 
     if (cantidad === 1) {
       set((state) => {
@@ -45,7 +54,7 @@ export const useCartStore = create<CartState>((set, get) => ({
         return { items: result };
       })
 
-      // Función para guardar la cantidad en la db!|
+      await scheduleQuantitySync(carrito_id, 0);
     } else {
       set((state) => ({
         items: state.items.map(item =>
@@ -55,7 +64,7 @@ export const useCartStore = create<CartState>((set, get) => ({
         ),
       }));
 
-      // Función para guardar la cantidad en la db!|
+      await scheduleQuantitySync(carrito_id, cantidad - 1);
     }
   },
   clearCart: () => set({ items: [] }),
