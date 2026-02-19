@@ -43,10 +43,10 @@ const CartContent = () => {
     )
   } else {
     return (
-      <section className="bg-(--background) flex flex-row gap-12 py-20 mx-auto max-w-7xl px-6">
+      <section className="bg-(--background) flex flex-row gap-12 py-20 mx-auto w-fit px-6">
         <div className="flex flex-col gap-12">
           {items.map(item => (
-            <CartItem key={`cart-item-${item.servicio_id}`} item={item} />
+            <CartItem key={`cart-item-${item.id}-${item.servicio_id}`} item={item} />
           ))}
         </div>
         <CartSummary />

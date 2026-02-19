@@ -22,7 +22,7 @@ const CartSummary = () => {
   const total = subtotal + fee;
 
   return (
-    <section className="sticky top-24 border border-(--border) bg-(--card)">
+    <section className="sticky top-24 w-md border border-(--border) bg-(--card)">
       <div className="border-b border-(--border) p-6">
         <h2 className="text-xl font-bold text-(--foreground) md:text-2xl">
           Resumen del pedido
