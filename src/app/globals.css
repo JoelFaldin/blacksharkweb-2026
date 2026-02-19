@@ -11,6 +11,7 @@
   --foreground: #fafafa;
   --muted-foreground: #8f8f8f;
   --border: #262626;
+  --destructive: #EF4444;
 }
 
 @theme inline {
