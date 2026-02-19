@@ -5,16 +5,17 @@ import ShoppingCart from "../icons/ShoppingCart";
 import ArrowRight from "../icons/ArrowRight";
 import Button from "../Button";
 import CartItem from "./CartItem";
+import CartSummary from "./CartSummary";
 
 type CartItemType = {
-    id: number,
-    usuario_id: string,
-    servicio_id: number,
-    precio: number,
-    nombre: string,
-    cantidad: number,
-    img_url: string,
-    desc?: string,
+  id: number,
+  usuario_id: string,
+  servicio_id: number,
+  precio: number,
+  nombre: string,
+  cantidad: number,
+  img_url: string,
+  desc?: string,
 }
 
 const CartContent = () => {
@@ -47,9 +48,7 @@ const CartContent = () => {
           {items.map(item => (
             <CartItem key={`cart-item-${item.servicio_id}`} item={item} />
           ))}
-          <div>
-            
-          </div>
+          <CartSummary />
         </div>
       </section>
     )
