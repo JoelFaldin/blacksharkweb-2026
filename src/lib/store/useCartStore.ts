@@ -15,7 +15,7 @@ type CartItem = {
 
 type CartState = {
   items: CartItem[],
-  addItem: (item: CartItem) => void,
+  addItem: (item_id: number) => void,
   removeItem: (service_id: number) => void,
   clearCart: () => void,
   setCart: (items: CartItem[]) => void,
@@ -23,33 +23,41 @@ type CartState = {
 
 export const useCartStore = create<CartState>((set, get) => ({
   items: [],
-  addItem: (item) => set((state) => {
-    const existing = state.items.find(i => i.servicio_id === item.servicio_id);
-
-    if (existing) {
-      return {
-        items: state.items.map(i => 
-          i.servicio_id === item.servicio_id
-          ? { ...i, quantity: i.cantidad + item.cantidad }
-          : i
-        )
-      }
-    }
-
-    return { items: [...state.items, item] };
-  }),
+  addItem: (item_id) => {
+    set((state) => ({
+      items: state.items.map(item =>
+        item.id === item_id
+          ? { ...item, cantidad: item.cantidad + 1 }
+          : item
+      ),
+    }));
+    
+    // Función para guardar la cantidad en la db!|
+  },
   removeItem: async (carrito_id) => {
     const { items } = get();
     const item = items.find(i => i.id === carrito_id);
+    const cantidad = item?.cantidad;
 
-    if (item) {
-      await removeCartItem(carrito_id)
+    if (cantidad === 1) {
+      set((state) => {
+        const result = state.items.filter(i => i.id !== carrito_id);
+        return { items: result };
+      })
+
+      // Función para guardar la cantidad en la db!|
+    } else {
+      set((state) => ({
+        items: state.items.map(item =>
+          item.id === carrito_id
+            ? { ...item, cantidad: item.cantidad - 1 }
+            : item
+        ),
+      }));
+
+      // Función para guardar la cantidad en la db!|
     }
-
-    set((state) => {
-      const result = state.items.filter(i => i.id !== carrito_id);
-      return { items: result };
-  })},
+  },
   clearCart: () => set({ items: [] }),
   setCart: (items) => set({ items })
 }))

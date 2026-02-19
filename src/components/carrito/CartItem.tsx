@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import priceFormat from "@/lib/utils/priceFormat";
 import TrashIcon from "../icons/Trash";
+import CartQuantity from "./CartQuantity";
 
 type CartItem = {
     id: number,
@@ -39,6 +40,9 @@ const CartItem = ({ item }: CartItemInterface) => {
           </p>
         </div>
       </div>
+
+      <CartQuantity item_id={item.id} cantidad={item.cantidad} />
+
       <span className="block w-28 text-right">
         <p className="text-lg font-bold text-(--foreground)">
           {priceFormat(item.precio * item.cantidad)}
