@@ -9,6 +9,7 @@ import ShoppingCart from "../icons/ShoppingCart"
 import Send from "../icons/Send"
 import { useCartStore } from "@/lib/store/useCartStore"
 import { getSupabaseBrowserClient } from "@/lib/supabase/browser-client"
+import priceFormat from "@/lib/utils/priceFormat"
 
 interface ServiceTemplateInterface {
   id: number,
@@ -76,7 +77,7 @@ const ServiceTemplate = ({ id, precio, descripcion_corta, nombre, imagen, index 
             Precio
           </span>
           <span className="text-xl font-bold text-(--primary)">
-            {precio}
+            {priceFormat(parseInt(precio))}
           </span>
         </div>
 

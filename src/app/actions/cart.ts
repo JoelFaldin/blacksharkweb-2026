@@ -55,7 +55,7 @@ export async function removeCartItem(carrito_id: number) {
   revalidatePath("/carrito");
 }
 
-export async function updateItemQuantity(id: number, quantity: number) {
+export async function updateItemQuantity(carrito_id: number, quantity: number) {
   const supabase = await createSupabaseServerClient();
   const { data: { user } } = await supabase.auth.getUser();
 
@@ -63,7 +63,7 @@ export async function updateItemQuantity(id: number, quantity: number) {
     await supabase
       .from("carrito")
       .update({ cantidad: quantity })
-      .eq("id", id);
+      .eq("id", carrito_id);
   }
 
   revalidatePath("/carrito");

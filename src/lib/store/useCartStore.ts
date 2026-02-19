@@ -30,7 +30,7 @@ type NewCartItem = {
 
 type CartState = {
   items: CartItem[],
-  updateQuantity: (id: number, newQuantity: number) => void,
+  updateQuantity: (carrito_id: number, newQuantity: number) => void,
   addItem: (service_id: number, user_id: string) => void,
   removeItem: (service_id: number) => void,
   clearCart: () => void,
@@ -39,31 +39,31 @@ type CartState = {
 
 export const useCartStore = create<CartState>((set, get) => ({
   items: [],
-  updateQuantity: async (id, newQuantity) => {
+  updateQuantity: async (carrito_id, newQuantity) => {
     if (newQuantity === 0) {
       const { items } = get();
-      const item = items.find(i => i.id === id);
+      const item = items.find(i => i.id === carrito_id);
 
       if (!item) return;
 
       set((state) => {
-        const result = state.items.filter(i => i.id !== id);
+        const result = state.items.filter(i => i.id !== carrito_id);
         return { items: result };
       })
 
-      await scheduleQuantitySync(id, 0);
+      await scheduleQuantitySync(carrito_id, 0);
     } else {
       set((state) => {        
         return {
           items: state.items.map(item =>
-            item.id === id
+            item.id === carrito_id
               ? { ...item, cantidad: newQuantity }
               : item
           ),
         }
       });
 
-      await scheduleQuantitySync(id, newQuantity);
+      await scheduleQuantitySync(carrito_id, newQuantity);
     }
   },
   addItem: async (service_id, user_id) => {
