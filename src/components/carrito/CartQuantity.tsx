@@ -8,13 +8,12 @@ type CartQuantityProps = {
 }
 
 const CartQuantity = ({ item_id, cantidad }: CartQuantityProps) => {
-  const addItem = useCartStore(e => e.addItem);
-  const removeItem = useCartStore(e => e.removeItem);
+  const updateQuantity = useCartStore(e => e.updateQuantity);
 
   return (
     <section className="flex w-32 items-center justify-center gap-0">
       <button
-        onClick={() => removeItem(item_id)}
+        onClick={() => updateQuantity(item_id, cantidad - 1)}
         type="button"
         className="flex h-10 w-12 justify-center items-center border border-(--border) text-(--muted-foreground) transition-colors hover:border-(--primary) hover:text-(--primary) cursor-pointer">
         <Minus />
@@ -23,7 +22,7 @@ const CartQuantity = ({ item_id, cantidad }: CartQuantityProps) => {
         {cantidad}
       </div>
       <button
-        onClick={() => addItem(item_id)}
+        onClick={() => updateQuantity(item_id, cantidad + 1)}
         type="button"
         className="flex h-10 w-12 justify-center items-center border border-(--border) text-(--muted-foreground) transition-colors hover:border-(--primary) hover:text-(--primary) cursor-pointer">
         <Plus />

@@ -3,6 +3,7 @@ import Image from "next/image";
 import priceFormat from "@/lib/utils/priceFormat";
 import TrashIcon from "../icons/Trash";
 import CartQuantity from "./CartQuantity";
+import { useCartStore } from "@/lib/store/useCartStore";
 
 type CartItem = {
     id: number,
@@ -20,6 +21,18 @@ type CartItemInterface = {
 }
 
 const CartItem = ({ item }: CartItemInterface) => {
+  const removeItem = useCartStore(e => e.removeItem);
+
+  const handleRemoveItem = (id: number) => {
+    const confirm = window.confirm("¿Estas seguro de que quieres eliminar este servicio del carrito?");
+
+    if (confirm) {
+      removeItem(id);
+    } else {
+      return;
+    }
+  }
+
   return (
     <div className="group h-fit flex flex-col gap-6 border border-(--border) bg-(--card) p-4 transition-colors hover:border-(--primary)/30 md:flex-row md:items-center md:p-6">
       <div className="flex flex-1 gap-5 items-center">
@@ -48,9 +61,12 @@ const CartItem = ({ item }: CartItemInterface) => {
           {priceFormat(item.precio * item.cantidad)}
         </p>
       </span>
-      <span className="block w-12 text-right cursor-pointer text-(--muted-foreground) transition-colors hover:text-(--destructive)">
+      <button
+        onClick={() => handleRemoveItem(item.id)}
+        className="block w-12 text-right cursor-pointer text-(--muted-foreground) transition-colors hover:text-(--destructive)"
+      >
         <TrashIcon />
-      </span>
+      </button>
     </div>
   )
 }
