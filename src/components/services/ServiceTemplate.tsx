@@ -1,11 +1,18 @@
+"use client"
+
 import Image from "next/image"
+import { toast } from "sonner"
 
 import ArrowUpRight from "../icons/ArrowUpRight"
 import Button from "../Button"
 import ShoppingCart from "../icons/ShoppingCart"
 import Send from "../icons/Send"
+import { useCartStore } from "@/lib/store/useCartStore"
+import { getSupabaseBrowserClient } from "@/lib/supabase/browser-client"
+import priceFormat from "@/lib/utils/priceFormat"
 
 interface ServiceTemplateInterface {
+  id: number,
   precio: string,
   descripcion_corta: string,
   nombre: string,
@@ -15,7 +22,24 @@ interface ServiceTemplateInterface {
   index: number,
 }
 
-const ServiceTemplate = ({ precio, descripcion_corta, nombre, imagen, index }: ServiceTemplateInterface) => {
+const ServiceTemplate = ({ id, precio, descripcion_corta, nombre, imagen, index }: ServiceTemplateInterface) => {
+  const supabase = getSupabaseBrowserClient();
+  
+  const addItem = useCartStore(e => e.addItem);
+  
+  const handleAddItem = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+      alert("¡Debes iniciar sesión para agregar servicios al carrito!");
+      return;
+    }
+
+    addItem(id, user.id);
+
+    toast.success("¡Se ha agregado el servicio al carrito!");
+  }
+
   return (
     <div className="group relative flex flex-col border border-(--border) bg-(--background) transition-colors hover:border-(--primary)/40">
       {/* Index */}
@@ -53,15 +77,19 @@ const ServiceTemplate = ({ precio, descripcion_corta, nombre, imagen, index }: S
             Precio
           </span>
           <span className="text-xl font-bold text-(--primary)">
-            {precio}
+            {priceFormat(parseInt(precio))}
           </span>
         </div>
 
         <div className="flex items-center justify-center gap-4 pt-8">
-          <Button type="secondary" href="" className="flex flex-row items-center justify-center rounded-lg p-6 gap-x-4">
+          <button
+            type="button"
+            onClick={() => handleAddItem()}
+            className="flex flex-row items-center justify-center border border-(--border) p-6 gap-x-4 cursor-pointer"
+          >
             <ShoppingCart />
             <span>Añadir al carrito</span>
-          </Button>
+          </button>
           <Button type="primary" href="" className="flex flex-row items-center justify-center rounded-lg p-6 gap-x-4">
             <Send className="text-(--secondary)" />
             <span className="text-(--secondary)">Solicitar Servicio</span>

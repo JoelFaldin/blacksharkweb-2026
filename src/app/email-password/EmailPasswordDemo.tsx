@@ -1,10 +1,12 @@
 "use client";
 
-import { getSupabaseBrowserClient } from "@/lib/supabase/browser-client";
-import {User} from "@supabase/supabase-js";
+import { User } from "@supabase/supabase-js";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+
+import { getSupabaseBrowserClient } from "@/lib/supabase/browser-client";
+import { useAuthStore } from "@/lib/store/useAuthStore";
 
 type EmailPasswordDemoProps = {
     user: User | null;
@@ -13,12 +15,14 @@ type EmailPasswordDemoProps = {
 type Mode = "signup" | "signin";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default function EmailPasswordDemo ({user}: EmailPasswordDemoProps) {
+export default function EmailPasswordDemo ({ user }: EmailPasswordDemoProps) {
     const router = useRouter();
     const [mode, setMode] = useState("signup");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const supabase = getSupabaseBrowserClient();
+
+    const saveUser = useAuthStore((s) => s.setUser)
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -39,7 +43,7 @@ export default function EmailPasswordDemo ({user}: EmailPasswordDemoProps) {
               toast.success("Revisa tu inbox para confirmar la nueva cuenta");
             }
         } else {
-            const {error} = await supabase.auth.signInWithPassword({
+            const { data, error } = await supabase.auth.signInWithPassword({
                 email,
                 password,
             });
@@ -48,6 +52,11 @@ export default function EmailPasswordDemo ({user}: EmailPasswordDemoProps) {
               toast.dismiss(loading);
               toast.error(error.message);
             } else {
+              saveUser({
+                email: data.user.email!,
+                username: data.user.email?.split("@")[0],
+              })
+
               toast.dismiss(loading);
               toast.success("¡Bienvenido!");
 

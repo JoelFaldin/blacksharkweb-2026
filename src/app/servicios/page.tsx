@@ -3,7 +3,6 @@ import ServiceGrid from "@/components/services/ServiceGrid";
 import ServiceHero from "@/components/services/ServiceHero";
 import ServiceProcess from "@/components/services/ServiceProcess";
 import { createSupabaseServerClient } from "@/lib/supabase/server-client";
-import ServiceClient from "./ServiceClient";
 
 interface ServicioInterface {
   id: number;
@@ -22,10 +21,6 @@ const ServiciosPage = async () => {
     .from("servicios")
     .select(`id, precio, descripcion_corta, imagen:imagenes(url), nombre`);
 
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
   const servicios = serviciosData as unknown as ServicioInterface[];
 
   return (
@@ -34,10 +29,6 @@ const ServiciosPage = async () => {
       <ServiceGrid servicios={servicios} />
       <ServiceProcess />
       <ContactForm />
-      <ServiceClient
-        servicios={servicios}
-        isAuthenticated={!!session}
-      />
     </>
   )
 }
