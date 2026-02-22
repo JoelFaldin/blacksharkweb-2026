@@ -50,7 +50,7 @@ const Nosotros = async () => {
         <div className="grid grid-cols-1 gap-4">
           {
             team.map((member: TeamInterface) => (
-              <div key={`team-member-${member.name}`} className="bg-(--card)/5 flex flex-row gap-4 p-4 rounded-lg border border-white/30">
+              <div key={`team-member-${member.name}`} className="bg-(--card)/5 flex flex-row gap-4 p-4 rounded-lg border border-white/40">
                 <Image
                   alt="Imagen del integrante"
                   src={member.imagenes.url}
