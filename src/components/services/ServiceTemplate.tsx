@@ -8,7 +8,7 @@ import Button from "../Button"
 import ShoppingCart from "../icons/ShoppingCart"
 import Send from "../icons/Send"
 import { useCartStore } from "@/lib/store/useCartStore"
-import { getSupabaseBrowserClient } from "@/lib/supabase/browser-client"
+import { getSupabaseBrowserClient } from "@/lib/supabase/client"
 import priceFormat from "@/lib/utils/priceFormat"
 
 interface ServiceTemplateInterface {
@@ -28,14 +28,14 @@ const ServiceTemplate = ({ id, precio, descripcion_corta, nombre, imagen, index 
   const addItem = useCartStore(e => e.addItem);
   
   const handleAddItem = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
+    const { data } = await supabase.auth.getClaims();
 
-    if (!user) {
+    if (!data) {
       alert("¡Debes iniciar sesión para agregar servicios al carrito!");
       return;
     }
 
-    addItem(id, user.id);
+    addItem(id, data.claims.sub);
 
     toast.success("¡Se ha agregado el servicio al carrito!");
   }

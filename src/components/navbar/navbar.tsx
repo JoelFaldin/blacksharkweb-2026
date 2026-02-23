@@ -7,7 +7,7 @@ import { toast } from "sonner"
 
 import User from "../icons/User"
 import ShoppingCart from "../icons/ShoppingCart"
-import { getSupabaseBrowserClient } from "@/lib/supabase/browser-client";
+import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { useAuthStore } from "@/lib/store/useAuthStore"
 
 interface UserInterface {

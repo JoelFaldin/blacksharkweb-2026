@@ -1,4 +1,4 @@
-import { createSupabaseServerClient } from "@/lib/supabase/server-client"
+import { createSupabaseServerClient } from "@/lib/supabase/server"
 import Image from "next/image"
 
 interface TeamInterface {
