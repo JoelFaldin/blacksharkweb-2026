@@ -102,6 +102,35 @@ export type Database = {
         }
         Relationships: []
       }
+      marcas: {
+        Row: {
+          created_at: string
+          id: number
+          imagen: number
+          nombre: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          imagen: number
+          nombre: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          imagen?: number
+          nombre?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "marcas_imagen_fkey"
+            columns: ["imagen"]
+            isOneToOne: false
+            referencedRelation: "imagenes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       nosotros: {
         Row: {
           contact: string
