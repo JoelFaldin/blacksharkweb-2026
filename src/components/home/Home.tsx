@@ -13,7 +13,7 @@ const Home = () => {
           alt="Imagen de referencia BlackSharkStudios"
           fill
           className="object-cover opacity-30"
-          priority
+          loading="eager"
         />
         <div className="absolute inset-0 bg-(--background)/70" />
       </div>
@@ -25,7 +25,7 @@ const Home = () => {
           <span className="text-(--primary)"> impulsan </span>
           tu marca
         </h1>
-        <p className="max-w-2xl text-2xl text-center text-pretty mb-10 mx-auto">
+        <p className="max-w-2xl text-2xl text-(--muted-foreground) text-center text-pretty mb-10 mx-auto">
           Transformamos la imagen de tu marca para capturar la atención de tus clientes.
           Desde el concepto hasta la ejecución, traemos tus ideas a la realidad con calidad excelente.
         </p>
