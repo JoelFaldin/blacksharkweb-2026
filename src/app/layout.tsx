@@ -3,7 +3,7 @@ import { Toaster } from "sonner";
 
 import "./globals.css";
 import Navbar from "@/components/navbar/navbar";
-import { createSupabaseServerClient } from "@/lib/supabase/server-client";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 import Footer from "@/components/footer/footer";
 import AuthProvider from "@/providers/AuthProvider";
 import CartProvider from "@/providers/CartProvider";
@@ -25,12 +25,12 @@ export default async function RootLayout({
 
   const supabase = await createSupabaseServerClient();
 
-  const { data: { user }} = await supabase.auth.getUser();
+  const { data } = await supabase.auth.getClaims();
 
-  const userData = {
-    username: user?.user_metadata?.email.split("@")[0],
-    email: user?.user_metadata?.email,
-  }
+  const userData = data?.claims?.email ? {
+    username: data.claims.email.split("@")[0],
+    email: data.claims.email,
+  } : null;
 
   const { data: carritoData } = await supabase
     .from("carrito")

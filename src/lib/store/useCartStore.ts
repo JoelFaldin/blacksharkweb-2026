@@ -69,7 +69,6 @@ export const useCartStore = create<CartState>((set, get) => ({
   addItem: async (service_id, user_id) => {
     const { items } = get();
     const findItem = items.find(i => i.servicio_id === service_id);
-
     
     if (!findItem) {
       const res: NewCartItem[] | undefined = await addCartItem(service_id, user_id);
