@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
+import { Toaster } from "sonner";
+import localFont from 'next/font/local'
 
 import "./globals.css";
 import Navbar from "@/components/navbar/navbar";
-import { BackgroundEffect } from "@/components/background/BackgroundEffect";
-import { createSupabaseServerClient } from "@/lib/supabase/server-client";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
+import Footer from "@/components/footer/footer";
+import AuthProvider from "@/providers/AuthProvider";
+import CartProvider from "@/providers/CartProvider";
 import WhatsappButton from "@/components/WhatsappButton";
 
 export const metadata: Metadata = {
@@ -15,6 +19,11 @@ export const metadata: Metadata = {
     "Lleva el diseño de tu marca al siguiente nivel, revisa los servicios disponibles y transforma la imagen de tu empresa en BlackSharkWeb!",
 };
 
+const font = localFont({
+  src: '../../public/fonts/Satoshi-Variable.ttf',
+  display: 'swap',
+})
+
 export default async function RootLayout({
   children,
 }: {
@@ -23,30 +32,43 @@ export default async function RootLayout({
 
   const supabase = await createSupabaseServerClient();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { data } = await supabase.auth.getClaims();
 
-  const isAuthenticated = !!user;
+  const userData = data?.claims?.email ? {
+    username: data.claims.email.split("@")[0],
+    email: data.claims.email,
+  } : null;
 
-  const userName =
-    user?.user_metadata?.full_name ||
-    user?.email?.split("@")[0] ||
-    undefined;
+  const { data: carritoData } = await supabase
+    .from("carrito")
+    .select("id, usuario_id, servicio_id, servicios(precio, nombre, imagenes(url), descripcion_corta), cantidad")
+    .order("id", { ascending: true });
+  
+  const flatten = carritoData?.map(item => ({
+      id: item.id,
+      usuario_id: item.usuario_id,
+      servicio_id: item.servicio_id,
+      precio: item.servicios.precio,
+      nombre: item.servicios.nombre,
+      cantidad: item.cantidad,
+      img_url: item.servicios.imagenes.url,
+      desc: item.servicios.descripcion_corta || undefined,
+    })
+  ) ?? []
 
   return (
     <html lang="es">
-      <body>
-        <BackgroundEffect />
+      <body className={font.className}>
+        <AuthProvider initialUser={userData} />
+        <CartProvider initialCartItems={flatten} />
 
-        <Navbar
-          isAuthenticated={isAuthenticated}
-          userName={userName}
-        />
-
+        <Navbar />
         {children}
 
         <WhatsappButton />
+        <Footer />
+
+        <Toaster />
       </body>
     </html>
   );

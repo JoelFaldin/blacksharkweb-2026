@@ -1,53 +1,35 @@
+import { createSupabaseServerClient } from "@/lib/supabase/server"
 import Image from "next/image"
 
 interface TeamInterface {
-  image: string,
+  id: string,
   name: string,
   role: string,
-  description?: string,
   contact: string,
+  description?: string,
+  imagenes: {
+    url: string,
+  },
 }
 
-const team: TeamInterface[] = [
-  {
-    image: "/images/about/logotipo_blacksharkstudios.webp",
-    name: "Andrés",
-    role: "Diseñador",
-    description: "Dueño de la marca",
-    contact: "https://www.instagram.com/blackshark.studios/"
-    
-  },
-  {
-    image: "/images/about/carlos-pic.webp",
-    name: "Carlos",
-    role: "Desarrollador web",
-    contact: "https://github.com/carloscj20"
-  },
-  {
-    image: "/images/about/joel-pic.webp",
-    name: "Joel",
-    role: "Desarrollador web",
-    contact: "https://github.com/JoelFaldin"
-  },
-  {
-    image: "/images/about/samuel-pic.webp",
-    name: "Samuel",
-    role: "Desarrollador web",
-    contact: "https://github.com/SamuelSotomayor1"
-  },
-]
+const Nosotros = async () => {
+  const supabase = await createSupabaseServerClient();
+  const { data } = await supabase
+    .from("nosotros")
+    .select(`id, name, role, contact, description, imagenes("url")`);
 
-const Nosotros = () => {
+  const team: TeamInterface[] = data as unknown as TeamInterface[];
+
   return (
     <div className="container mx-auto px-4 pt-32 pb-20">
       <h1 className="text-5xl font-bold text-center mb-10">
         Acerca de
-        <span className="text-(--secondary)"> BlackSharkStudios </span>
+        <span className="text-(--primary)"> BlackSharkStudios </span>
       </h1>
 
       <p className="max-w-xl text-lg text-center text-pretty mb-10 mx-auto">
         En
-        <span className="text-(--secondary)"> BlackSharkStudios </span>
+        <span className="text-(--primary)"> BlackSharkStudios </span>
         creamos sitios web modernos, rápidos y adaptados a lo que tu negocio necesita.
       </p>
 
@@ -71,7 +53,7 @@ const Nosotros = () => {
               <div key={`team-member-${member.name}`} className="bg-(--card)/5 flex flex-row gap-4 p-4 rounded-lg border border-white/30">
                 <Image
                   alt="Imagen del integrante"
-                  src={member.image}
+                  src={member.imagenes.url}
                   width={100}
                   height={100}
                   className="rounded-full"
@@ -84,7 +66,7 @@ const Nosotros = () => {
                       member.description ? ` - ${member.description}` : ""
                     }
                   </p>
-                  <p>Contacto: <a className="text-(--secondary) hover:cursor-pointer">{member.contact}</a>
+                  <p>Contacto: <a className="text-(--primary) hover:cursor-pointer">{member.contact}</a>
                   </p>
                 </span>
               </div>

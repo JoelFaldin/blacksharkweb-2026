@@ -1,12 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #f8f8f8;
-  --muted-foreground: #8f8f8f;
+  --background: #0a0a0a;
+  --foreground: #fafafa;
+  --card: #121212;
 
-  --primary: #10243c;
-  --secondary: #0186ff;
+  --primary: #e8c468;
+  --secondary: #171717;
+  
+  --foreground: #fafafa;
+  --muted-foreground: #8f8f8f;
+  --border: #262626;
+  --destructive: #EF4444;
 }
 
 @theme inline {
@@ -21,25 +26,53 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    /* --background: #0a0a0a; */
     --foreground: #ededed;
     
-    --card: oklch(1 0 0);
-
     --muted: oklch(0.96 0 0);
     --muted-foreground: oklch(0.5 0 0);
   }
 }
 
-@font-face {
-  font-family: 'Satoshi';
-  src: url('/fonts/Satoshi/Satoshi-Variable.ttf') format('truetype');
-  font-weight: 100 900; 
-  font-style: normal;
-}
-
 body {
-  font-family: 'Satoshi', sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   background: var(--background);
   color: var(--foreground);
+}
+
+.brands-wrapper {
+  display: flex;
+  flex-shrink: 0;
+  min-width: 100%;
+  align-items: center;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 50s linear infinite;
+}
+
+@keyframes loop {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-loop {
+  animation: loop 18s linear infinite;
+}
+
+.animate-loop:hover {
+  animation-play-state: paused;
 }
