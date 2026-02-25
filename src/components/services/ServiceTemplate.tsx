@@ -28,6 +28,7 @@ const ServiceTemplate = ({ id, precio, descripcion_corta, nombre, imagen, index 
   
   const addItem = useCartStore(e => e.addItem);
   const whatsappLink = useContextStore(m => m.getLink);
+  const setMessage = useContextStore(m => m.setMessage);
   
   const handleAddItem = async () => {
     const { data } = await supabase.auth.getClaims();
@@ -40,6 +41,12 @@ const ServiceTemplate = ({ id, precio, descripcion_corta, nombre, imagen, index 
     addItem(id, data.claims.sub);
 
     toast.success("¡Se ha agregado el servicio al carrito!");
+  }
+
+  const handleOpenWhatsapp = () => {
+    setMessage(nombre);
+    
+    return whatsappLink();
   }
 
   return (
@@ -92,7 +99,7 @@ const ServiceTemplate = ({ id, precio, descripcion_corta, nombre, imagen, index 
             <ShoppingCart />
             <span>Añadir al carrito</span>
           </button>
-          <Button type="primary" href={whatsappLink()} className="flex flex-row items-center justify-center rounded-lg p-6 gap-x-4">
+          <Button type="primary" href={handleOpenWhatsapp()} className="flex flex-row items-center justify-center rounded-lg p-6 gap-x-4">
             <Send className="text-(--secondary)" />
             <span className="text-(--secondary)">Solicitar Servicio</span>
           </Button>

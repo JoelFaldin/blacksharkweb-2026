@@ -8,9 +8,13 @@ type ContextState = {
 }
 
 export const useContextStore = create<ContextState>((set, get) => ({
-  message: 'Hola! Quiero más información!',
-  setMessage: (msg) => set({ message: msg }),
-  resetMessage: () => set({ message: 'Hola! Quiero más información!' }),
+  message: '¡Hola! ¡Quiero más información!',
+  setMessage: (msg) => {
+    const newMessage = `¡Hola! Me interesa el servicio ${msg} y quisiera saber más detalles al respecto.`
+
+    return set({ message: newMessage })
+  },
+  resetMessage: () => set({ message: '¡Hola! ¡Quiero más información!' }),
   getLink: () => {
     const { message } = get();
 
