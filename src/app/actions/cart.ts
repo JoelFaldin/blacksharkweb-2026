@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 
-import { createSupabaseServerClient } from "@/lib/supabase/server-client"
+import { createSupabaseServerClient } from "@/lib/supabase/server"
 
 type NewCartItem = {
   id: number,
@@ -20,9 +20,9 @@ type NewCartItem = {
 
 export async function addCartItem(service_id: number, user_id: string) {
   const supabase = await createSupabaseServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const { data } = await supabase.auth.getClaims();
 
-  if (user) {
+  if (data?.claims) {
     const res = await supabase
       .from("carrito")
       .insert({
@@ -42,14 +42,14 @@ export async function addCartItem(service_id: number, user_id: string) {
 
 export async function removeCartItem(carrito_id: number) {
   const supabase = await createSupabaseServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const { data } = await supabase.auth.getClaims();
 
-  if (user) {
+  if (data?.claims) {
     await supabase
       .from("carrito")
       .delete()
       .eq("id", carrito_id)
-      .eq("usuario_id", user?.id);
+      .eq("usuario_id", data.claims.sub);
   }
 
   revalidatePath("/carrito");
@@ -57,9 +57,9 @@ export async function removeCartItem(carrito_id: number) {
 
 export async function updateItemQuantity(carrito_id: number, quantity: number) {
   const supabase = await createSupabaseServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const { data } = await supabase.auth.getClaims();
 
-  if (user) {
+  if (data) {
     await supabase
       .from("carrito")
       .update({ cantidad: quantity })

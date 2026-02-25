@@ -1,7 +1,7 @@
 import PortfolioHero from "@/components/portfolio/PortfolioHero";
 import PortfolioGallery from "@/components/portfolio/PortfolioGallery";
 import ContactForm from "@/components/home/ContactForm";
-import { createSupabaseServerClient } from "@/lib/supabase/server-client";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 interface GalleryInterface {
   id: number,

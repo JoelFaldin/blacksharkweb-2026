@@ -2,14 +2,17 @@
 
 import Image from "next/image"
 import { toast } from "sonner"
+import { useState } from "react"
 
 import ArrowUpRight from "../icons/ArrowUpRight"
 import Button from "../Button"
 import ShoppingCart from "../icons/ShoppingCart"
 import Send from "../icons/Send"
 import { useCartStore } from "@/lib/store/useCartStore"
-import { getSupabaseBrowserClient } from "@/lib/supabase/browser-client"
+import { getSupabaseBrowserClient } from "@/lib/supabase/client"
 import priceFormat from "@/lib/utils/priceFormat"
+import ServiceModal from "./ServiceModal"
+import { useContextStore } from "@/lib/store/useContextStore"
 
 interface ServiceTemplateInterface {
   id: number,
@@ -23,21 +26,38 @@ interface ServiceTemplateInterface {
 }
 
 const ServiceTemplate = ({ id, precio, descripcion_corta, nombre, imagen, index }: ServiceTemplateInterface) => {
+  const [isOpen, setIsOpen] = useState(false)
+
   const supabase = getSupabaseBrowserClient();
   
   const addItem = useCartStore(e => e.addItem);
+  const setCustomMessage = useContextStore(m => m.resetMessage);
   
   const handleAddItem = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
+    const { data } = await supabase.auth.getClaims();
 
-    if (!user) {
+    if (!data) {
       alert("¡Debes iniciar sesión para agregar servicios al carrito!");
       return;
     }
 
-    addItem(id, user.id);
+    addItem(id, data.claims.sub);
 
     toast.success("¡Se ha agregado el servicio al carrito!");
+  }
+
+  const handleModal = () => {
+    if (!isOpen) {
+      setIsOpen(true);
+      // Desactivar el scroll cuando se abre el modal:
+      document.body.classList.add('overflow-hidden');
+    } else {
+      setIsOpen(false);
+      // Reactivar el scroll cuando se cierra el modal:
+      document.body.classList.remove('overflow-hidden');
+    }
+
+    setCustomMessage();
   }
 
   return (
@@ -56,6 +76,8 @@ const ServiceTemplate = ({ id, precio, descripcion_corta, nombre, imagen, index 
           alt={`Servicio ${nombre}`}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-105"
+          loading="eager"
+          sizes="(max-width: 768px) 100vw, 33vw"
         />
       </div>
 
@@ -90,12 +112,21 @@ const ServiceTemplate = ({ id, precio, descripcion_corta, nombre, imagen, index 
             <ShoppingCart />
             <span>Añadir al carrito</span>
           </button>
-          <Button type="primary" href="" className="flex flex-row items-center justify-center rounded-lg p-6 gap-x-4">
+          <Button type="primary" onClick={handleModal} className="flex flex-row items-center justify-center rounded-lg p-6 gap-x-4 cursor-pointer">
             <Send className="text-(--secondary)" />
             <span className="text-(--secondary)">Solicitar Servicio</span>
           </Button>
         </div>
       </div>
+
+      <ServiceModal
+        nombre={nombre}
+        url={imagen?.url}
+        descripcion_corta={descripcion_corta}
+        precio={precio}
+        handleModal={handleModal}
+        isOpen={isOpen}
+      />
     </div>
   )
 }

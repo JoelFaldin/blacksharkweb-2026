@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
 import { Toaster } from "sonner";
+import localFont from 'next/font/local'
 
 import "./globals.css";
 import Navbar from "@/components/navbar/navbar";
-import { createSupabaseServerClient } from "@/lib/supabase/server-client";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 import Footer from "@/components/footer/footer";
 import AuthProvider from "@/providers/AuthProvider";
 import CartProvider from "@/providers/CartProvider";
+import WhatsappButton from "@/components/WhatsappButton";
+import MessageProvider from "@/providers/MessageProvider";
 
 export const metadata: Metadata = {
   title: {
@@ -17,6 +20,11 @@ export const metadata: Metadata = {
     "Lleva el diseño de tu marca al siguiente nivel, revisa los servicios disponibles y transforma la imagen de tu empresa en BlackSharkWeb!",
 };
 
+const font = localFont({
+  src: '../../public/fonts/Satoshi-Variable.ttf',
+  display: 'swap',
+})
+
 export default async function RootLayout({
   children,
 }: {
@@ -25,12 +33,12 @@ export default async function RootLayout({
 
   const supabase = await createSupabaseServerClient();
 
-  const { data: { user }} = await supabase.auth.getUser();
+  const { data } = await supabase.auth.getClaims();
 
-  const userData = {
-    username: user?.user_metadata?.email.split("@")[0],
-    email: user?.user_metadata?.email,
-  }
+  const userData = data?.claims?.email ? {
+    username: data.claims.email.split("@")[0],
+    email: data.claims.email,
+  } : null;
 
   const { data: carritoData } = await supabase
     .from("carrito")
@@ -51,12 +59,17 @@ export default async function RootLayout({
 
   return (
     <html lang="es">
-      <body>
+      <body className={font.className}>
         <AuthProvider initialUser={userData} />
         <CartProvider initialCartItems={flatten} />
+        <MessageProvider />
+
+        <div id="modal-root" />
 
         <Navbar />
         {children}
+
+        <WhatsappButton />
         <Footer />
 
         <Toaster />

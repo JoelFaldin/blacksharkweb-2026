@@ -1,21 +1,15 @@
 "use client";
 
-import { User } from "@supabase/supabase-js";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-import { getSupabaseBrowserClient } from "@/lib/supabase/browser-client";
+import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { useAuthStore } from "@/lib/store/useAuthStore";
-
-type EmailPasswordDemoProps = {
-    user: User | null;
-};
 
 type Mode = "signup" | "signin";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default function EmailPasswordDemo ({ user }: EmailPasswordDemoProps) {
+export default function EmailPasswordDemo () {
     const router = useRouter();
     const [mode, setMode] = useState("signup");
     const [email, setEmail] = useState("");
