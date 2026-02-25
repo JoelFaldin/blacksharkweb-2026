@@ -12,6 +12,7 @@ import { useCartStore } from "@/lib/store/useCartStore"
 import { getSupabaseBrowserClient } from "@/lib/supabase/client"
 import priceFormat from "@/lib/utils/priceFormat"
 import ServiceModal from "./ServiceModal"
+import { useContextStore } from "@/lib/store/useContextStore"
 
 interface ServiceTemplateInterface {
   id: number,
@@ -30,6 +31,7 @@ const ServiceTemplate = ({ id, precio, descripcion_corta, nombre, imagen, index 
   const supabase = getSupabaseBrowserClient();
   
   const addItem = useCartStore(e => e.addItem);
+  const setCustomMessage = useContextStore(m => m.resetMessage);
   
   const handleAddItem = async () => {
     const { data } = await supabase.auth.getClaims();
@@ -54,6 +56,8 @@ const ServiceTemplate = ({ id, precio, descripcion_corta, nombre, imagen, index 
       // Reactivar el scroll cuando se cierra el modal:
       document.body.classList.remove('overflow-hidden');
     }
+
+    setCustomMessage();
   }
 
   return (
