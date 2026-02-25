@@ -1,8 +1,8 @@
+import ContactForm from "@/components/home/ContactForm";
 import { NosotrosHero } from "@/components/nosotros/NosotrosHero";
 import { NosotrosHistory } from "@/components/nosotros/NosotrosHistory";
 import NosotrosTeam from "@/components/nosotros/NosotrosTeam";
 import { createSupabaseServerClient } from "@/lib/supabase/server-client"
-import Image from "next/image"
 
 export interface TeamInterface {
   id: string,
@@ -28,6 +28,7 @@ const Nosotros = async () => {
       <NosotrosHero/>
       <NosotrosHistory/>
       <NosotrosTeam team={team}/>
+      <ContactForm />
     </>
   )
 }
