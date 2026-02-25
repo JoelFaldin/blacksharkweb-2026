@@ -8,6 +8,8 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import Footer from "@/components/footer/footer";
 import AuthProvider from "@/providers/AuthProvider";
 import CartProvider from "@/providers/CartProvider";
+import WhatsappButton from "@/components/WhatsappButton";
+import MessageProvider from "@/providers/MessageProvider";
 
 export const metadata: Metadata = {
   title: {
@@ -60,9 +62,14 @@ export default async function RootLayout({
       <body className={font.className}>
         <AuthProvider initialUser={userData} />
         <CartProvider initialCartItems={flatten} />
+        <MessageProvider />
+
+        <div id="modal-root" />
 
         <Navbar />
         {children}
+
+        <WhatsappButton />
         <Footer />
 
         <Toaster />
