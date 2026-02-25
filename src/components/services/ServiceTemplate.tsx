@@ -10,6 +10,7 @@ import Send from "../icons/Send"
 import { useCartStore } from "@/lib/store/useCartStore"
 import { getSupabaseBrowserClient } from "@/lib/supabase/client"
 import priceFormat from "@/lib/utils/priceFormat"
+import { useContextStore } from "@/lib/store/useContextStore"
 
 interface ServiceTemplateInterface {
   id: number,
@@ -26,6 +27,7 @@ const ServiceTemplate = ({ id, precio, descripcion_corta, nombre, imagen, index 
   const supabase = getSupabaseBrowserClient();
   
   const addItem = useCartStore(e => e.addItem);
+  const whatsappLink = useContextStore(m => m.getLink);
   
   const handleAddItem = async () => {
     const { data } = await supabase.auth.getClaims();
@@ -90,7 +92,7 @@ const ServiceTemplate = ({ id, precio, descripcion_corta, nombre, imagen, index 
             <ShoppingCart />
             <span>Añadir al carrito</span>
           </button>
-          <Button type="primary" href="" className="flex flex-row items-center justify-center rounded-lg p-6 gap-x-4">
+          <Button type="primary" href={whatsappLink()} className="flex flex-row items-center justify-center rounded-lg p-6 gap-x-4">
             <Send className="text-(--secondary)" />
             <span className="text-(--secondary)">Solicitar Servicio</span>
           </Button>
