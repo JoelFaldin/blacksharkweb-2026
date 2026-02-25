@@ -3,6 +3,7 @@ import { create } from "zustand";
 type ContextState = {
   message: string,
   setMessage: (msg: string) => void,
+  setCustomMessage: (customMessage: string) => void,
   resetMessage: () => void,
   getLink: () => string,
 }
@@ -14,6 +15,7 @@ export const useContextStore = create<ContextState>((set, get) => ({
 
     return set({ message: newMessage })
   },
+  setCustomMessage: (customMessage) => set({ message: customMessage }),
   resetMessage: () => set({ message: '¡Hola! ¡Quiero más información!' }),
   getLink: () => {
     const { message } = get();

@@ -64,6 +64,8 @@ export default async function RootLayout({
         <CartProvider initialCartItems={flatten} />
         <MessageProvider />
 
+        <div id="modal-root" />
+
         <Navbar />
         {children}
 
