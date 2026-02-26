@@ -1,7 +1,7 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server"
-import Image from "next/image"
 
 import AddBrand from "./AddBrand";
+import BrandItem from "./BrandItem";
 
 interface MarcasInterface {
   id: number;
@@ -9,6 +9,7 @@ interface MarcasInterface {
   imagen: {
     url: string;
   } | null;
+  disponible: boolean;
 }
 
 const Brands = async () => {
@@ -16,7 +17,8 @@ const Brands = async () => {
 
   const { data } = await supabase
     .from("marcas")
-    .select(`id, nombre, imagen(url)`);
+    .select(`id, nombre, imagen(url), disponible`)
+    .order("id", { ascending: true });
 
   const brands = data as unknown as MarcasInterface[];
 
@@ -41,23 +43,7 @@ const Brands = async () => {
 
       <div className={`flex flex-wrap justify-center items-center py-10 max-w-5xl`}>
         {brands.map((brand, index) => (
-          <div
-            key={`brands-${brand.id}-${brand.nombre}`}
-            className={`group flex flex-col h-80 w-80 shrink-0 items-center justify-center bg-(--background) p-8 border-r border-(--border) last:border-r-0 transition-colors hover:bg-(--card)`}
-          >
-            <div className="relative aspect-square mb-4 w-full overflow-hidden">
-              <Image
-                src={brand.imagen?.url ?? ""}
-                alt={`Logo de empresa ${brand.nombre}`}
-                fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                className="object-cover"
-              />
-            </div>
-            <span className="relative text-xs uppercase tracking-[0.2em] text-(--muted-foreground)/60 transition-colors group-hover:text-(--foreground)">
-              {brand.nombre}
-            </span>
-          </div>
+          <BrandItem key={`brands-${brand.id}-${brand.nombre}`} {...brand} />
         ))}
 
       </div>

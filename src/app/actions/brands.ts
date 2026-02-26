@@ -31,3 +31,24 @@ export async function handleAddBrand(path: string, name: string) {
     revalidatePath("/carrito");
   }
 }
+
+export async function updateBrandVisibility(id: number) {
+  const supabase = await createSupabaseServerClient();
+  const brand = await supabase
+    .from('marcas')
+    .select('disponible')
+    .eq('id', id);
+  
+  if (!brand) return;
+
+  const res = await supabase
+    .from('marcas')
+    .update({
+        disponible: !brand.data?.[0].disponible
+    })
+    .eq('id', id);
+
+  console.log(res)
+
+  revalidatePath("/");
+}
