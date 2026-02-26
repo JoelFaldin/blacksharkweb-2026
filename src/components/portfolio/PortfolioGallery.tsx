@@ -72,8 +72,9 @@ const PortfolioGallery = ({ imagenes }: PortfolioGalleryInterface) => {
             <button
               key={`gallery-image-${item.id}`}
               type="button"
-              className="group mb-4 block w-full break-inside-avoid overflow-hidden border border-(--border) bg-(--card) text-left transition-colors"
+              className="group mb-4 block w-full break-inside-avoid border border-(--border) bg-(--card) text-left transition-colors"
             >
+              {/* Imagen */}
               <div className="relative overflow-hidden">
                 <Image
                   src={item.imagenes.url}
@@ -82,8 +83,12 @@ const PortfolioGallery = ({ imagenes }: PortfolioGalleryInterface) => {
                   height={500}
                   className="w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="flex items-center justify-between p-4">
-                  <span className="block">
+              </div>
+
+              {/* Descripción en capa separada */}
+              <div className="relative bg-(--card) p-4">
+                <div className="flex items-center justify-between">
+                  <span>
                     <h3 className="text-xl font-semibold text-(--foreground)">
                       {item.desc}
                     </h3>
@@ -91,6 +96,7 @@ const PortfolioGallery = ({ imagenes }: PortfolioGalleryInterface) => {
                       {item.cliente}
                     </p>
                   </span>
+
                   <p className="text-right text-sm font-medium uppercase tracking-[0.2em] text-(--primary)">
                     {item.imagenes.categoria}
                   </p>
