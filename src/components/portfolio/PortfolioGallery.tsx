@@ -36,7 +36,7 @@ const PortfolioGallery = ({ imagenes }: PortfolioGalleryInterface) => {
   return (
     <section className="bg-(--background) py-16 border-b border-(--border)">
        {/* Navbar de filtros */}
-      <div className="mx-auto max-w-7xl px-6 pb-20">
+      <div className="mx-auto max-w-7xl px-8 sm:px-12 lg:px-16">
         <div className="mb-12 flex flex-wrap items-center gap-3">
           {categorias.map((cat) => (
             <button
@@ -66,37 +66,39 @@ const PortfolioGallery = ({ imagenes }: PortfolioGalleryInterface) => {
       )}
 
       {/* Grid de imágenes */}
-      <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
-        {filteredItems.map(item => (
-          <button
-            key={`gallery-image-${item.id}`}
-            type="button"
-            className="group mb-4 block w-full break-inside-avoid overflow-hidden border border-(--border) bg-(--card) text-left transition-colors"
-          >
-            <div className="relative overflow-hidden">
-              <Image
-                src={item.imagenes.url}
-                alt={item.desc}
-                width={800}
-                height={600}
-                className="w-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              <div className="flex items-center justify-between p-4">
-                <span className="block">
-                  <h3 className="text-xl font-semibold text-(--foreground)">
-                    {item.desc}
-                  </h3>
-                  <p className="mt-1 text-md text-(--muted-foreground)">
-                    {item.cliente}
+      <div className="w-[90%] mx-auto">
+        <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
+          {filteredItems.map(item => (
+            <button
+              key={`gallery-image-${item.id}`}
+              type="button"
+              className="group mb-4 block w-full break-inside-avoid overflow-hidden border border-(--border) bg-(--card) text-left transition-colors"
+            >
+              <div className="relative overflow-hidden">
+                <Image
+                  src={item.imagenes.url}
+                  alt={item.desc}
+                  width={700}
+                  height={500}
+                  className="w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="flex items-center justify-between p-4">
+                  <span className="block">
+                    <h3 className="text-xl font-semibold text-(--foreground)">
+                      {item.desc}
+                    </h3>
+                    <p className="mt-1 text-md text-(--muted-foreground)">
+                      {item.cliente}
+                    </p>
+                  </span>
+                  <p className="text-right text-sm font-medium uppercase tracking-[0.2em] text-(--primary)">
+                    {item.imagenes.categoria}
                   </p>
-                </span>
-                <p className="text-right text-sm font-medium uppercase tracking-[0.2em] text-(--primary)">
-                  {item.imagenes.categoria}
-                </p>
+                </div>
               </div>
-            </div>
-          </button>
-        ))}
+            </button>
+          ))}
+        </div>
       </div>
     </section>
   )
