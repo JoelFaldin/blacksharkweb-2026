@@ -1,6 +1,8 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server"
 import Image from "next/image"
 
+import AddBrand from "./AddBrand";
+
 interface MarcasInterface {
   id: number;
   nombre: string;
@@ -40,15 +42,17 @@ const Brands = async () => {
       {/* Sección de las marcas */}
       {/* Estructurado con "flex" de forma momentánea */}
       {/* La idea es, cuando estén más empresas, cambiar la estructura a grid */}
-      <div className="py-10 flex flex-col items-center justify-center">
+      <div className="py-10 flex flex-col items-center justify-center gap-10">
         {brands.map(brand => (
           <div key={`brands-${brand.id}-${brand.nombre}`} className="flex flex-col items-center justify-center gap-y-2">
-            <Image src={"/images/once.webp"} alt={`Logo de empresa ${brand.nombre}`} width={223} height={223} />
+            <Image src={brand.imagen?.url ?? ""} alt={`Logo de empresa ${brand.nombre}`} width={223} height={223} />
             <span className="text-lg uppercase">
               {brand.nombre}
             </span>
           </div>
         ))}
+
+        <AddBrand />
       </div>
     </section>
   )
