@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Toaster } from "sonner";
+import localFont from 'next/font/local'
 
 import "./globals.css";
 import Navbar from "@/components/navbar/navbar";
@@ -7,6 +8,8 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import Footer from "@/components/footer/footer";
 import AuthProvider from "@/providers/AuthProvider";
 import CartProvider from "@/providers/CartProvider";
+import WhatsappButton from "@/components/WhatsappButton";
+import MessageProvider from "@/providers/MessageProvider";
 
 export const metadata: Metadata = {
   title: {
@@ -16,6 +19,11 @@ export const metadata: Metadata = {
   description:
     "Lleva el diseño de tu marca al siguiente nivel, revisa los servicios disponibles y transforma la imagen de tu empresa en BlackSharkWeb!",
 };
+
+const font = localFont({
+  src: '../../public/fonts/Satoshi-Variable.ttf',
+  display: 'swap',
+})
 
 export default async function RootLayout({
   children,
@@ -51,12 +59,17 @@ export default async function RootLayout({
 
   return (
     <html lang="es">
-      <body>
+      <body className={font.className}>
         <AuthProvider initialUser={userData} />
         <CartProvider initialCartItems={flatten} />
+        <MessageProvider />
+
+        <div id="modal-root" />
 
         <Navbar />
         {children}
+
+        <WhatsappButton />
         <Footer />
 
         <Toaster />

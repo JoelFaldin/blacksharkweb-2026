@@ -45,8 +45,8 @@ const Navbar = () => {
         <Image
           src="/images/bsw_logo_icon.webp"
           alt="Logo de la empresa"
-          width={100}
-          height={100}
+          width={97}
+          height={85}
         />
         <p className="font-semibold text-xl tracking-tight">
           <span>Black</span>
