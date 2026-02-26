@@ -39,19 +39,29 @@ const Brands = async () => {
         Marcas locales
       </h3>
 
-      {/* Sección de las marcas */}
-      {/* Estructurado con "flex" de forma momentánea */}
-      {/* La idea es, cuando estén más empresas, cambiar la estructura a grid */}
-      <div className="py-10 flex flex-col items-center justify-center gap-10">
-        {brands.map(brand => (
-          <div key={`brands-${brand.id}-${brand.nombre}`} className="flex flex-col items-center justify-center gap-y-2">
-            <Image src={brand.imagen?.url ?? ""} alt={`Logo de empresa ${brand.nombre}`} width={223} height={223} />
-            <span className="text-lg uppercase">
+      <div className={`flex flex-wrap justify-center items-center py-10 max-w-5xl`}>
+        {brands.map((brand, index) => (
+          <div
+            key={`brands-${brand.id}-${brand.nombre}`}
+            className={`group flex flex-col h-80 w-80 shrink-0 items-center justify-center bg-(--background) p-8 border-r border-(--border) last:border-r-0 transition-colors hover:bg-(--card)`}
+          >
+            <div className="relative aspect-square mb-4 w-full overflow-hidden">
+              <Image
+                src={brand.imagen?.url ?? ""}
+                alt={`Logo de empresa ${brand.nombre}`}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                className="object-cover"
+              />
+            </div>
+            <span className="relative text-xs uppercase tracking-[0.2em] text-(--muted-foreground)/60 transition-colors group-hover:text-(--foreground)">
               {brand.nombre}
             </span>
           </div>
         ))}
 
+      </div>
+      <div className="mt-12">
         <AddBrand />
       </div>
     </section>

@@ -191,7 +191,7 @@ const AddBrand = () => {
     )
   } else {
     return (
-      <button type="button" onClick={handleModal} className="group flex flex-col p-5 justify-center items-center gap-2 cursor-pointer hover:bg-(--border) transition-colors">
+      <button type="button" onClick={handleModal} className="group max-h-80 max-w-80 flex flex-col p-5 justify-center items-center gap-2 cursor-pointer hover:bg-(--border) transition-colors">
         <span className="border-2 border-(--muted-foreground) border-dashed rounded-full p-4 group-hover:border-(--primary) transition-colors">
           <Plus
             className="text-(--muted-foreground) group-hover:text-(--primary) transition-colors"
