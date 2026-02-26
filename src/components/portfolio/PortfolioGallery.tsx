@@ -35,7 +35,7 @@ const PortfolioGallery = ({ imagenes }: PortfolioGalleryInterface) => {
 
   return (
     <section className="bg-(--background) py-16 border-b border-(--border)">
-       {/* 🔹 Navbar de filtros */}
+       {/* Navbar de filtros */}
       <div className="mx-auto max-w-7xl px-6 pb-20">
         <div className="mb-12 flex flex-wrap items-center gap-3">
           {categorias.map((cat) => (
