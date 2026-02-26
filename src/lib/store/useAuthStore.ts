@@ -3,6 +3,7 @@ import { create } from "zustand";
 type User = {
   email: string,
   username?: string,
+  role: string,
 }
 
 type AuthState = {
@@ -13,6 +14,6 @@ type AuthState = {
 
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
-  setUser: (user) => set({ user }),
+  setUser: (user: User | null) => set({ user }),
   clearUser: () => set({ user: null }),
 }))

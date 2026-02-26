@@ -7,6 +7,7 @@ import { useAuthStore } from "@/lib/store/useAuthStore";
 interface UserData {
   username: string,
   email: string,
+  role: string,
 }
 
 type Props = {
@@ -21,6 +22,7 @@ export default function AuthProvider({ initialUser }: Props) {
       setUser({
         username: initialUser.username,
         email: initialUser.email,
+        role: initialUser.role,
       })
     }
   }, [initialUser, setUser]);

@@ -13,6 +13,7 @@ import { useAuthStore } from "@/lib/store/useAuthStore"
 interface UserInterface {
   username?: string,
   email: string,
+  role: string,
 }
 
 const Navbar = () => {
