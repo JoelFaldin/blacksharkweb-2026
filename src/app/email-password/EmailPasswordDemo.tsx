@@ -7,6 +7,8 @@ import { jwtDecode, JwtPayload } from "jwt-decode";
 
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { useAuthStore } from "@/lib/store/useAuthStore";
+import EmailIcon from "@/components/icons/Email";
+import PasswordIcon from "@/components/icons/Password";
 
 type Mode = "signup" | "signin";
 
@@ -74,7 +76,7 @@ export default function EmailPasswordDemo () {
     return (
         <>
           <form
-            className="relative mx-auto w-full bg-(--card) max-w-lg overflow-hidden rounded-[32px] border border-(--primary) px-10 py-12 text-slate-100"
+            className="relative mx-auto w-full bg-(--card) max-w-xl overflow-hidden rounded-[32px] border border-(--primary) px-10 py-12 text-slate-100"
             onSubmit={handleSubmit}
           >
             <div
@@ -87,7 +89,7 @@ export default function EmailPasswordDemo () {
             />
 
             {/* Header */}
-            <div className="flex flex-wrap items-start justify-between gap-6">
+            <div className="flex items-start justify-between gap-6">
               <div className="space-y-2">
                 <p className="text-xs uppercase tracking-[0.2em] text-(--foreground)">
                   Credenciales
@@ -97,20 +99,20 @@ export default function EmailPasswordDemo () {
                 </h3>
               </div>
 
-              <div className="mb-8 flex w-fit items-center rounded-full border border-(--border) bg-(--secondary) p-1">
+              <div className="mb-8 flex items-center rounded-full border border-(--border) bg-(--secondary) p-1 justify-between">
                 {(["signup", "signin"] as Mode[]).map((option) => (
                   <button
                     key={option}
                     type="button"
                     aria-pressed={mode === option}
                     onClick={() => setMode(option)}
-                    className={`rounded-full px-4 py-1.5 transition ${
+                    className={`rounded-full px-4 py-1.5 transition  ${
                       mode === option
                         ? "bg-(--primary) text-(--secondary) shadow-md font-semibold"
                         : "text-(--foreground)"
                     }`}
                   >
-                    {option === "signup" ? "Sign up" : "Sign in"}
+                    {option === "signup" ? "Registrarse" : "Iniciar sesión"}
                   </button>
                 ))}
               </div>
@@ -120,27 +122,37 @@ export default function EmailPasswordDemo () {
             <div className="mt-10 space-y-6">
               <label className="block text-sm font-medium text-(--foreground)">
                 Email
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                  required
-                  className="mt-3 w-full rounded-xl border border-(--border) bg-black px-4 py-3 text-sm text-white placeholder:text-white/70 transition-colors duration-200 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-                  placeholder="you@email.com"
-                />
+                <div className="relative mt-3">
+                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-white/50">
+                    <EmailIcon className="h-5 w-5" />
+                  </div>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                    required
+                    className="w-full rounded-xl border border-(--border) bg-black pl-12 pr-4 py-3 text-sm text-white placeholder:text-white/70 transition-colors duration-200 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                    placeholder="you@email.com"
+                  />
+                </div>
               </label>
 
               <label className="block text-sm font-medium text-(--foreground)">
                 Contraseña
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(event) => setPassword(event.target.value)}
-                  required
-                  minLength={6}
-                  className="mt-3 w-full rounded-xl border border-(--border) bg-black px-4 py-3 text-sm text-white placeholder:text-white/70 transition-colors duration-200 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-                  placeholder="Al menos 6 caracteres"
-                />
+                <div className="relative mt-3">
+                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-white/50">
+                    <PasswordIcon className="h-5 w-5" />
+                  </div>
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(event) => setPassword(event.target.value)}
+                    required
+                    minLength={6}
+                    className="w-full rounded-xl border border-(--border) bg-black pl-12 pr-4 py-3 text-sm text-white placeholder:text-white/70 transition-colors duration-200 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                    placeholder="Al menos 6 caracteres"
+                  />
+                </div>
               </label>
             </div>
 
