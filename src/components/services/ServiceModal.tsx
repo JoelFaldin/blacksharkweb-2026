@@ -1,3 +1,5 @@
+"use client"
+
 import Image from "next/image";
 
 import Button from "../Button"
@@ -6,6 +8,7 @@ import Alert from "../icons/Alert"
 import ArrowRight from "../icons/ArrowRight"
 import { useContextStore } from "@/lib/store/useContextStore"
 import priceFormat from "@/lib/utils/priceFormat"
+import { useState } from "react";
 
 type ServiceModalType = {
   nombre: string,
@@ -19,18 +22,16 @@ type ServiceModalType = {
 const ServiceModal = ({ nombre, url, descripcion_corta, precio, handleModal, isOpen }: ServiceModalType) => {
   const whatsappLink = useContextStore(m => m.getLink);
   const message = useContextStore(m => m.message);
-  const setMessage = useContextStore(m => m.setMessage);
-  const setCustomMessage = useContextStore(m => m.setCustomMessage);
 
+  const [msg, setMsg] = useState(message + ` Me interesa el servicio ${nombre.toLowerCase()} de BlackSharkStudios`)
 
-  const handleOpenWhatsapp = () => {
-    setMessage(nombre);
-    
-    return whatsappLink();
+  const handleLink = () => {
+    const newLink = whatsappLink(msg);
+    window.open(newLink, "_blank");
   }
 
   return (
-          <Modal isOpen={isOpen} onClose={handleModal}>
+      <Modal isOpen={isOpen} onClose={handleModal}>
         <section className="relative w-full max-w-2xl border border-(--primary)/50 bg-(--card) shadow-2xl">
           <div className="relative aspect-[16/7] w-full overflow-hidden">
             <Image
@@ -61,8 +62,8 @@ const ServiceModal = ({ nombre, url, descripcion_corta, precio, handleModal, isO
               <input
                 id="custom-message"
                 className="border border-white rounded-md px-2 py-1 focus:outline-none focus:border-(--primary)"
-                value={message}
-                onChange={e => setCustomMessage(e.target.value)}
+                value={`${msg}`}
+                onChange={e => setMsg(e.target.value)}
               />
             </span>
 
@@ -75,7 +76,7 @@ const ServiceModal = ({ nombre, url, descripcion_corta, precio, handleModal, isO
               <Button type="secondary" onClick={handleModal} className="group p-6 cursor-pointer">
                 <span className="text-(--foreground) text-lg font-bold">Volver</span>
               </Button>
-              <Button type="primary" onClick={handleOpenWhatsapp} className="group py-6 px-4 cursor-pointer flex flex-row items-center gap-2">
+              <Button type="primary" onClick={handleLink} className="group py-6 px-4 cursor-pointer flex flex-row items-center gap-2">
                 <span className="text-(--secondary) text-lg font-bold">Continuar</span>
                 <ArrowRight className="text-black group-hover:translate-x-1 transition-transform" />
               </Button>
