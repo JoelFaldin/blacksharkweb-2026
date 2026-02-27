@@ -74,58 +74,63 @@ export default function EmailPasswordDemo () {
     return (
         <>
           <form
-            className="relative mx-auto mt-16 w-full max-w-md overflow-hidden rounded-[32px] border border-blue-500 bg-gradient-to-br from-[#000000] via-[#10243c] to-[#0186ff] p-8 text-slate-100 shadow-[0_35px_90px_rgba(2,6,23,0.65)]"
+            className="relative mx-auto w-full bg-(--card) max-w-lg overflow-hidden rounded-[32px] border border-(--primary) px-10 py-12 text-slate-100"
             onSubmit={handleSubmit}
-            >
+          >
             <div
-              className="pointer-events-none absolute -left-4 -top-4 -z-10 h-20 w-28 rounded-full bg-[radial-gradient(circle,_rgba(16,185,129,0.25),_transparent)] blur-lg"
+              className="pointer-events-none absolute -left-4 -top-4 -z-10 h-20 w-28 rounded-full blur-lg"
               aria-hidden="true"
             />
             <div
-              className="pointer-events-none absolute -bottom-10 right-2 -z-10 h-28 w-40 rounded-full bg-[linear-gradient(140deg,_rgba(45,212,191,0.32),_rgba(59,130,246,0.12))] blur-xl"
+              className="pointer-events-none absolute -bottom-10 right-2 -z-10 h-28 w-40 rounded-full blur-xl"
               aria-hidden="true"
             />
-            <div className="absolute inset-x-8 top-6 flex items-center justify-between text-[11px] font-semibold uppercase tracking-[0.3em] text-blue-300/80">
-            </div>
-            <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
-              <div>
-                <p className="text-xs uppercase tracking-[0.2em] text-white">
+
+            {/* Header */}
+            <div className="flex flex-wrap items-start justify-between gap-6">
+              <div className="space-y-2">
+                <p className="text-xs uppercase tracking-[0.2em] text-(--foreground)">
                   Credenciales
                 </p>
-                <h3 className="text-xl font-semibold text-white">
+                <h3 className="text-2xl font-semibold text-(--foreground)">
                   {mode === "signup" ? "Crea una cuenta" : "Bienvenido"}
                 </h3>
               </div>
-              <div className="flex rounded-full border border-white/10 bg-white/[0.07] p-1 text-xs font-semibold text-slate-300">
+
+              <div className="mb-8 flex w-fit items-center rounded-full border border-(--border) bg-(--secondary) p-1">
                 {(["signup", "signin"] as Mode[]).map((option) => (
                   <button
                     key={option}
                     type="button"
                     aria-pressed={mode === option}
                     onClick={() => setMode(option)}
-                    className={`rounded-full px-4 py-1 transition ${mode === option
-                      ? "bg-[#001b33] text-white shadow shadow-black"
-                      : "text-slate-400"
-                      }`}
+                    className={`rounded-full px-4 py-1.5 transition ${
+                      mode === option
+                        ? "bg-(--primary) text-(--secondary) shadow-md font-semibold"
+                        : "text-(--foreground)"
+                    }`}
                   >
                     {option === "signup" ? "Sign up" : "Sign in"}
                   </button>
                 ))}
               </div>
             </div>
-            <div className="mt-6 space-y-4">
-              <label className="block text-sm font-medium text-slate-200">
+
+            {/* Inputs */}
+            <div className="mt-10 space-y-6">
+              <label className="block text-sm font-medium text-(--foreground)">
                 Email
                 <input
                   type="email"
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
                   required
-                  className="mt-2 w-full rounded-2xl border border-white/10 bg-[#001b33] px-3 py-2.5 text-base text-white placeholder-slate-500 shadow-inner shadow-black/30 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/30"
+                  className="mt-3 w-full rounded-xl border border-(--border) bg-black px-4 py-3 text-sm text-white placeholder:text-white/70 transition-colors duration-200 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                   placeholder="you@email.com"
                 />
               </label>
-              <label className="block text-sm font-medium text-slate-200">
+
+              <label className="block text-sm font-medium text-(--foreground)">
                 Contraseña
                 <input
                   type="password"
@@ -133,17 +138,23 @@ export default function EmailPasswordDemo () {
                   onChange={(event) => setPassword(event.target.value)}
                   required
                   minLength={6}
-                  className="mt-2 w-full rounded-2xl border border-white/10 bg-[#001b33] px-3 py-2.5 text-base text-white placeholder-slate-500 shadow-inner shadow-black/30 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/30"
+                  className="mt-3 w-full rounded-xl border border-(--border) bg-black px-4 py-3 text-sm text-white placeholder:text-white/70 transition-colors duration-200 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                   placeholder="Al menos 6 caracteres"
                 />
               </label>
             </div>
-            <button
-              type="submit"
-              className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-[#2477BF] px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-emerald-900/30 transition hover:bg-blue-900 disabled:cursor-not-allowed disabled:bg-emerald-900/40 cursor-pointer"
-            >
-              {mode === "signup" ? "Crear cuenta" : "Iniciar sesión"}
-            </button>
+
+            {/* Botón */}
+            <div className="mt-10">
+              <button
+                type="submit"
+                className="group relative w-full overflow-hidden rounded-xl bg-(--primary) py-3.5 text-sm font-semibold text-(--foreground) shadow-lg shadow-primary/20 transition-all duration-200 hover:shadow-xl hover:shadow-(--primary)/80 hover:brightness-110 active:scale-[0.98] cursor-pointer"
+              >
+                <span className="relative z-10 text-(--background)">
+                  {mode === "signup" ? "Crear cuenta" : "Iniciar sesión"}
+                </span>
+              </button>
+            </div>
           </form>
         </>
     )
