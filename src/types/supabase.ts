@@ -102,6 +102,38 @@ export type Database = {
         }
         Relationships: []
       }
+      marcas: {
+        Row: {
+          created_at: string
+          disponible: boolean
+          id: number
+          imagen: number
+          nombre: string
+        }
+        Insert: {
+          created_at?: string
+          disponible?: boolean
+          id?: number
+          imagen: number
+          nombre: string
+        }
+        Update: {
+          created_at?: string
+          disponible?: boolean
+          id?: number
+          imagen?: number
+          nombre?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "marcas_imagen_fkey"
+            columns: ["imagen"]
+            isOneToOne: false
+            referencedRelation: "imagenes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       nosotros: {
         Row: {
           contact: string
@@ -140,6 +172,24 @@ export type Database = {
           },
         ]
       }
+      role_permissions: {
+        Row: {
+          id: number
+          permission: Database["public"]["Enums"]["app_permission"]
+          role: Database["public"]["Enums"]["app_role"]
+        }
+        Insert: {
+          id?: number
+          permission: Database["public"]["Enums"]["app_permission"]
+          role: Database["public"]["Enums"]["app_role"]
+        }
+        Update: {
+          id?: number
+          permission?: Database["public"]["Enums"]["app_permission"]
+          role?: Database["public"]["Enums"]["app_role"]
+        }
+        Relationships: []
+      }
       servicios: {
         Row: {
           created_at: string
@@ -175,15 +225,34 @@ export type Database = {
           },
         ]
       }
+      user_roles: {
+        Row: {
+          id: number
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: number
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: number
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      custom_access_token_hook: { Args: { event: Json }; Returns: Json }
     }
     Enums: {
-      [_ in never]: never
+      app_permission: "marcas.delete" | "marcas.add"
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -310,6 +379,9 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_permission: ["marcas.delete", "marcas.add"],
+      app_role: ["admin", "user"],
+    },
   },
 } as const

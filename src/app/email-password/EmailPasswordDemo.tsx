@@ -3,11 +3,18 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { jwtDecode, JwtPayload } from "jwt-decode";
 
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { useAuthStore } from "@/lib/store/useAuthStore";
 
 type Mode = "signup" | "signin";
+
+interface CustomJwtPayload extends JwtPayload {
+  app_metadata: {
+    role: string,
+  }
+}
 
 export default function EmailPasswordDemo () {
     const router = useRouter();
@@ -46,9 +53,12 @@ export default function EmailPasswordDemo () {
               toast.dismiss(loading);
               toast.error(error.message);
             } else {
+              const jwt = jwtDecode<CustomJwtPayload>(data.session.access_token);
+
               saveUser({
                 email: data.user.email!,
                 username: data.user.email?.split("@")[0],
+                role: jwt.app_metadata.role || "user"
               })
 
               toast.dismiss(loading);
