@@ -53,10 +53,11 @@ export function NosotrosHistory () {
                     {/* Studio image */}
                     <div className="relative aspect-[4/5] text-(--primary) overflow-hidden">
                         <Image
-                        src="/images/history.jpg"
-                        alt="BlackSharkStudios creative workspace"
-                        fill
-                        className="object-cover"
+                            src="/images/history.jpg"
+                            alt="BlackSharkStudios creative workspace"
+                            fill
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                            className="object-cover"
                         />
                         {/* Gold corner accent */}
                         <div className="absolute bottom-0 right-0 h-24 w-24 border-b-2 border-r-2 border-primary" />

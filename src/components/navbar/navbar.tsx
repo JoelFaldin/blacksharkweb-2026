@@ -41,7 +41,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className="grid grid-cols-3 items-center w-full backdrop-blur-md py-3 border-b border-b-(--muted-foreground)">
+    <header className="grid grid-cols-3 items-center w-full backdrop-blur-md py-3 border-b border-b-(--border)">
       <Link href="/" className="flex flex-row justify-center items-center gap-x-1">
         <Image
           src="/images/bsw_logo_icon.webp"
