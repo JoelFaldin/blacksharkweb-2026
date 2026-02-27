@@ -74,7 +74,7 @@ export default function EmailPasswordDemo () {
     return (
         <>
           <form
-            className="relative mx-auto mt-16 w-full max-w-md overflow-hidden rounded-[32px] border border-blue-900 bg-gradient-to-br from-[#000000] via-[#10243c] to-[#0186ff] p-8 text-slate-100 shadow-[0_35px_90px_rgba(2,6,23,0.65)]"
+            className="relative mx-auto mt-16 w-full max-w-md overflow-hidden rounded-[32px] border border-blue-500 bg-gradient-to-br from-[#000000] via-[#10243c] to-[#0186ff] p-8 text-slate-100 shadow-[0_35px_90px_rgba(2,6,23,0.65)]"
             onSubmit={handleSubmit}
             >
             <div
