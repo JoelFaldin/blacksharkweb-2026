@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { jwtDecode, JwtPayload } from "jwt-decode";
+import { loginSchema } from "@/lib/validations/auth.schema";
 
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { useAuthStore } from "@/lib/store/useAuthStore";
@@ -30,21 +31,43 @@ export default function EmailPasswordDemo () {
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
+        const validation = loginSchema.safeParse({ email, password });
+
+        if (!validation.success) {
+          const firstError = validation.error.issues[0].message;
+          toast.error(firstError);
+          return;
+        }
+
         const loading = toast.loading(mode === "signup" ? "Creando cuenta..." : "Iniciando sesión...");
 
-        if(mode == "signup") {
-            const { data, error } = await supabase.auth.signUp({
-                email,
-                password
+        if (mode === "signup") {
+          const { data: signInData, error: signInError } =
+            await supabase.auth.signInWithPassword({
+              email,
+              password,
             });
 
-            if(error){
-              toast.dismiss(loading);
-              toast.error(error.message);
-            } else {
-              toast.dismiss(loading);
-              toast.success("Revisa tu inbox para confirmar la nueva cuenta");
-            }
+          if (!signInError) {
+            toast.dismiss(loading);
+            toast.error("Este correo ya está registrado. Intenta iniciar sesión.");
+            setMode("signin");
+            return;
+          }
+
+          const { data, error } = await supabase.auth.signUp({
+            email,
+            password,
+          });
+
+          toast.dismiss(loading);
+
+          if (error) {
+            toast.error(error.message);
+            return;
+          }
+
+          toast.success("Revisa tu inbox para confirmar la nueva cuenta");
         } else {
             const { data, error } = await supabase.auth.signInWithPassword({
                 email,
@@ -106,7 +129,7 @@ export default function EmailPasswordDemo () {
                     type="button"
                     aria-pressed={mode === option}
                     onClick={() => setMode(option)}
-                    className={`rounded-full px-4 py-1.5 transition  ${
+                    className={`rounded-full px-4 py-1.5 transition cursor-pointer  ${
                       mode === option
                         ? "bg-(--primary) text-(--secondary) shadow-md font-semibold"
                         : "text-(--foreground)"
