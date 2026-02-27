@@ -38,6 +38,7 @@ export default async function RootLayout({
   const userData = data?.claims?.email ? {
     username: data.claims.email.split("@")[0],
     email: data.claims.email,
+    role: data.claims.app_metadata?.role || "user"
   } : null;
 
   const { data: carritoData } = await supabase
