@@ -10,6 +10,7 @@ import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { useAuthStore } from "@/lib/store/useAuthStore";
 import EmailIcon from "@/components/icons/Email";
 import PasswordIcon from "@/components/icons/Password";
+import Link from "next/link";
 
 type Mode = "signup" | "signin";
 
@@ -179,8 +180,19 @@ export default function EmailPasswordDemo () {
               </label>
             </div>
 
+            {mode === "signin" && (
+              <div className="text-right mt-8">
+                <Link href="/recuperar-contrasena"
+                      type="button"
+                      className="text-sm text-(--primary) hover:text-(--primary)/80 transition-colors cursor-pointer"
+                >
+                    {"¿Olvidaste tu contraseña?"}
+                </Link>
+              </div>
+            )}
+
             {/* Botón */}
-            <div className="mt-10">
+            <div className="mt-8">
               <button
                 type="submit"
                 className="group relative w-full overflow-hidden rounded-xl bg-(--primary) py-3.5 text-sm font-semibold text-(--foreground) shadow-lg shadow-primary/20 transition-all duration-200 hover:shadow-xl hover:shadow-(--primary)/80 hover:brightness-110 active:scale-[0.98] cursor-pointer"
