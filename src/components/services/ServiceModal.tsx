@@ -59,7 +59,7 @@ const ServiceModal = ({ nombre, url, descripcion_corta, precio, handleModal, isO
 
             <span className="flex flex-col gap-1 mb-2">
               <label htmlFor="custom-message">Cambiar mensaje:</label>
-              <input
+              <textarea
                 id="custom-message"
                 className="border border-white rounded-md px-2 py-1 focus:outline-none focus:border-(--primary)"
                 value={`${msg}`}

@@ -14,7 +14,7 @@ const ContactForm = () => {
         Cuéntanos tu idea y trabajemos juntos para que tu marca crezca con estrategia, identidad y estilo.
       </p>
 
-      <span className="flex flex-row gap-8 py-10">
+      <span className="flex sm:flex-row flex-col gap-8 py-10">
         <Button type="primary" href="/nosotros" className="flex flex-row items-center justify-center gap-x-2 bg-(--primary) hover:bg-(--primary)/80 p-6 rounded-lg border border-white/30">
           <span className="text-(--secondary) text-2xl font-bold ">
             Contáctanos
