@@ -82,7 +82,7 @@ export default function RecuperarContrasenaLogic () {
                 className="group relative w-full overflow-hidden rounded-xl bg-(--primary) py-3.5 text-sm font-semibold text-(--foreground) shadow-lg shadow-primary/20 transition-all duration-200 hover:shadow-xl hover:shadow-(--primary)/80 hover:brightness-110 active:scale-[0.98] cursor-pointer"
                 >
                 <span className="relative z-10 text-(--background)">
-                    Enviar enlace de recuperación
+                    Enviar enlace
                 </span>
                 </button>
             </div>
