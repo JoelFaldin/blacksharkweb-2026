@@ -1,4 +1,4 @@
-import EmailPasswordDemo from "./EmailPasswordDemo";
+import EmailPasswordDemo from "./EmailPassword";
 
 export default async function EmailPasswordPage() {
   return (

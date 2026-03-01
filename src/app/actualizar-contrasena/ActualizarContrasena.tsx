@@ -20,7 +20,7 @@ export default function ActualizarContrasena () {
 
         if (!data.session) {
             toast.error("Enlace inválido o expirado");
-            router.push("/email-password");
+            router.push("/login");
         } else {
             setLoading(false);
         }
@@ -58,7 +58,7 @@ export default function ActualizarContrasena () {
             toast.success("Contraseña actualizada correctamente");
 
             await supabase.auth.signOut();
-            router.push("/email-password");
+            router.push("/login");
         }
     }
 

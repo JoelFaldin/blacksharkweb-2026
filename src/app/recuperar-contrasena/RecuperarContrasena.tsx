@@ -90,7 +90,7 @@ export default function RecuperarContrasenaLogic () {
             {/* Volver */}
             <div className="mt-8 text-center">
                 <Link
-                href="/email-password"
+                href="/login"
                 className="text-sm text-(--primary) hover:text-(--primary)/80 transition-colors"
                 >
                 Volver al inicio de sesión
