@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion"
 
 const categorias = [
   "Todo",
@@ -35,8 +36,8 @@ const PortfolioGallery = ({ imagenes }: PortfolioGalleryInterface) => {
 
   return (
     <section className="bg-(--background) py-16 border-b border-(--border)">
-       {/* 🔹 Navbar de filtros */}
-      <div className="mx-auto max-w-7xl px-6 pb-20">
+       {/* Navbar de filtros */}
+      <div className="mx-auto max-w-7xl px-8 sm:px-12 lg:px-16">
         <div className="mb-12 flex flex-wrap items-center gap-3">
           {categorias.map((cat) => (
             <button
@@ -66,37 +67,56 @@ const PortfolioGallery = ({ imagenes }: PortfolioGalleryInterface) => {
       )}
 
       {/* Grid de imágenes */}
-      <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
-        {filteredItems.map(item => (
-          <button
-            key={`gallery-image-${item.id}`}
-            type="button"
-            className="group mb-4 block w-full break-inside-avoid overflow-hidden border border-(--border) bg-(--card) text-left transition-colors"
-          >
-            <div className="relative overflow-hidden">
-              <Image
-                src={item.imagenes.url}
-                alt={item.desc}
-                width={800}
-                height={600}
-                className="w-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              <div className="flex items-center justify-between p-4">
-                <span className="block">
-                  <h3 className="text-xl font-semibold text-(--foreground)">
-                    {item.desc}
-                  </h3>
-                  <p className="mt-1 text-md text-(--muted-foreground)">
-                    {item.cliente}
-                  </p>
-                </span>
-                <p className="text-right text-sm font-medium uppercase tracking-[0.2em] text-(--primary)">
-                  {item.imagenes.categoria}
-                </p>
-              </div>
-            </div>
-          </button>
-        ))}
+     <div className="w-[90%] mx-auto">
+        <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
+          <AnimatePresence mode="popLayout">
+            {filteredItems.map((item) => (
+              <motion.div
+                key={item.id}
+                layout
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.3 }}
+                className="mb-4 break-inside-avoid"
+              >
+                <button
+                  type="button"
+                  className="group block w-full border border-(--border) bg-(--card) text-left transition-colors"
+                >
+                  {/* Imagen */}
+                  <div className="relative overflow-hidden">
+                    <Image
+                      src={item.imagenes.url}
+                      alt={item.desc}
+                      width={700}
+                      height={500}
+                      className="w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+
+                  {/* Descripción */}
+                  <div className="relative bg-(--card) p-4">
+                    <div className="flex items-center justify-between">
+                      <span>
+                        <h3 className="text-xl font-semibold text-(--foreground)">
+                          {item.desc}
+                        </h3>
+                        <p className="mt-1 text-md text-(--muted-foreground)">
+                          {item.cliente}
+                        </p>
+                      </span>
+
+                      <p className="text-right text-sm font-medium uppercase tracking-[0.2em] text-(--primary)">
+                        {item.imagenes.categoria}
+                      </p>
+                    </div>
+                  </div>
+                </button>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
       </div>
     </section>
   )
