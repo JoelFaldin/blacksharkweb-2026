@@ -6,6 +6,8 @@ import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
 import { updatePasswordSchema } from "@/lib/validations/auth.schema";
 import PasswordIcon from "@/components/icons/Password";
+import EyeOpen from "@/components/icons/EyeOpen";
+import EyeClose from "@/components/icons/EyeOpen";
 
 export default function ActualizarContrasena () {
     const supabase = getSupabaseBrowserClient();
@@ -13,6 +15,8 @@ export default function ActualizarContrasena () {
     const [loading, setLoading] = useState(true);
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     useEffect(() => {
         const checkSession = async () => {
@@ -86,40 +90,70 @@ export default function ActualizarContrasena () {
       {/* Inputs */}
       <div className="mt-10 space-y-6">
         {/* Nueva contraseña */}
-        <label className="block text-sm font-medium text-(--foreground)">
-          Nueva contraseña
-          <div className="relative mt-3">
-            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-white/50">
-              <PasswordIcon className="h-5 w-5" />
-            </div>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              title="Ingresa tu contraseña"
-              required
-              className="w-full rounded-xl border border-(--border) bg-black pl-12 pr-4 py-3 text-sm text-white placeholder:text-white/70 transition-colors duration-200 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-              placeholder="Mínimo 6 caracteres"
-            />
+      <label className="block text-sm font-medium text-(--foreground)">
+        Nueva contraseña
+        <div className="relative mt-3">
+          
+          <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-white/50">
+            <PasswordIcon className="h-5 w-5" />
           </div>
-        </label>
+
+          <input
+            type={showPassword ? "text" : "password"}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            title="Ingresa tu contraseña"
+            required
+            placeholder="Mínimo 6 caracteres"
+            className="w-full rounded-xl border border-(--border) bg-black pl-12 pr-12 py-3 text-sm text-white placeholder:text-white/70 transition-colors duration-200 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+          />
+
+          <button
+            type="button"
+            onClick={() => setShowPassword(prev => !prev)}
+            className="absolute inset-y-0 right-0 flex items-center pr-4 text-white/50 hover:text-white transition-colors"
+          >
+            {showPassword ? (
+              <EyeOpen className="h-5 w-5" />
+            ) : (
+              <EyeClose className="h-5 w-5" />
+            )}
+          </button>
+
+        </div>
+      </label>
 
         {/* Confirmar contraseña */}
-        <label className="block text-sm font-medium text-(--foreground)">
+       <label className="block text-sm font-medium text-(--foreground)">
           Confirmar contraseña
           <div className="relative mt-3">
+            
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-white/50">
               <PasswordIcon className="h-5 w-5" />
             </div>
+
             <input
-              type="password"
+              type={showConfirmPassword ? "text" : "password"}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               title="Repite tu contraseña"
               required
-              className="w-full rounded-xl border border-(--border) bg-black pl-12 pr-4 py-3 text-sm text-white placeholder:text-white/70 transition-colors duration-200 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               placeholder="Repite tu contraseña"
+              className="w-full rounded-xl border border-(--border) bg-black pl-12 pr-12 py-3 text-sm text-white placeholder:text-white/70 transition-colors duration-200 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
             />
+
+            <button
+              type="button"
+              onClick={() => setShowConfirmPassword(prev => !prev)}
+              className="absolute inset-y-0 right-0 flex items-center pr-4 text-white/50 hover:text-white transition-colors"
+            >
+              {showConfirmPassword ? (
+                <EyeOpen className="h-5 w-5" />
+              ) : (
+                <EyeClose className="h-5 w-5" />
+              )}
+            </button>
+
           </div>
         </label>
       </div>

@@ -1,10 +1,10 @@
-type EyeCloseType = {
+type EyeOpenType = {
   width?: number;
   height?: number;
   className?: string;
 };
 
-const EyeClose = ({ className }: EyeCloseType) => {
+const EyeOpen = ({ className }: EyeOpenType) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -25,4 +25,4 @@ const EyeClose = ({ className }: EyeCloseType) => {
   );
 };
 
-export default EyeClose;
+export default EyeOpen;
