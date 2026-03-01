@@ -91,7 +91,7 @@ const Navbar = () => {
               ) : (
                 <>
                   <Link
-                    href="/email-password"
+                    href="/login"
                     className="p-1 hover:bg-(--secondary) transition-colors rounded"
                   >
                     <User />

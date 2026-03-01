@@ -7,7 +7,7 @@ interface Props {
 
 const NosotrosTeam = ({ team }: Props) => {
   return (
-    <section className="bborder-b border-(--border) bg-card py-24 md:py-32">
+    <section className="border-b border-(--border) bg-card py-24 md:py-32">
       <div className="mx-auto px-6">
 
         {/* Section header */}
