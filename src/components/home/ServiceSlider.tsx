@@ -12,8 +12,8 @@ const ServiceSlider = () => {
   // La animación se encuentra en src/app/globals.css
   return (
     <section className="border-y border-(--border) bg-(--card) py-5 overflow-hidden">
-      <div className="relative flex w-full overflow-hidden">
-        <div className="animate-loop flex">
+      <div className="relative flex overflow-hidden">
+        <div className="animate-loop flex w-max gap-0">
           {/* Primer set */}
           <div className="flex shrink-0">
             {services.map((service, i) => (
@@ -39,7 +39,7 @@ const ServiceSlider = () => {
                 </span>
               </div>
             ))}
-          </div>
+          </div>          
         </div>
       </div>
     </section>
