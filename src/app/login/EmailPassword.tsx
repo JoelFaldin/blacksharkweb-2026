@@ -11,6 +11,8 @@ import { useAuthStore } from "@/lib/store/useAuthStore";
 import EmailIcon from "@/components/icons/Email";
 import PasswordIcon from "@/components/icons/Password";
 import Link from "next/link";
+import EyeClose from "@/components/icons/EyeClose";
+import EyeOpen from "@/components/icons/EyeOpen";
 
 type Mode = "signup" | "signin";
 
@@ -25,6 +27,7 @@ export default function EmailPasswordDemo () {
     const [mode, setMode] = useState("signup");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
     const supabase = getSupabaseBrowserClient();
 
     const saveUser = useAuthStore((s) => s.setUser)
@@ -154,9 +157,14 @@ export default function EmailPasswordDemo () {
                     type="email"
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
+                    title="Ejemplo: usuario@correo.com"
                     required
                     className="w-full rounded-xl border border-(--border) bg-black pl-12 pr-4 py-3 text-sm text-white placeholder:text-white/70 transition-colors duration-200 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-                    placeholder="you@email.com"
+                     placeholder={
+                      mode === "signup"
+                        ? "tu@email.com"
+                        : "Ingresa tu email"
+                      }
                   />
                 </div>
               </label>
@@ -164,18 +172,33 @@ export default function EmailPasswordDemo () {
               <label className="block text-sm font-medium text-(--foreground)">
                 Contraseña
                 <div className="relative mt-3">
+                  
+                  {/* Icono izquierdo */}
                   <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-white/50">
                     <PasswordIcon className="h-5 w-5" />
                   </div>
+
+                  {/* Input */}
                   <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
+                    title="Ingresa tu contraseña"
                     required
                     minLength={6}
-                    className="w-full rounded-xl border border-(--border) bg-black pl-12 pr-4 py-3 text-sm text-white placeholder:text-white/70 transition-colors duration-200 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                     placeholder="Al menos 6 caracteres"
+                    className="w-full rounded-xl border border-(--border) bg-black pl-12 pr-12 py-3 text-sm text-white placeholder:text-white/70 transition-colors duration-200 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                   />
+
+                  {/* Icono derecho (toggle) */}
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute inset-y-0 right-0 flex items-center pr-4 text-white/50 hover:text-white transition-colors"
+                  >
+                    {showPassword ? <EyeOpen className="h-5 w-5" /> : <EyeClose className="h-5 w-5" />}
+                  </button>
+
                 </div>
               </label>
             </div>

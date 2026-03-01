@@ -96,6 +96,7 @@ export default function ActualizarContrasena () {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              title="Ingresa tu contraseña"
               required
               className="w-full rounded-xl border border-(--border) bg-black pl-12 pr-4 py-3 text-sm text-white placeholder:text-white/70 transition-colors duration-200 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               placeholder="Mínimo 6 caracteres"
@@ -114,6 +115,7 @@ export default function ActualizarContrasena () {
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
+              title="Repite tu contraseña"
               required
               className="w-full rounded-xl border border-(--border) bg-black pl-12 pr-4 py-3 text-sm text-white placeholder:text-white/70 transition-colors duration-200 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               placeholder="Repite tu contraseña"

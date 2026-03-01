@@ -67,6 +67,7 @@ export default function RecuperarContrasenaLogic () {
                     type="email"
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
+                    title="Ejemplo: usuario@correo.com"
                     required
                     className="w-full rounded-xl border border-(--border) bg-black pl-12 pr-4 py-3 text-sm text-white placeholder:text-white/70 transition-colors duration-200 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                     placeholder="you@email.com"
