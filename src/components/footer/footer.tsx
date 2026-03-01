@@ -23,7 +23,7 @@ const Footer = () => {
         <section className="flex flex-row items-center gap-x-8">
           {links.map(link => (
             <Link key={`footer-link-${link.href}`} href={link.href}>
-              <span className="text-2xl hover:text-(--primary) text-(--muted-foreground) transition-colors">
+              <span className="text-lg hover:text-(--primary) text-(--muted-foreground) transition-colors">
                 {link.name}
               </span>
             </Link>
