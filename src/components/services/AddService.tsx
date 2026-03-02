@@ -84,6 +84,8 @@ const AddService = () => {
       toast.dismiss(loading);
       toast.success("¡Se han guardado con éxito los datos del servicio!")
     }
+
+    handleModal();
   }
 
   if (showModal) {

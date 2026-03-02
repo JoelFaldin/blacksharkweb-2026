@@ -1,9 +1,10 @@
 "use server"
 
-import { createSupabaseServerClient } from "@/lib/supabase/server"
-import { uploadOptimizedImage } from "./upload";
 import { createClient } from "@supabase/supabase-js";
 import { revalidatePath } from "next/cache";
+
+import { createSupabaseServerClient } from "@/lib/supabase/server"
+import { uploadOptimizedImage } from "./upload";
 
 export async function handleService(file: File, name: string, desc: string, price: number) {
   const optimizedBuffer = await uploadOptimizedImage(file);

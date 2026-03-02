@@ -29,7 +29,7 @@ const BrandItem = ({ id, nombre, imagen, disponible }: BrandItemProps) => {
   
   return (
     <div
-      className={`group flex flex-col h-80 w-80 shrink-0 items-center justify-center bg-(--background) p-2 border-r border-(--border) last:border-r-0 transition-colors hover:bg-(--card)`}
+      className={`group flex flex-col h-80 w-80 shrink-0 items-center justify-center bg-(--background) p-2 last:border-r-0 transition-colors hover:bg-(--card)`}
     >
       <div className="relative aspect-square mb-4 w-full overflow-hidden">
         {user?.role === "admin" && disponible ? (

@@ -78,6 +78,8 @@ const AddBrand = () => {
       toast.dismiss(loading);
       toast.success("¡Se han guardado con éxito los datos de la marca!");
     }
+
+    handleModal();
   }
 
   if (isOpen) {
