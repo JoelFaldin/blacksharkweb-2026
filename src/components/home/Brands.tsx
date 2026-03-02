@@ -41,7 +41,7 @@ const Brands = async () => {
         Marcas locales
       </h3>
 
-      <div className={`flex flex-wrap justify-center items-center py-10 max-w-5xl`}>
+      <div className={`flex flex-wrap justify-center items-center gap-2 my-10 max-w-5xl`}>
         {brands.map((brand, index) => (
           <BrandItem key={`brands-${brand.id}-${brand.nombre}`} {...brand} />
         ))}

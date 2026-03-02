@@ -1,12 +1,12 @@
 "use server"
 
-import { revalidatePath } from "next/cache";
 import { createClient } from "@supabase/supabase-js";
+import { revalidatePath } from "next/cache";
 
 import { createSupabaseServerClient } from "@/lib/supabase/server"
 import { uploadOptimizedImage } from "./upload";
 
-export async function handleBrand(file: File, name: string) {
+export async function handleService(file: File, name: string, desc: string, price: number) {
   const optimizedBuffer = await uploadOptimizedImage(file);
 
   if ('error' in optimizedBuffer) {
@@ -18,19 +18,19 @@ export async function handleBrand(file: File, name: string) {
     process.env.NEXT_PUBLIC_SUPABASE_ROLE_KEY!,
   )
 
-  const brandName = `${file.name.replace(/\.[^/.]+$/, "")}.webp`
+  const serviceName = `${file.name.replace(/\.[^/.]+$/, "")}.webp`
   const { data, error } = await supabaseAdmin.storage.from('images')
-    .upload(`marcas/${brandName}`, optimizedBuffer, {
+    .upload(`servicios/${serviceName}`, optimizedBuffer, {
       contentType: 'image/webp',
       upsert: true,
     });
 
   if (error) return { success: false, error: error.message };
 
-  await handleAddBrand(data.path, name);
+  await handleAddService(data.path, name, desc, price);
 }
 
-async function handleAddBrand(path: string, name: string) {
+export async function handleAddService(path: string, name: string, desc: string, price: number) {
   const supabase = await createSupabaseServerClient();
 
   const { data: urlData } = supabase.storage
@@ -43,41 +43,21 @@ async function handleAddBrand(path: string, name: string) {
     .from("imagenes")
     .insert({
       url: urlData.publicUrl,
-      categoria: "Marcas",
+      categoria: "Servicios",
     })
     .select("id");
 
   if (!data) return { success: false, error: error };
 
   await supabase
-    .from("marcas")
+    .from("servicios")
     .insert({
       nombre: name,
       imagen: data[0].id,
-      disponible: true,
-    })
+      descripcion_corta: desc,
+      precio: price,
+    });
 
-  revalidatePath("/")
+  revalidatePath("/servicios");
   return { success: true }
-}
-
-export async function updateBrandVisibility(id: number) {
-  const supabase = await createSupabaseServerClient();
-  const brand = await supabase
-    .from('marcas')
-    .select('disponible')
-    .eq('id', id);
-  
-  if (!brand) return;
-
-  const res = await supabase
-    .from('marcas')
-    .update({
-        disponible: !brand.data?.[0].disponible
-    })
-    .eq('id', id);
-
-  console.log(res)
-
-  revalidatePath("/");
 }

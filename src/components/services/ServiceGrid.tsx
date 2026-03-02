@@ -1,3 +1,4 @@
+import AddService from "./AddService";
 import ServiceTemplate from "./ServiceTemplate";
 
 interface ServiceGridInterface {
@@ -19,6 +20,8 @@ const ServiceGrid = ({ servicios }: ServiceGridInterface) => {
         {servicios.map((servicio, index) => (
           <ServiceTemplate key={`service-${servicio.nombre}`} {...servicio} index={index} />
         ))}
+
+        <AddService />
       </div>
     </section>
   )

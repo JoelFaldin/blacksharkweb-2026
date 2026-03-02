@@ -4,37 +4,43 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import { toast } from "sonner";
 
-import { useAuthStore } from "@/lib/store/useAuthStore";
-import Modal from "../Modal";
+import { useAuthStore } from "@/lib/store/useAuthStore"
 import Plus from "../icons/Plus";
+import Modal from "../Modal";
 import ImageIcon from "../icons/ImageIcon";
 import Button from "../Button";
 import Upload from "../icons/Upload";
-import { handleBrand } from "@/app/actions/brands";
+import { handleService } from "@/app/actions/service";
 
-const AddBrand = () => {
+const AddService = () => {
   const user = useAuthStore(u => u.user);
+
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [isOpen, setIsOpen] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
-  const [filePath, setFilePath] = useState<string | null>(null);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [isDragging, setIsDragging] = useState<boolean>(false);
   const [preview, setPreview] = useState<string | null>(null);
-  const [brandName, setBrandName] = useState("");
+  const [file, setFile] = useState<File | null>(null);
+  const [filePath, setFilePath] = useState<string | null>(null);
+  const [serviceName, setServiceName] = useState("");
+  const [serviceDesc, setServiceDesc] = useState("");
+  const [servicePrice, setServicePrice] = useState("");
 
   if (user?.role !== 'admin') return;
 
   const handleModal = () => {
-    if (!isOpen) {
-      setIsOpen(true);
+    if (!showModal) {
+      setShowModal(true);
       // Desactivar el scroll cuando se abre el modal:
       document.body.classList.add('overflow-hidden');
     } else {
-      setIsOpen(false);
-      setPreview(null);
-      setBrandName("");
+      setShowModal(false);
 
-      setIsOpen(false);
+      setPreview(null);
+      setServiceName("");
+      setServiceDesc("");
+      setServicePrice("");
+
+      setShowModal(false);
       // Reactivar el scroll cuando se cierra el modal:
       document.body.classList.remove('overflow-hidden');
     }
@@ -51,44 +57,44 @@ const AddBrand = () => {
   const handleFile = (file: File) => {
     if (!file.type.startsWith('image/')) return;
 
-    setSelectedFile(file);
-    setFilePath(`marcas/${file.name}`);
+    setFile(file);
+    setFilePath(`servicios/${file.name}`);
 
-    const reader = new FileReader();
-    reader.onload = e => setPreview(e.target?.result as string);
-    reader.readAsDataURL(file);
+    const render = new FileReader();
+    render.onload = e => setPreview(e.target?.result as string);
+    render.readAsDataURL(file);
   }
 
   const handleSubmit = async () => {
-    if (!filePath || !selectedFile || !fileInputRef) {
+    if (!filePath || !file || !fileInputRef) {
       toast.error("Debes seleccionar un archivo primero.");
       return;
-    };
+    }
 
-    const loading = toast.loading("Subiendo imagen y guardando sus datos...");
-    const res = await handleBrand(selectedFile, brandName);
-    
+    const loading = toast.loading("Subiendo imagen y guardando los datos del servicio...");
+    const res = await handleService(file, serviceName, serviceDesc, parseInt(servicePrice));
+
     if (res?.error) {
       toast.dismiss(loading);
-      toast.error("Ocurrió un error al intentar subir los datos de la marca. Inténtalo más tarde.");
+      toast.error("Ocurrió un error al intentar subir los datos del servicio. Inténtalo más tarde.");
       console.log(res.error);
 
       return;
     } else {
       toast.dismiss(loading);
-      toast.success("¡Se han guardado con éxito los datos de la marca!");
+      toast.success("¡Se han guardado con éxito los datos del servicio!")
     }
 
     handleModal();
   }
 
-  if (isOpen) {
+  if (showModal) {
     return (
-      <Modal isOpen={isOpen} onClose={handleModal} className="w-2xl">
+      <Modal isOpen={showModal} onClose={handleModal} className="w-2xl">
         <section className="relative w-full border border-(--primary)/50 bg-(--card) shadow-2xl">
           <div className="flex flex-col px-6 py-5 border-b border-(--border)">
-            <p className="text-sm font-medium text-(--primary) uppercase tracking-[0.2em]">Nueva Marca</p>
-            <h1 className="text-xl font-bold text-(--foreground)">Añadir una nueva marca</h1>
+            <p className="text-sm font-medium text-(--primary) uppercase tracking-[0.2em]">Nuevo Servicio</p>
+            <h1 className="text-xl font-bold text-(--foreground)">Añade un Nuevo Servicio</h1>
           </div>
           <div className="px-6 py-5 h-fit">
             <label className="text-sm text-(--muted-foreground) uppercase tracking-[0.em]">Logo de la Marca</label>
@@ -111,7 +117,7 @@ const AddBrand = () => {
                       src={preview}
                       alt="Preview del logo de la marca"
                       fill
-                      sizes="(max-width: 768px) 100vw, 30vw"
+                      sizes="(max-width: 768px) 100vw, 50vw"
                       className="object-cover"
                     />
                     <button
@@ -129,7 +135,7 @@ const AddBrand = () => {
                     <ImageIcon />
                   </div>
                   <p className="mb-1 text-sm text-(--foreground)">
-                    Arrastra tu logo aquí
+                    Arrastra la imagen del nuevo servicio aquí
                   </p>
                   <p className="mb-3 text-xs text-(--muted-foreground)">
                     PNG, JPG o SVG 
@@ -156,30 +162,53 @@ const AddBrand = () => {
               />
             </div>
           </div>
-          <div className="px-6 py-5 h-fit">
-            <label htmlFor="brand-name" className="mb-2 block text-xs font-medium uppercase tracking-[0.2em] text-(--muted-foreground)">
-              Nombre de la Marca
+          <div className="px-6 py-5 h-fit flex flex-col gap-2">
+            <label htmlFor="service-name" className="mb-2 block text-xs font-medium uppercase tracking-[0.2em] text-(--muted-foreground)">
+              Nombre del Servicio
             </label>
             <input
-              id="brand-name"
+              id="service-name"
               type="text"
-              placeholder="Marca Inc. Corp."
-              value={brandName}
-              onChange={e => setBrandName(e.target.value)}
-              onKeyDown={e => {
-                if (e.key === "Enter") handleSubmit();
-              }}
+              placeholder="Diseño Gráfico"
+              value={serviceName}
+              onChange={e => setServiceName(e.target.value)}
               className="w-full border border-(--border) bg-(--background) px-4 py-3 text-sm text-(--foreground) placeholder:text-(--muted-foreground)/50 transition-colors focus:border-(--primary) focus:outline-none"
             />
-          </div>
 
+            <label htmlFor="service-desc" className="mb-2 block text-xs font-medium uppercase trakcing-[0.2em] text-(--muted-foreground)">
+              Descripción
+            </label>
+            <textarea
+              id="service-desc"
+              placeholder="Detalla una descripción del servicio..."
+              value={serviceDesc}
+              onChange={e => setServiceDesc(e.target.value)}
+              className="w-full border border-(--border) bg-(--background) px-4 py-3 text-sm text-(--foreground) placeholder:text-(--muted-foreground)/50 transition-colors focus:border-(--primary) focus:outline-none"
+            />
+
+            <label htmlFor="service-price" className="mb-2 block text-xs font-medium uppercase trakcing-[0.2em] text-(--muted-foreground)">
+              Precio
+            </label>
+            <input
+              id="service-price"
+              type="text"
+              value={servicePrice}
+              onChange={e => {
+                const int = parseInt(e.target.value);
+                if (isNaN(int) && e.target.value !== "") return;
+                setServicePrice(e.target.value);
+              }}
+              className="w-full border border-(--border) bg-(--background) px-4 py-3 text-sm text-(--foreground) placeholder:text-(--muted-foreground)/50 transition-colors focus:border-(--primary) focus:outline-none"
+              min={0}
+            />
+          </div>
           <div className="flex items-center justify-center gap-3 px-6 py-5">
             <Button type="secondary" className="p-6 cursor-pointer" onClick={handleModal}>
               <span className="font-bold">Volver</span>
             </Button>
             <Button type="primary" className="p-6 flex flex-row gap-2 cursor-pointer" onClick={handleSubmit}>
               <Plus className="text-(--secondary)" />
-              <span className="text-(--secondary) font-bold">Añadir Marca</span>
+              <span className="text-(--secondary) font-bold">Añadir Servicio</span>
             </Button>
           </div>
         </section>
@@ -187,18 +216,20 @@ const AddBrand = () => {
     )
   } else {
     return (
-      <button type="button" onClick={handleModal} className="group max-h-80 max-w-80 flex flex-col p-5 justify-center items-center gap-2 cursor-pointer hover:bg-(--border) transition-colors">
-        <span className="border-2 border-(--muted-foreground) border-dashed rounded-full p-4 group-hover:border-(--primary) transition-colors">
-          <Plus
-            className="text-(--muted-foreground) group-hover:text-(--primary) transition-colors"
-            width={80}
-            height={80}
-          />
+      <button
+        type="button"
+        onClick={handleModal}
+        className="group relative flex min-h-[650px] flex-col items-center justify-center border-2 border-dashed border-(--border) bg-(--background) transition-colors hover:border-(--primary)/40 hover:bg-(--card) cursor-pointer"
+      >
+        <span className="mb-4 flex h-16 w-16 items-center justify-center rounded-full border-2 border-dashed border-(--muted-foreground)/30 text-(--muted-foreground) transition-colors group-hover:border-(--primary) group-hover:text-(--primary)">
+          <Plus />
         </span>
-        <span className="text-2xl text-(--muted-foreground) group-hover:text-(--primary) transition-colors">Añadir Marca</span>
+        <span className="text-sm font-medium uppercase tracking-[0.2em] text-(--muted-foreground) transition-colors group-hover:text-(--foreground)">
+          Añadir Nuevo Servicio
+        </span>
       </button>
     )
   }
-};
+}
 
-export default AddBrand;
+export default AddService;
