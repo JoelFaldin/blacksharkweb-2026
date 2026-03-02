@@ -15,6 +15,7 @@ import { uploadOptimizedImage } from "@/app/actions/upload";
 const AddBrand = () => {
   const user = useAuthStore(u => u.user);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [filePath, setFilePath] = useState<string | null>(null);
@@ -50,25 +51,27 @@ const AddBrand = () => {
   const handleFile = (file: File) => {
     if (!file.type.startsWith('image/')) return;
 
+    setSelectedFile(file);
     setFilePath(`marcas/${file.name}`);
+
     const reader = new FileReader();
     reader.onload = e => setPreview(e.target?.result as string);
     reader.readAsDataURL(file);
   }
 
   const handleSubmit = async () => {
-    if (!filePath) return;
-
-    const file = fileInputRef.current?.files?.[0];
-    if (!file) return;
+    if (!filePath || !selectedFile || !fileInputRef) {
+      toast.error("Debes seleccionar un archivo primero.");
+      return;
+    };
 
     const loading = toast.loading("Subiendo imagen a Supabase y guardando sus datos...");
-    const { error } = await uploadOptimizedImage(file, brandName);
+    const res = await uploadOptimizedImage(selectedFile, brandName);
     
-    if (error) {
+    if (res.error) {
       toast.dismiss(loading);
       toast.error("Ocurrió un error al intentar subir la imagen a Supabase. Inténtalo más tarde.");
-      console.log(error);
+      console.log(res.error);
 
       return;
     } else {

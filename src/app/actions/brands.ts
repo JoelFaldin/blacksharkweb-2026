@@ -27,6 +27,7 @@ export async function handleAddBrand(path: string, name: string) {
     .insert({
       nombre: name,
       imagen: data[0].id,
+      disponible: true,
     })
 
   return { success: true }
