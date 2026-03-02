@@ -10,26 +10,26 @@ export async function handleAddBrand(path: string, name: string) {
     .from('images')
     .getPublicUrl(path);
 
-  if (urlData) {
-    const { data, error } = await supabase
-      .from("imagenes")
-      .insert({
-        url: urlData.publicUrl,
-        categoria: "Marcas",
-      })
-      .select("id");
+  if (!urlData) return { success: false, error: "No image url found." };
 
-    if (!data) return;
+  const { data, error } = await supabase
+    .from("imagenes")
+    .insert({
+      url: urlData.publicUrl,
+      categoria: "Marcas",
+    })
+    .select("id");
 
-    await supabase
-      .from("marcas")
-      .insert({
-        nombre: name,
-        imagen: data[0].id,
-      })
+  if (!data) return;
 
-    revalidatePath("/carrito");
-  }
+  await supabase
+    .from("marcas")
+    .insert({
+      nombre: name,
+      imagen: data[0].id,
+    })
+
+  return { success: true }
 }
 
 export async function updateBrandVisibility(id: number) {

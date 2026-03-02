@@ -10,8 +10,7 @@ import Plus from "../icons/Plus";
 import ImageIcon from "../icons/ImageIcon";
 import Button from "../Button";
 import Upload from "../icons/Upload";
-import { getSupabaseBrowserClient } from "@/lib/supabase/client";
-import { handleAddBrand } from "@/app/actions/brands";
+import { uploadOptimizedImage } from "@/app/actions/upload";
 
 const AddBrand = () => {
   const user = useAuthStore(u => u.user);
@@ -57,29 +56,23 @@ const AddBrand = () => {
     reader.readAsDataURL(file);
   }
 
-  const supabase = getSupabaseBrowserClient();
-
   const handleSubmit = async () => {
     if (!filePath) return;
 
     const file = fileInputRef.current?.files?.[0];
     if (!file) return;
 
-    const loading = toast.loading("Subiendo imagen a Supabase...");
-    const { data, error } =  await supabase.storage.from('images').upload(filePath, file);
+    const loading = toast.loading("Subiendo imagen a Supabase y guardando sus datos...");
+    const { error } = await uploadOptimizedImage(file, brandName);
     
     if (error) {
       toast.dismiss(loading);
-      toast.error("Ocurrió un error al intentar subir la imagen a Supabase.");
+      toast.error("Ocurrió un error al intentar subir la imagen a Supabase. Inténtalo más tarde.");
       console.log(error);
 
       return;
     } else {
       toast.dismiss(loading);
-
-      const loadingAddBrand = toast.loading("Guardando el resto de datos de la marca...");
-      await handleAddBrand(data.path, brandName);
-      toast.dismiss(loadingAddBrand);
       toast.success("Se han guardado con éxito los datos de la marca!");
 
       handleModal();
