@@ -2,11 +2,8 @@
 
 import sharp from "sharp";
 import { jwtDecode, JwtPayload } from "jwt-decode";
-import { createClient } from "@supabase/supabase-js";
-import { revalidatePath } from "next/cache";
 
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { handleAddBrand } from "./brands";
 
 interface CustomJwtPayload extends JwtPayload {
   app_metadata: {
@@ -14,7 +11,7 @@ interface CustomJwtPayload extends JwtPayload {
   }
 }
 
-export async function uploadOptimizedImage(file: File, brandName: string) {
+export async function uploadOptimizedImage(file: File) {
   if (!file) throw new Error("No file provided.");
 
   const supabase = await createSupabaseServerClient();
@@ -43,23 +40,5 @@ export async function uploadOptimizedImage(file: File, brandName: string) {
     optimizedBuffer = Buffer.from(await file.arrayBuffer());
   }
 
-  const supabaseAdmin = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ROLE_KEY!,
-  )
-
-  const name = `${file.name.replace(/\.[^/.]+$/, "")}.webp`
-  const { data, error } = await supabaseAdmin.storage.from('images')
-    .upload(`marcas/${name}`, optimizedBuffer, {
-      contentType: 'image/webp',
-      upsert: true,
-    });
-
-  if (error) return { success: false, error: error.message };
-
-  const res = await handleAddBrand(data.path, brandName);
-  if (res?.error) return { success: false, error: res.error }
-
-  revalidatePath('/');
-  return { success: true };
+  return optimizedBuffer;
 }
