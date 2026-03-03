@@ -34,21 +34,23 @@ const BrandItem = ({ id, nombre, imagen, disponible }: BrandItemProps) => {
       className={`group flex flex-col h-80 w-80 shrink-0 items-center justify-center bg-(--background) p-2 last:border-r-0 transition-colors hover:bg-(--card)`}
     >
       <div className="relative aspect-square mb-4 w-full overflow-hidden">
-        {user?.role === "admin" && disponible ? (
-          <button
-            type="button"
-            onClick={handleChangeVisibility}
-            className="z-10 absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full border-transparent text-transparent transition-all group-hover:border-(--border) group-hover:text-(--muted-foreground) hover:!border-(destructive) hover:!text-(--destructive) cursor-pointer"
-          >
-            <XIcon />
-          </button>
-        ) : <>
-          <span className="z-10 px-1 absolute top-2 left-2 flex flex-row justify-center items-center gap-2 rounded-md border border-(--border) font-semibold bg-(--background)/90 text-[10px] uppercase tracking-[0.15em] text-(--muted-foreground)">
-            <EyeClose />
-            <span>Invisible</span>
-          </span>
-          <Confirm visible={disponible} changeVisibility={handleChangeVisibility} text="esta marca" position="left" />
-        </>}
+        {user?.role === "admin" && (
+          disponible ? (
+            <button
+              type="button"
+              onClick={handleChangeVisibility}
+              className="z-10 absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full border-transparent text-transparent transition-all group-hover:border-(--border) group-hover:text-(--muted-foreground) hover:!border-(destructive) hover:!text-(--destructive) cursor-pointer"
+            >
+              <XIcon />
+            </button>
+          ) : <>
+            <span className="z-10 px-1 absolute top-2 left-2 flex flex-row justify-center items-center gap-2 rounded-md border border-(--border) font-semibold bg-(--background)/90 text-[10px] uppercase tracking-[0.15em] text-(--muted-foreground)">
+              <EyeClose />
+              <span>Invisible</span>
+            </span>
+            <Confirm visible={disponible} changeVisibility={handleChangeVisibility} text="esta marca" position="left" />
+          </>
+        )}
 
         <Image
           src={imagen?.url ?? ""}

@@ -44,7 +44,7 @@ const ServiceTemplate = ({ id, precio, descripcion_corta, nombre, imagen, index,
     const { data } = await supabase.auth.getClaims();
 
     if (!data) {
-      alert("¡Debes iniciar sesión para agregar servicios al carrito!");
+      toast.warning("¡Debes iniciar sesión para agregar servicios al carrito!");
       return;
     }
 
@@ -83,24 +83,26 @@ const ServiceTemplate = ({ id, precio, descripcion_corta, nombre, imagen, index,
           {String(index + 1).padStart(2, "0")}
         </span>
       </div>
-      {user?.role === "admin" && disponible ? (
-        <div className="absolute right-4 top-4 z-10">
-          <button
-            type="button"
-            onClick={handleChangeVisibility}
-            className="z-10 absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full border-transparent text-transparent transition-all group-hover:border-(--border) group-hover:text-(--muted-foreground) hover:!border-(destructive) hover:!text-(--destructive) cursor-pointer"
-          >
-            <XIcon />
-          </button>
-        </div>
-      ) : (
-        <>
-          <span className="z-10 px-1 absolute top-2 right-2 flex flex-row justify-center items-center gap-2 rounded-md border border-(--border) font-semibold bg-(--background)/90 text-[10px] uppercase tracking-[0.15em] text-(--muted-foreground)">
-              <EyeClose />
-              <span>Invisible</span>
-            </span>
-          <Confirm visible={disponible} changeVisibility={handleChangeVisibility} text="este servicio" position="right" />
-        </>
+      {user?.role === "admin" && (
+        disponible ? (
+          <div className="absolute right-4 top-4 z-10">
+            <button
+              type="button"
+              onClick={handleChangeVisibility}
+              className="z-10 absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full border-transparent text-transparent transition-all group-hover:border-(--border) group-hover:text-(--muted-foreground) hover:!border-(destructive) hover:!text-(--destructive) cursor-pointer"
+            >
+              <XIcon className="text-(--foreground)" />
+            </button>
+          </div>
+        ) : (
+          <>
+            <span className="z-10 px-1 absolute top-2 right-2 flex flex-row justify-center items-center gap-2 rounded-md border border-(--border) font-semibold bg-(--background)/90 text-[10px] uppercase tracking-[0.15em] text-(--muted-foreground)">
+                <EyeClose />
+                <span>Invisible</span>
+              </span>
+            <Confirm visible={disponible} changeVisibility={handleChangeVisibility} text="este servicio" position="right" />
+          </>
+        )
       )}
 
       {/* Imagen */}
