@@ -7,7 +7,7 @@ import { useAuthStore } from "@/lib/store/useAuthStore";
 import XIcon from "../icons/XIcon";
 import scheduleAvailableSync from "@/lib/utils/brandSync";
 import EyeClose from "../icons/EyeClose";
-import BrandConfirm from "./BrandConfirm";
+import Confirm from "../Confirm";
 
 interface BrandItemProps {
   id: number,
@@ -47,7 +47,7 @@ const BrandItem = ({ id, nombre, imagen, disponible }: BrandItemProps) => {
             <EyeClose />
             <span>Invisible</span>
           </span>
-          <BrandConfirm visible={disponible} changeVisibility={handleChangeVisibility} />
+          <Confirm visible={disponible} changeVisibility={handleChangeVisibility} text="esta marca" position="left" />
         </>}
 
         <Image

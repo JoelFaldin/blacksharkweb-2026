@@ -3,17 +3,19 @@
 import { useState } from "react";
 
 import { useAuthStore } from "@/lib/store/useAuthStore";
-import Modal from "../Modal";
-import Button from "../Button";
-import EyeOpen from "../icons/EyeOpen";
-import Refresh from "../icons/Refresh";
+import Modal from "./Modal";
+import Button from "./Button";
+import Refresh from "./icons/Refresh";
+import EyeOpen from "./icons/EyeOpen";
 
-type BrandConfirmType = {
+type ConfirmType = {
 	visible: boolean;
 	changeVisibility: () => void,
+  text: string,
+	position: string,
 }
 
-const BrandConfirm = ({ visible, changeVisibility }: BrandConfirmType) => {
+const Confirm = ({ visible, changeVisibility, text, position }: ConfirmType) => {
 	const user = useAuthStore(u => u.user);
 
 	const [isOpen, setIsOpen] = useState(false);
@@ -28,7 +30,7 @@ const BrandConfirm = ({ visible, changeVisibility }: BrandConfirmType) => {
 		} else {
 			setIsOpen(false);
 			// Reactivar el scroll:
-			document.body.classList.remove("overflow-hiddren");
+			document.body.classList.remove("overflow-hidden");
 		}
 	}
 
@@ -42,8 +44,8 @@ const BrandConfirm = ({ visible, changeVisibility }: BrandConfirmType) => {
 			<>
 				<Modal isOpen={isOpen} onClose={handleModal} className="w-xl">
 					<div className="px-6 py-5 border border-(--border) bg-(--background)">
-						<h4 className="text-2xl font-medium text-(--foreground)">¿Quieres cambiar la visibilidad de este servicio?</h4>
-						<p className="text-md text-(--foreground)/70 mt-2">Este servicio pasará a ser {visible ? "invisible" : "visible"} para el usuario común.</p>
+						<h4 className="text-2xl font-medium text-(--foreground)">¿Quieres cambiar la visibilidad de {text}?</h4>
+						<p className="text-md text-(--foreground)/70 mt-2">{text.charAt(0).toUpperCase() + text.slice(1)} pasará a ser {visible ? "invisible" : "visible"} para el usuario común.</p>
 						<span className="flex flex-row items-center justify-center gap-3 px-6 py-5">
 							<Button type="secondary" onClick={handleModal} className="p-6 cursor-pointer">
 								<span className="font-bold">Volver</span>
@@ -62,13 +64,13 @@ const BrandConfirm = ({ visible, changeVisibility }: BrandConfirmType) => {
 			<button
 				type="button"
 				onClick={handleModal}
-				className="absolute top-10 left-2 z-20 p-1 flex flex-row justify-center items-center gap-2 rounded border border-(--primary) text-sm bg-(--background)/90 cursor-pointer"
+				className={`absolute top-10 ${position}-2 z-20 text-transparent border-transparent bg-transparent p-1 flex flex-row justify-center items-center gap-2 rounded border group-hover:border-(--primary) group-hover:text-(--primary) text-sm group-hover:bg-(--background)/90 cursor-pointer transition-all`}
 			>
-				<EyeOpen className="text-(--primary)" />
-				<span className="text-(--primary)">Cambiar Visibilidad</span>
+				<EyeOpen />
+				<span>Cambiar Visibilidad</span>
 			</button>
 		)
 	}
 }
 
-export default BrandConfirm;
+export default Confirm;

@@ -10,6 +10,7 @@ interface ServiceGridInterface {
       url: string;
     } | null;
     nombre: string;
+    disponible: boolean;
   }[]
 }
 
