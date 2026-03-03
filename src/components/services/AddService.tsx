@@ -33,8 +33,6 @@ const AddService = () => {
       // Desactivar el scroll cuando se abre el modal:
       document.body.classList.add('overflow-hidden');
     } else {
-      setShowModal(false);
-
       setPreview(null);
       setServiceName("");
       setServiceDesc("");

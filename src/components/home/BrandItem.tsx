@@ -1,11 +1,13 @@
 "use client"
 
 import Image from "next/image"
+import { toast } from "sonner";
 
 import { useAuthStore } from "@/lib/store/useAuthStore";
 import XIcon from "../icons/XIcon";
 import scheduleAvailableSync from "@/lib/utils/brandSync";
-import { toast } from "sonner";
+import EyeClose from "../icons/EyeClose";
+import BrandConfirm from "./BrandConfirm";
 
 interface BrandItemProps {
   id: number,
@@ -40,33 +42,25 @@ const BrandItem = ({ id, nombre, imagen, disponible }: BrandItemProps) => {
           >
             <XIcon />
           </button>
-        ) : <></>}
+        ) : <>
+          <span className="z-10 px-1 absolute top-2 left-2 flex flex-row justify-center items-center gap-2 rounded-md border border-(--border) font-semibold bg-(--background)/90 text-[10px] uppercase tracking-[0.15em] text-(--muted-foreground)">
+            <EyeClose />
+            <span>Invisible</span>
+          </span>
+          <BrandConfirm visible={disponible} changeVisibility={handleChangeVisibility} />
+        </>}
 
         <Image
           src={imagen?.url ?? ""}
           alt={`Logo de empresa ${nombre}`}
           fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          sizes="(max-width: 768px) 100vw, (max-wh: 1024px) 50vw, 33vw"
           className="object-cover"
         />
       </div>
       <span className="relative text-xs uppercase tracking-[0.2em] text-(--muted-foreground)/60 transition-colors group-hover:text-(--foreground)">
         {nombre}
       </span>
-      {!disponible ? (
-        <>
-          <p className="relative text-xs text-center text-(--destructuve) border border-(--destructive) bg-(--destructive)/30 p-1 rounded-md mt-2">
-            Ésta marca no será visible para el resto de los usuarios.
-          </p>
-          <button
-            type="button"
-            className="mt-2 text-sm border rounded-md py-1 px-2 cursor-pointer"
-            onClick={handleChangeVisibility}
-          >
-            Cambiar visibilidad
-          </button>
-        </>
-      ) : <></>}
     </div>
   )
 }
