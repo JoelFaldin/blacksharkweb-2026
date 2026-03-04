@@ -2,17 +2,17 @@
 
 import { createBrowserClient } from "@supabase/ssr";
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { Database } from "./types";
+
+import { getEnvironmentVariables } from "./server";
+import type { Database } from "./types";
 
 let client: SupabaseClient<Database> | null = null;
 
-export function getSupabaseBrowserClient(): SupabaseClient<Database> {
+export async function getSupabaseBrowserClient(): Promise<SupabaseClient<Database>> {
   if (client) return client;
 
-  client = createBrowserClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+  const { supabaseUrl, supabaseAnonKey } = await getEnvironmentVariables();
+  client = createBrowserClient<Database>(supabaseUrl, supabaseAnonKey);
 
   return client;
 }

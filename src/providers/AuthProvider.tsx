@@ -1,18 +1,18 @@
-"use client"
+"use client";
 
 import { useEffect } from "react";
 
 import { useAuthStore } from "@/lib/store/useAuthStore";
 
 interface UserData {
-  username: string,
-  email: string,
-  role: string,
+  username: string;
+  email: string;
+  role: string;
 }
 
 type Props = {
-  initialUser: UserData | null,
-}
+  initialUser: UserData | null;
+};
 
 export default function AuthProvider({ initialUser }: Props) {
   const setUser = useAuthStore((s) => s.setUser);
@@ -23,7 +23,7 @@ export default function AuthProvider({ initialUser }: Props) {
         username: initialUser.username,
         email: initialUser.email,
         role: initialUser.role,
-      })
+      });
     }
   }, [initialUser, setUser]);
 
