@@ -4,10 +4,9 @@ import Image from "next/image"
 import { toast } from "sonner";
 
 import { useAuthStore } from "@/lib/store/useAuthStore";
-import XIcon from "../icons/XIcon";
 import scheduleAvailableSync from "@/lib/utils/brandSync";
-import EyeClose from "../icons/EyeClose";
 import Confirm from "../Confirm";
+import { EyeClose, XIcon } from "../icons";
 
 interface BrandItemProps {
   id: number,

@@ -1,6 +1,5 @@
 import { useCartStore } from "@/lib/store/useCartStore";
-import Minus from "../icons/Minus";
-import Plus from "../icons/Plus";
+import { Minus, Plus } from "../icons";
 
 type CartQuantityProps = {
   item_id: number,

@@ -23,4 +23,4 @@ const WhatsApp = ({ className, width = 24, height = 24 }: WhatsappProps) => (
   </svg>
 );
 
-export { WhatsApp };
+export default WhatsApp;

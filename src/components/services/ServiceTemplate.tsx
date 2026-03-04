@@ -4,20 +4,16 @@ import Image from "next/image"
 import { toast } from "sonner"
 import { useState } from "react"
 
-import ArrowUpRight from "../icons/ArrowUpRight"
 import Button from "../Button"
-import ShoppingCart from "../icons/ShoppingCart"
-import Send from "../icons/Send"
 import { useCartStore } from "@/lib/store/useCartStore"
 import { getSupabaseBrowserClient } from "@/lib/supabase/client"
 import priceFormat from "@/lib/utils/priceFormat"
 import ServiceModal from "./ServiceModal"
 import { useContextStore } from "@/lib/store/useContextStore"
 import { useAuthStore } from "@/lib/store/useAuthStore"
-import XIcon from "../icons/XIcon"
 import scheduleServiceSync from "@/lib/utils/serviceSync"
-import EyeClose from "../icons/EyeClose"
 import Confirm from "../Confirm"
+import { ArrowUpRight, EyeClose, Send, ShoppingCart, XIcon } from "../icons"
 
 interface ServiceTemplateInterface {
   id: number,

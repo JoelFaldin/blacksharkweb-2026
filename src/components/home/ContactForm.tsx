@@ -1,5 +1,5 @@
-import ArrowRight from "../icons/ArrowRight"
 import Button from "../Button"
+import { ArrowRight } from "../icons"
 
 const ContactForm = () => {
   return (

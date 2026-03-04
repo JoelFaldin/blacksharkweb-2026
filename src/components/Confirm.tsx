@@ -5,8 +5,7 @@ import { useState } from "react";
 import { useAuthStore } from "@/lib/store/useAuthStore";
 import Modal from "./Modal";
 import Button from "./Button";
-import Refresh from "./icons/Refresh";
-import EyeOpen from "./icons/EyeOpen";
+import { EyeOpen, Refresh } from "./icons";
 
 type ConfirmType = {
 	visible: boolean;

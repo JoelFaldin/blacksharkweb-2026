@@ -5,12 +5,10 @@ import Image from "next/image";
 import { toast } from "sonner";
 
 import { useAuthStore } from "@/lib/store/useAuthStore"
-import Plus from "../icons/Plus";
 import Modal from "../Modal";
-import ImageIcon from "../icons/ImageIcon";
 import Button from "../Button";
-import Upload from "../icons/Upload";
 import { handleService } from "@/app/actions/service";
+import { ImageIcon, Plus, Upload } from "../icons";
 
 const AddService = () => {
   const user = useAuthStore(u => u.user);
