@@ -1,10 +1,11 @@
-import { NextResponse } from "next/server"
+"use server"
+
 import { createSupabaseServerClient } from "@/lib/supabase/server"
 import { Resend } from "resend"
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
-export async function POST() {
+export async function sendOrderEmail() {
   try {
     const supabase = await createSupabaseServerClient()
 
@@ -14,10 +15,11 @@ export async function POST() {
     } = await supabase.auth.getUser()
 
     if (userError || !user) {
-      return NextResponse.json(
-        { error: "No autenticado" },
-        { status: 401 }
-      )
+      return {
+        success: false,
+        error: "No autenticado",
+        status: 401,
+      }
     }
 
     const { data: cartItems, error: cartError } = await supabase
@@ -34,37 +36,41 @@ export async function POST() {
 
     if (cartError) {
       console.error(cartError)
-      return NextResponse.json(
-        { error: "Error obteniendo carrito" },
-        { status: 500 }
-      )
+
+      return {
+        success: false,
+        error: "Error obteniendo carrito",
+        status: 500,
+      }
     }
 
     if (!cartItems || cartItems.length === 0) {
-      return NextResponse.json(
-        { error: "Carrito vacío" },
-        { status: 400 }
-      )
+      return {
+        success: false,
+        error: "Carrito vacío",
+        status: 400,
+      }
     }
 
     const itemsText = cartItems
       .map((item) => {
         return `
-            Servicio: ${item.servicios.nombre}
-            Precio: $${item.servicios.precio}
+            Servicio: ${item.servicios?.nombre}
+            Precio: $${item.servicios?.precio}
             Cantidad: ${item.cantidad}
             ----------------------------------
-        `
-      })
-      .join("\n")
+            `
+                })
+                .join("\n")
 
-    const emailContent = `
-    Nuevo pedido de: ${user.email}
-    ${itemsText}
-    `
+                const emailContent = `
+            Nuevo pedido de: ${user.email}
+
+            ${itemsText}
+            `
 
     if (!process.env.ADMIN_EMAIL) {
-      throw new Error("No se ha definido el correo de administrador en .env.local")
+      throw new Error("ADMIN_EMAIL no definido")
     }
 
     await resend.emails.send({
@@ -74,16 +80,17 @@ export async function POST() {
       text: emailContent,
     })
 
-    return NextResponse.json({
+    return {
       success: true,
-      message: "Correo enviado correctamente",
-    })
+    }
 
   } catch (error) {
     console.error(error)
-    return NextResponse.json(
-      { error: "Error interno del servidor" },
-      { status: 500 }
-    )
+
+    return {
+      success: false,
+      error: "Error interno del servidor",
+      status: 500,
+    }
   }
 }

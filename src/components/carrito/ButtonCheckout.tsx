@@ -1,5 +1,6 @@
 "use client"
 
+import { sendOrderEmail } from "@/app/actions/order-email"
 import { useState } from "react"
 import { toast } from "sonner"
 
@@ -10,14 +11,10 @@ export default function CheckoutButton() {
     try {
       setLoading(true)
 
-      const res = await fetch("/api/checkout", {
-        method: "POST",
-      })
+      const res = await sendOrderEmail()
 
-      const data = await res.json()
-
-      if (!res.ok) {
-        toast.error(data.error || "Error al enviar pedido")
+      if (!res.success) {
+        toast.error("Error al enviar pedido")
         return
       }
 
