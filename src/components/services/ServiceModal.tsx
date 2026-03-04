@@ -82,7 +82,9 @@ const ServiceModal = ({
 
           <span className="border-(--border) p-2 border-t flex flex-col my-4">
             <p className="text-sm text-(--muted-foreground)">Precio del Servicio:</p>
-            <p className="text-2xl text-(--primary) font-bold">{priceFormat(parseInt(precio))}</p>
+            <p className="text-2xl text-(--primary) font-bold">
+              {priceFormat(parseInt(precio, 10))}
+            </p>
           </span>
 
           <span className="flex flex-row items-center justify-center gap-2">

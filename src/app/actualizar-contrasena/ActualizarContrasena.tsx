@@ -10,8 +10,8 @@ import PasswordIcon from "@/components/icons/Password";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { updatePasswordSchema } from "@/lib/validations/auth.schema";
 
-export default function ActualizarContrasena() {
-  const supabase = getSupabaseBrowserClient();
+export default async function ActualizarContrasena() {
+  const supabase = await getSupabaseBrowserClient();
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [password, setPassword] = useState("");
