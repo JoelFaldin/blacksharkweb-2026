@@ -194,6 +194,7 @@ export type Database = {
         Row: {
           created_at: string
           descripcion_corta: string | null
+          disponible: boolean
           id: number
           imagen: number
           nombre: string
@@ -202,6 +203,7 @@ export type Database = {
         Insert: {
           created_at?: string
           descripcion_corta?: string | null
+          disponible?: boolean
           id?: number
           imagen: number
           nombre: string
@@ -210,6 +212,7 @@ export type Database = {
         Update: {
           created_at?: string
           descripcion_corta?: string | null
+          disponible?: boolean
           id?: number
           imagen?: number
           nombre?: string

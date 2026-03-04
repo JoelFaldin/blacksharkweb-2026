@@ -6,11 +6,9 @@ import { toast } from "sonner";
 
 import { useAuthStore } from "@/lib/store/useAuthStore";
 import Modal from "../Modal";
-import Plus from "../icons/Plus";
-import ImageIcon from "../icons/ImageIcon";
 import Button from "../Button";
-import Upload from "../icons/Upload";
 import { handleBrand } from "@/app/actions/brands";
+import { ImageIcon, Plus, Upload } from "../icons";
 
 const AddBrand = () => {
   const user = useAuthStore(u => u.user);

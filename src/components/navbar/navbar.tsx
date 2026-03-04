@@ -5,10 +5,9 @@ import Image from "next/image"
 import Link from "next/link"
 import { toast } from "sonner"
 
-import User from "../icons/User"
-import ShoppingCart from "../icons/ShoppingCart"
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { useAuthStore } from "@/lib/store/useAuthStore"
+import { ShoppingCart, User } from "../icons"
 
 interface UserInterface {
   username?: string,

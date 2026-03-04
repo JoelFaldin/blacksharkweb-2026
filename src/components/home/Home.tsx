@@ -1,7 +1,7 @@
 import Image from "next/image";
 
-import ArrowRight from "@/components/icons/ArrowRight";
 import Button from "../Button";
+import { ArrowRight } from "../icons";
 
 const Home = () => {
   return (

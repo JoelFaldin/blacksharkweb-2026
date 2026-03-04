@@ -8,11 +8,8 @@ import { loginSchema } from "@/lib/validations/auth.schema";
 
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { useAuthStore } from "@/lib/store/useAuthStore";
-import EmailIcon from "@/components/icons/Email";
-import PasswordIcon from "@/components/icons/Password";
 import Link from "next/link";
-import EyeClose from "@/components/icons/EyeClose";
-import EyeOpen from "@/components/icons/EyeOpen";
+import { EmailIcon, EyeClose, EyeOpen, PasswordIcon } from "@/components/icons";
 
 type Mode = "signup" | "signin";
 

@@ -5,9 +5,7 @@ import { useRouter } from "next/navigation";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
 import { updatePasswordSchema } from "@/lib/validations/auth.schema";
-import PasswordIcon from "@/components/icons/Password";
-import EyeOpen from "@/components/icons/EyeOpen";
-import EyeClose from "@/components/icons/EyeOpen";
+import { EyeClose, EyeOpen, PasswordIcon } from "@/components/icons";
 
 export default function ActualizarContrasena () {
     const supabase = getSupabaseBrowserClient();

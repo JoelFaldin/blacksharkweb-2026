@@ -4,11 +4,10 @@ import Image from "next/image";
 
 import Button from "../Button"
 import Modal from "../Modal"
-import Alert from "../icons/Alert"
-import ArrowRight from "../icons/ArrowRight"
 import { useContextStore } from "@/lib/store/useContextStore"
 import priceFormat from "@/lib/utils/priceFormat"
 import { useState } from "react";
+import { Alert, ArrowRight } from "../icons";
 
 type ServiceModalType = {
   nombre: string,

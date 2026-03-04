@@ -4,15 +4,16 @@ import Image from "next/image"
 import { toast } from "sonner"
 import { useState } from "react"
 
-import ArrowUpRight from "../icons/ArrowUpRight"
 import Button from "../Button"
-import ShoppingCart from "../icons/ShoppingCart"
-import Send from "../icons/Send"
 import { useCartStore } from "@/lib/store/useCartStore"
 import { getSupabaseBrowserClient } from "@/lib/supabase/client"
 import priceFormat from "@/lib/utils/priceFormat"
 import ServiceModal from "./ServiceModal"
 import { useContextStore } from "@/lib/store/useContextStore"
+import { useAuthStore } from "@/lib/store/useAuthStore"
+import scheduleServiceSync from "@/lib/utils/serviceSync"
+import Confirm from "../Confirm"
+import { ArrowUpRight, EyeClose, Send, ShoppingCart, XIcon } from "../icons"
 
 interface ServiceTemplateInterface {
   id: number,
@@ -23,27 +24,40 @@ interface ServiceTemplateInterface {
     url: string,
   } | null,
   index: number,
+  disponible: boolean,
 }
 
-const ServiceTemplate = ({ id, precio, descripcion_corta, nombre, imagen, index }: ServiceTemplateInterface) => {
+const ServiceTemplate = ({ id, precio, descripcion_corta, nombre, imagen, index, disponible }: ServiceTemplateInterface) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const supabase = getSupabaseBrowserClient();
   
   const addItem = useCartStore(e => e.addItem);
   const setCustomMessage = useContextStore(m => m.resetMessage);
+  const user = useAuthStore(u => u.user);
   
   const handleAddItem = async () => {
     const { data } = await supabase.auth.getClaims();
 
     if (!data) {
-      alert("¡Debes iniciar sesión para agregar servicios al carrito!");
+      toast.warning("¡Debes iniciar sesión para agregar servicios al carrito!");
       return;
     }
 
     addItem(id, data.claims.sub);
 
     toast.success("¡Se ha agregado el servicio al carrito!");
+  }
+
+  const handleChangeVisibility = async () => {
+    toast.promise(
+      scheduleServiceSync(id),
+      {
+        loading: "Cambiando la visibilidad del servicio...",
+        success: "¡Se ha cambiado la visibilidad del servicio!",
+        error: "Error al cambiar la visibilidad del servicio",
+      }
+    );
   }
 
   const handleModal = () => {
@@ -68,6 +82,27 @@ const ServiceTemplate = ({ id, precio, descripcion_corta, nombre, imagen, index 
           {String(index + 1).padStart(2, "0")}
         </span>
       </div>
+      {user?.role === "admin" && (
+        disponible ? (
+          <div className="absolute right-4 top-4 z-10">
+            <button
+              type="button"
+              onClick={handleChangeVisibility}
+              className="z-10 absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full border-transparent text-transparent transition-all group-hover:border-(--border) group-hover:text-(--foreground) hover:!border-(destructive) hover:!text-(--destructive) cursor-pointer"
+            >
+              <XIcon />
+            </button>
+          </div>
+        ) : (
+          <>
+            <span className="z-10 px-1 absolute top-2 right-2 flex flex-row justify-center items-center gap-2 rounded-md border border-(--border) font-semibold bg-(--background)/90 text-[10px] uppercase tracking-[0.15em] text-(--muted-foreground)">
+                <EyeClose />
+                <span>Invisible</span>
+              </span>
+            <Confirm visible={disponible} changeVisibility={handleChangeVisibility} text="este servicio" position="right" />
+          </>
+        )
+      )}
 
       {/* Imagen */}
       <div className="relative aspect-[4/3] overflow-hidden">
