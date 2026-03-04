@@ -1,5 +1,5 @@
 interface ArrowUpRightInterface {
-  className?: string,
+  className?: string;
 }
 
 const ArrowUpRight = ({ className }: ArrowUpRightInterface) => {
@@ -16,11 +16,12 @@ const ArrowUpRight = ({ className }: ArrowUpRightInterface) => {
       strokeLinejoin="round"
       className={`${className} icon icon-tabler icons-tabler-outline icon-tabler-arrow-up-right`}
     >
+      <title>Arrow Up Right</title>
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M17 7l-10 10" />
       <path d="M8 7l9 0l0 9" />
     </svg>
-  )
-}
+  );
+};
 
-export default ArrowUpRight
+export default ArrowUpRight;

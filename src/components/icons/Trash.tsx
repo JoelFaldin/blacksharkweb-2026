@@ -18,6 +18,7 @@ const TrashIcon = ({ width = 24, height = 24, className }: TrashProps) => {
       strokeLinejoin="round"
       className={className}
     >
+      <title>Trash</title>
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M4 7l16 0" />
       <path d="M10 11l0 6" />
@@ -28,4 +29,4 @@ const TrashIcon = ({ width = 24, height = 24, className }: TrashProps) => {
   );
 };
 
-export default TrashIcon
+export default TrashIcon;

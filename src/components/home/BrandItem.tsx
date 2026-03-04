@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-
-import { useAuthStore } from "@/lib/store/useAuthStore";
-import XIcon from "../icons/XIcon";
-import scheduleAvailableSync from "@/lib/utils/brandSync";
+import Image from "next/image";
 import { toast } from "sonner";
 
+import { useAuthStore } from "@/lib/store/useAuthStore";
+import scheduleAvailableSync from "@/lib/utils/brandSync";
+import XIcon from "../icons/XIcon";
+
 interface BrandItemProps {
-  id: number,
+  id: number;
   nombre: string;
   imagen: {
     url: string;
@@ -17,16 +17,16 @@ interface BrandItemProps {
 }
 
 const BrandItem = ({ id, nombre, imagen, disponible }: BrandItemProps) => {
-  const user = useAuthStore(u => u.user);
+  const user = useAuthStore((u) => u.user);
 
   const handleChangeVisibility = async () => {
-    const loading = toast.loading('Cambiando la visibilidad de la marca...');
+    const loading = toast.loading("Cambiando la visibilidad de la marca...");
 
     await scheduleAvailableSync(id);
     toast.dismiss(loading);
     toast.success("Se ha actualizado la visibilidad de la marca.");
-  }
-  
+  };
+
   return (
     <div
       className={`group flex flex-col h-80 w-80 shrink-0 items-center justify-center bg-(--background) p-2 last:border-r-0 transition-colors hover:bg-(--card)`}
@@ -40,7 +40,9 @@ const BrandItem = ({ id, nombre, imagen, disponible }: BrandItemProps) => {
           >
             <XIcon />
           </button>
-        ) : <></>}
+        ) : (
+          ""
+        )}
 
         <Image
           src={imagen?.url ?? ""}
@@ -66,9 +68,11 @@ const BrandItem = ({ id, nombre, imagen, disponible }: BrandItemProps) => {
             Cambiar visibilidad
           </button>
         </>
-      ) : <></>}
+      ) : (
+        ""
+      )}
     </div>
-  )
-}
+  );
+};
 
 export default BrandItem;

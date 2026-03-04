@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { TeamInterface } from "@/app/nosotros/page";
+
+import type { TeamInterface } from "@/app/nosotros/page";
 
 interface Props {
   team: TeamInterface[];
@@ -9,7 +10,6 @@ const NosotrosTeam = ({ team }: Props) => {
   return (
     <section className="border-b border-(--border) bg-card py-24 md:py-32">
       <div className="mx-auto px-6">
-
         {/* Section header */}
         <div className="mb-16 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
@@ -22,8 +22,8 @@ const NosotrosTeam = ({ team }: Props) => {
           </div>
 
           <p className="max-w-sm text-xl text-(--muted-foreground) leading-relaxed md:text-right">
-            Un equipo creativo y estratégico que combina diseño, marketing y tecnología 
-            para construir marcas con identidad y resultados reales.
+            Un equipo creativo y estratégico que combina diseño, marketing y tecnología para
+            construir marcas con identidad y resultados reales.
           </p>
         </div>
 
@@ -77,7 +77,6 @@ const NosotrosTeam = ({ team }: Props) => {
             </div>
           ))}
         </div>
-
       </div>
     </section>
   );

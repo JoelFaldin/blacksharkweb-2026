@@ -1,38 +1,45 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import { toast } from "sonner"
-import { useState } from "react"
+import Image from "next/image";
+import { useState } from "react";
+import { toast } from "sonner";
 
-import ArrowUpRight from "../icons/ArrowUpRight"
-import Button from "../Button"
-import ShoppingCart from "../icons/ShoppingCart"
-import Send from "../icons/Send"
-import { useCartStore } from "@/lib/store/useCartStore"
-import { getSupabaseBrowserClient } from "@/lib/supabase/client"
-import priceFormat from "@/lib/utils/priceFormat"
-import ServiceModal from "./ServiceModal"
-import { useContextStore } from "@/lib/store/useContextStore"
+import { useCartStore } from "@/lib/store/useCartStore";
+import { useContextStore } from "@/lib/store/useContextStore";
+import { getSupabaseBrowserClient } from "@/lib/supabase/client";
+import priceFormat from "@/lib/utils/priceFormat";
+import Button from "../Button";
+import ArrowUpRight from "../icons/ArrowUpRight";
+import Send from "../icons/Send";
+import ShoppingCart from "../icons/ShoppingCart";
+import ServiceModal from "./ServiceModal";
 
 interface ServiceTemplateInterface {
-  id: number,
-  precio: string,
-  descripcion_corta: string,
-  nombre: string,
+  id: number;
+  precio: string;
+  descripcion_corta: string;
+  nombre: string;
   imagen: {
-    url: string,
-  } | null,
-  index: number,
+    url: string;
+  } | null;
+  index: number;
 }
 
-const ServiceTemplate = ({ id, precio, descripcion_corta, nombre, imagen, index }: ServiceTemplateInterface) => {
-  const [isOpen, setIsOpen] = useState(false)
+const ServiceTemplate = ({
+  id,
+  precio,
+  descripcion_corta,
+  nombre,
+  imagen,
+  index,
+}: ServiceTemplateInterface) => {
+  const [isOpen, setIsOpen] = useState(false);
 
   const supabase = getSupabaseBrowserClient();
-  
-  const addItem = useCartStore(e => e.addItem);
-  const setCustomMessage = useContextStore(m => m.resetMessage);
-  
+
+  const addItem = useCartStore((e) => e.addItem);
+  const setCustomMessage = useContextStore((m) => m.resetMessage);
+
   const handleAddItem = async () => {
     const { data } = await supabase.auth.getClaims();
 
@@ -44,21 +51,21 @@ const ServiceTemplate = ({ id, precio, descripcion_corta, nombre, imagen, index 
     addItem(id, data.claims.sub);
 
     toast.success("¡Se ha agregado el servicio al carrito!");
-  }
+  };
 
   const handleModal = () => {
     if (!isOpen) {
       setIsOpen(true);
       // Desactivar el scroll cuando se abre el modal:
-      document.body.classList.add('overflow-hidden');
+      document.body.classList.add("overflow-hidden");
     } else {
       setIsOpen(false);
       // Reactivar el scroll cuando se cierra el modal:
-      document.body.classList.remove('overflow-hidden');
+      document.body.classList.remove("overflow-hidden");
     }
 
     setCustomMessage();
-  }
+  };
 
   return (
     <div className="group relative flex flex-col border border-(--border) bg-(--background) transition-colors hover:border-(--primary)/40">
@@ -99,7 +106,7 @@ const ServiceTemplate = ({ id, precio, descripcion_corta, nombre, imagen, index 
             Precio
           </span>
           <span className="text-xl font-bold text-(--primary)">
-            {priceFormat(parseInt(precio))}
+            {priceFormat(parseInt(precio, 10))}
           </span>
         </div>
 
@@ -112,7 +119,11 @@ const ServiceTemplate = ({ id, precio, descripcion_corta, nombre, imagen, index 
             <ShoppingCart />
             <span>Añadir al carrito</span>
           </button>
-          <Button type="primary" onClick={handleModal} className="flex flex-row items-center justify-center rounded-lg p-6 gap-x-4 cursor-pointer">
+          <Button
+            type="primary"
+            onClick={handleModal}
+            className="flex flex-row items-center justify-center rounded-lg p-6 gap-x-4 cursor-pointer"
+          >
             <Send className="text-(--secondary)" />
             <span className="text-(--secondary)">Solicitar Servicio</span>
           </Button>
@@ -128,7 +139,7 @@ const ServiceTemplate = ({ id, precio, descripcion_corta, nombre, imagen, index 
         isOpen={isOpen}
       />
     </div>
-  )
-}
+  );
+};
 
-export default ServiceTemplate
+export default ServiceTemplate;

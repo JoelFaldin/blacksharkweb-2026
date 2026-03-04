@@ -25,6 +25,9 @@
             "ignoreRestSiblings": false
           }
         }
+      },
+      "a11y": {
+        "noStaticElementInteractions": "off"
       }
     },
     "domains": {

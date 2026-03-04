@@ -1,19 +1,19 @@
-"use client"
+"use client";
 
-import { useRef, useState } from "react";
 import Image from "next/image";
+import { useRef, useState } from "react";
 import { toast } from "sonner";
 
-import { useAuthStore } from "@/lib/store/useAuthStore";
-import Modal from "../Modal";
-import Plus from "../icons/Plus";
-import ImageIcon from "../icons/ImageIcon";
-import Button from "../Button";
-import Upload from "../icons/Upload";
 import { handleBrand } from "@/app/actions/brands";
+import { useAuthStore } from "@/lib/store/useAuthStore";
+import Button from "../Button";
+import ImageIcon from "../icons/ImageIcon";
+import Plus from "../icons/Plus";
+import Upload from "../icons/Upload";
+import Modal from "../Modal";
 
 const AddBrand = () => {
-  const user = useAuthStore(u => u.user);
+  const user = useAuthStore((u) => u.user);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -22,13 +22,13 @@ const AddBrand = () => {
   const [preview, setPreview] = useState<string | null>(null);
   const [brandName, setBrandName] = useState("");
 
-  if (user?.role !== 'admin') return;
+  if (user?.role !== "admin") return;
 
   const handleModal = () => {
     if (!isOpen) {
       setIsOpen(true);
       // Desactivar el scroll cuando se abre el modal:
-      document.body.classList.add('overflow-hidden');
+      document.body.classList.add("overflow-hidden");
     } else {
       setIsOpen(false);
       setPreview(null);
@@ -36,9 +36,9 @@ const AddBrand = () => {
 
       setIsOpen(false);
       // Reactivar el scroll cuando se cierra el modal:
-      document.body.classList.remove('overflow-hidden');
+      document.body.classList.remove("overflow-hidden");
     }
-  }
+  };
 
   const handleDrop = (event: React.DragEvent) => {
     event.preventDefault();
@@ -46,28 +46,28 @@ const AddBrand = () => {
     setIsDragging(false);
     const file = event.dataTransfer.files?.[0];
     if (file) handleFile(file);
-  }
+  };
 
   const handleFile = (file: File) => {
-    if (!file.type.startsWith('image/')) return;
+    if (!file.type.startsWith("image/")) return;
 
     setSelectedFile(file);
     setFilePath(`marcas/${file.name}`);
 
     const reader = new FileReader();
-    reader.onload = e => setPreview(e.target?.result as string);
+    reader.onload = (e) => setPreview(e.target?.result as string);
     reader.readAsDataURL(file);
-  }
+  };
 
   const handleSubmit = async () => {
     if (!filePath || !selectedFile || !fileInputRef) {
       toast.error("Debes seleccionar un archivo primero.");
       return;
-    };
+    }
 
     const loading = toast.loading("Subiendo imagen y guardando sus datos...");
     const res = await handleBrand(selectedFile, brandName);
-    
+
     if (res?.error) {
       toast.dismiss(loading);
       toast.error("Ocurrió un error al intentar subir los datos de la marca. Inténtalo más tarde.");
@@ -80,24 +80,32 @@ const AddBrand = () => {
     }
 
     handleModal();
-  }
+  };
 
   if (isOpen) {
     return (
       <Modal isOpen={isOpen} onClose={handleModal} className="w-2xl">
         <section className="relative w-full border border-(--primary)/50 bg-(--card) shadow-2xl">
           <div className="flex flex-col px-6 py-5 border-b border-(--border)">
-            <p className="text-sm font-medium text-(--primary) uppercase tracking-[0.2em]">Nueva Marca</p>
+            <p className="text-sm font-medium text-(--primary) uppercase tracking-[0.2em]">
+              Nueva Marca
+            </p>
             <h1 className="text-xl font-bold text-(--foreground)">Añadir una nueva marca</h1>
           </div>
           <div className="px-6 py-5 h-fit">
-            <label className="text-sm text-(--muted-foreground) uppercase tracking-[0.em]">Logo de la Marca</label>
-            <div className={`relative flex flex-col items-center justify-center rounded transition-colors ${
-              isDragging
-                ? "border-(--primary) bg-(--primary)/5"
-                : "border-(--border) hover:border-(--muted-foreground)/40"
+            <label
+              htmlFor="image-input"
+              className="text-sm text-(--muted-foreground) uppercase tracking-[0.em]"
+            >
+              Logo de la Marca
+            </label>
+            <div
+              className={`relative flex flex-col items-center justify-center rounded transition-colors ${
+                isDragging
+                  ? "border-(--primary) bg-(--primary)/5"
+                  : "border-(--border) hover:border-(--muted-foreground)/40"
               } ${preview ? "py-4" : "py-10 border-2 border-dashed"}`}
-              onDragOver={e => {
+              onDragOver={(e) => {
                 e.preventDefault();
                 setIsDragging(true);
               }}
@@ -128,12 +136,8 @@ const AddBrand = () => {
                   <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full border border-(--border) text-(--muted-foreground)">
                     <ImageIcon />
                   </div>
-                  <p className="mb-1 text-sm text-(--foreground)">
-                    Arrastra tu logo aquí
-                  </p>
-                  <p className="mb-3 text-xs text-(--muted-foreground)">
-                    PNG, JPG o SVG 
-                  </p>
+                  <p className="mb-1 text-sm text-(--foreground)">Arrastra tu logo aquí</p>
+                  <p className="mb-3 text-xs text-(--muted-foreground)">PNG, JPG o SVG</p>
                   <Button
                     type="secondary"
                     onClick={() => fileInputRef.current?.click()}
@@ -145,11 +149,12 @@ const AddBrand = () => {
                 </>
               )}
               <input
+                id="image-input"
                 ref={fileInputRef}
                 type="file"
                 accept="image/*"
                 className="hidden"
-                onChange={e => {
+                onChange={(e) => {
                   const file = e.target.files?.[0];
                   if (file) handleFile(file);
                 }}
@@ -157,7 +162,10 @@ const AddBrand = () => {
             </div>
           </div>
           <div className="px-6 py-5 h-fit">
-            <label htmlFor="brand-name" className="mb-2 block text-xs font-medium uppercase tracking-[0.2em] text-(--muted-foreground)">
+            <label
+              htmlFor="brand-name"
+              className="mb-2 block text-xs font-medium uppercase tracking-[0.2em] text-(--muted-foreground)"
+            >
               Nombre de la Marca
             </label>
             <input
@@ -165,8 +173,8 @@ const AddBrand = () => {
               type="text"
               placeholder="Marca Inc. Corp."
               value={brandName}
-              onChange={e => setBrandName(e.target.value)}
-              onKeyDown={e => {
+              onChange={(e) => setBrandName(e.target.value)}
+              onKeyDown={(e) => {
                 if (e.key === "Enter") handleSubmit();
               }}
               className="w-full border border-(--border) bg-(--background) px-4 py-3 text-sm text-(--foreground) placeholder:text-(--muted-foreground)/50 transition-colors focus:border-(--primary) focus:outline-none"
@@ -177,17 +185,25 @@ const AddBrand = () => {
             <Button type="secondary" className="p-6 cursor-pointer" onClick={handleModal}>
               <span className="font-bold">Volver</span>
             </Button>
-            <Button type="primary" className="p-6 flex flex-row gap-2 cursor-pointer" onClick={handleSubmit}>
+            <Button
+              type="primary"
+              className="p-6 flex flex-row gap-2 cursor-pointer"
+              onClick={handleSubmit}
+            >
               <Plus className="text-(--secondary)" />
               <span className="text-(--secondary) font-bold">Añadir Marca</span>
             </Button>
           </div>
         </section>
       </Modal>
-    )
+    );
   } else {
     return (
-      <button type="button" onClick={handleModal} className="group max-h-80 max-w-80 flex flex-col p-5 justify-center items-center gap-2 cursor-pointer hover:bg-(--border) transition-colors">
+      <button
+        type="button"
+        onClick={handleModal}
+        className="group max-h-80 max-w-80 flex flex-col p-5 justify-center items-center gap-2 cursor-pointer hover:bg-(--border) transition-colors"
+      >
         <span className="border-2 border-(--muted-foreground) border-dashed rounded-full p-4 group-hover:border-(--primary) transition-colors">
           <Plus
             className="text-(--muted-foreground) group-hover:text-(--primary) transition-colors"
@@ -195,9 +211,11 @@ const AddBrand = () => {
             height={80}
           />
         </span>
-        <span className="text-2xl text-(--muted-foreground) group-hover:text-(--primary) transition-colors">Añadir Marca</span>
+        <span className="text-2xl text-(--muted-foreground) group-hover:text-(--primary) transition-colors">
+          Añadir Marca
+        </span>
       </button>
-    )
+    );
   }
 };
 
