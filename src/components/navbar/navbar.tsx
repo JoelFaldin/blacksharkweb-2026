@@ -23,12 +23,12 @@ const Navbar = () => {
   };
 
   const router = useRouter();
-  const supabase = getSupabaseBrowserClient();
 
   const user: UserInterface | null = useAuthStore((s) => s.user);
   const clearUser = useAuthStore((s) => s.clearUser);
 
   const handleLogout = async () => {
+    const supabase = await getSupabaseBrowserClient();
     const loading = toast.loading("Cerrando sesión...");
 
     await supabase.auth.signOut();

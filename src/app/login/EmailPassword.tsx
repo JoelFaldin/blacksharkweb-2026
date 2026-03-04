@@ -28,7 +28,6 @@ export default function EmailPasswordDemo() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const supabase = getSupabaseBrowserClient();
 
   const saveUser = useAuthStore((s) => s.setUser);
 
@@ -42,6 +41,8 @@ export default function EmailPasswordDemo() {
       toast.error(firstError);
       return;
     }
+
+    const supabase = await getSupabaseBrowserClient();
 
     const loading = toast.loading(mode === "signup" ? "Creando cuenta..." : "Iniciando sesión...");
 

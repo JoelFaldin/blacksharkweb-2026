@@ -35,12 +35,11 @@ const ServiceTemplate = ({
 }: ServiceTemplateInterface) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const supabase = getSupabaseBrowserClient();
-
   const addItem = useCartStore((e) => e.addItem);
   const setCustomMessage = useContextStore((m) => m.resetMessage);
 
   const handleAddItem = async () => {
+    const supabase = await getSupabaseBrowserClient();
     const { data } = await supabase.auth.getClaims();
 
     if (!data) {

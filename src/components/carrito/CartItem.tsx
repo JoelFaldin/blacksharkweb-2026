@@ -43,6 +43,7 @@ const CartItem = ({ item }: CartItemInterface) => {
             src={item.img_url}
             alt={`Imagen de servicio ${item.desc}`}
             fill
+            sizes="(max-width: 768px) 100vw, 30vw"
             className="object-cover"
           />
         </div>
