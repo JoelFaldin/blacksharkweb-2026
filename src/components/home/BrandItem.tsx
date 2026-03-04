@@ -22,13 +22,16 @@ const BrandItem = ({ id, nombre, imagen, disponible }: BrandItemProps) => {
   const user = useAuthStore(u => u.user);
 
   const handleChangeVisibility = async () => {
-    const loading = toast.loading('Cambiando la visibilidad de la marca...');
-
-    await scheduleAvailableSync(id);
-    toast.dismiss(loading);
-    toast.success("Se ha actualizado la visibilidad de la marca.");
+    toast.promise(
+      scheduleAvailableSync(id),
+      {
+        loading: "Cambiando la visibilidad de la marca...",
+        success: "¡Se ha cambiado la visibilidad de la marca!",
+        error: "Error al cambiar la visibilidad de la marca",
+      }
+    )
   }
-  
+
   return (
     <div
       className={`group flex flex-col h-80 w-80 shrink-0 items-center justify-center bg-(--background) p-2 last:border-r-0 transition-colors hover:bg-(--card)`}

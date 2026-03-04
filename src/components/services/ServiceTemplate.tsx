@@ -54,11 +54,14 @@ const ServiceTemplate = ({ id, precio, descripcion_corta, nombre, imagen, index,
   }
 
   const handleChangeVisibility = async () => {
-    const loading = toast.loading("Cambiando la visibilidad del servicio...");
-
-    await scheduleServiceSync(id);
-    toast.dismiss(loading);
-    toast.success("¡Se ha cambiado la visibilidad del servicio!");
+    toast.promise(
+      scheduleServiceSync(id),
+      {
+        loading: "Cambiando la visibilidad del servicio...",
+        success: "¡Se ha cambiado la visibilidad del servicio!",
+        error: "Error al cambiar la visibilidad del servicio",
+      }
+    );
   }
 
   const handleModal = () => {
