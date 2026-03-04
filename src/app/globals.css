@@ -7,28 +7,17 @@
 
   --primary: #e8c468;
   --secondary: #171717;
-  
-  --foreground: #fafafa;
+
   --muted-foreground: #8f8f8f;
   --border: #262626;
-  --destructive: #EF4444;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-satoshi-light: 'Satoshi', sans-serif;
-  --font-satoshi-regular: 'Satoshi', sans-serif;
-  --font-satoshi-bold: 'Satoshi', sans-serif;
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --destructive: #ef4444;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     /* --background: #0a0a0a; */
     --foreground: #ededed;
-    
+
     --muted: oklch(0.96 0 0);
     --muted-foreground: oklch(0.5 0 0);
   }
@@ -82,7 +71,7 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 1000px var(--border) inset !important;
-  -webkit-text-fill-color: #fafafa !important;
+  -webkit-box-shadow: 0 0 0 1000px var(--border) inset;
+  -webkit-text-fill-color: #fafafa;
   transition: background-color 5000s ease-in-out 0s;
 }

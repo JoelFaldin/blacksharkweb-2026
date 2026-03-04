@@ -30,7 +30,7 @@ const ServiciosPage = async () => {
       <ServiceProcess />
       <ContactForm />
     </>
-  )
-}
+  );
+};
 
 export default ServiciosPage;

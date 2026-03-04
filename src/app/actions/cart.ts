@@ -1,22 +1,22 @@
-"use server"
+"use server";
 
 import { revalidatePath } from "next/cache";
 
-import { createSupabaseServerClient } from "@/lib/supabase/server"
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 type NewCartItem = {
-  id: number,
-  usuario_id: string,
-  servicio_id: number,
-  cantidad: number,
+  id: number;
+  usuario_id: string;
+  servicio_id: number;
+  cantidad: number;
   servicios: {
-    precio: number,
-    nombre: string,
+    precio: number;
+    nombre: string;
     imagen: {
       url: string;
-    } | null,
-  } | null,
-}
+    } | null;
+  } | null;
+};
 
 export async function addCartItem(service_id: number, user_id: string) {
   const supabase = await createSupabaseServerClient();
@@ -29,8 +29,9 @@ export async function addCartItem(service_id: number, user_id: string) {
         usuario_id: user_id,
         servicio_id: service_id,
       })
-      .select("id, usuario_id, servicio_id, cantidad, servicios:servicios(nombre, imagen:imagenes(url), precio)");
-    console.log(res)
+      .select(
+        "id, usuario_id, servicio_id, cantidad, servicios:servicios(nombre, imagen:imagenes(url), precio)",
+      );
 
     const data = res.data as unknown as NewCartItem[];
 
@@ -45,11 +46,7 @@ export async function removeCartItem(carrito_id: number) {
   const { data } = await supabase.auth.getClaims();
 
   if (data?.claims) {
-    await supabase
-      .from("carrito")
-      .delete()
-      .eq("id", carrito_id)
-      .eq("usuario_id", data.claims.sub);
+    await supabase.from("carrito").delete().eq("id", carrito_id).eq("usuario_id", data.claims.sub);
   }
 
   revalidatePath("/carrito");
@@ -60,10 +57,7 @@ export async function updateItemQuantity(carrito_id: number, quantity: number) {
   const { data } = await supabase.auth.getClaims();
 
   if (data) {
-    await supabase
-      .from("carrito")
-      .update({ cantidad: quantity })
-      .eq("id", carrito_id);
+    await supabase.from("carrito").update({ cantidad: quantity }).eq("id", carrito_id);
   }
 
   revalidatePath("/carrito");
