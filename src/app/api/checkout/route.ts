@@ -63,16 +63,16 @@ export async function POST() {
     ${itemsText}
     `
 
-  if (!process.env.ADMIN_EMAIL) {
-    throw new Error("No se ha definido el correo de administrador en .env.local")
-  }
+    if (!process.env.ADMIN_EMAIL) {
+      throw new Error("No se ha definido el correo de administrador en .env.local")
+    }
 
-  await resend.emails.send({
-    from: "onboarding@resend.dev",
-    to: process.env.ADMIN_EMAIL,
-    subject: "Nuevo pedido recibido",
-    text: emailContent,
-  })
+    await resend.emails.send({
+      from: "onboarding@resend.dev",
+      to: process.env.ADMIN_EMAIL,
+      subject: "Nuevo pedido recibido",
+      text: emailContent,
+    })
 
     return NextResponse.json({
       success: true,

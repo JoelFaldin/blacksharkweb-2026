@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { toast } from "sonner"
 
 export default function CheckoutButton() {
   const [loading, setLoading] = useState(false)
@@ -16,19 +17,19 @@ export default function CheckoutButton() {
       const data = await res.json()
 
       if (!res.ok) {
-        alert(data.error || "Error al enviar pedido")
+        toast.error(data.error || "Error al enviar pedido")
         return
       }
 
-      alert("Pedido enviado correctamente 🚀")
+      toast.success("Pedido enviado correctamente")
 
     } catch (error) {
       console.error(error)
-      alert("Error inesperado")
+      toast.error("Error inesperado")
     } finally {
       setLoading(false)
     }
-  }
+}
 
   return (
     <button onClick={handleCheckout} disabled={loading} className="cursor-pointer">
