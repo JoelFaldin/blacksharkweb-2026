@@ -61,3 +61,23 @@ export async function handleAddService(path: string, name: string, desc: string,
   revalidatePath("/servicios");
   return { success: true }
 }
+
+export async function updateServiceVisibility(service_id: number) {
+  const supabase = await createSupabaseServerClient();
+  const service = await supabase
+    .from('servicios')
+    .select('disponible')
+    .eq('id', service_id);
+
+  if (!service) return { success: false, error: "No service found with that id." };
+
+  await supabase
+    .from('servicios')
+    .update({
+      disponible: !service.data?.[0].disponible,
+    })
+    .eq('id', service_id);
+
+  revalidatePath("/servicios");
+  return { success: true }
+}

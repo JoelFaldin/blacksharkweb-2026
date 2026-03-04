@@ -16,7 +16,7 @@ const EyeClose = ({ className }: EyeCloseType) => {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="icon icon-tabler icons-tabler-outline icon-tabler-eye-off"
+      className={`${className} icon icon-tabler icons-tabler-outline icon-tabler-eye-off`}
     >
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M10.585 10.587a2 2 0 0 0 2.829 2.828" />

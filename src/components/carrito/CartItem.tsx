@@ -1,9 +1,9 @@
 import Image from "next/image";
 
 import priceFormat from "@/lib/utils/priceFormat";
-import TrashIcon from "../icons/Trash";
 import CartQuantity from "./CartQuantity";
 import { useCartStore } from "@/lib/store/useCartStore";
+import { TrashIcon } from "../icons";
 
 type CartItem = {
     id: number,

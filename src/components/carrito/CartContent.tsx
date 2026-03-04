@@ -1,11 +1,10 @@
 "use client"
 
 import { useCartStore } from "@/lib/store/useCartStore";
-import ShoppingCart from "../icons/ShoppingCart";
-import ArrowRight from "../icons/ArrowRight";
 import Button from "../Button";
 import CartItem from "./CartItem";
 import CartSummary from "./CartSummary";
+import { ArrowRight, ShoppingCart } from "../icons";
 
 type CartItemType = {
   id: number,
