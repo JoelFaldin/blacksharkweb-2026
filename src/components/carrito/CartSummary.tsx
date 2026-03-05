@@ -1,7 +1,6 @@
 import { useCartStore } from "@/lib/store/useCartStore";
 import priceFormat from "@/lib/utils/priceFormat";
-import Button from "../Button";
-import { ArrowRight } from "../icons";
+import CheckoutButton from "./ButtonCheckout";
 
 type CartItemType = {
   id: number;
@@ -64,14 +63,7 @@ const CartSummary = () => {
 
         <div className="my-2 border-t border-(--border)" />
 
-        <Button
-          type="primary"
-          href="/"
-          className="group flex flex-row items-center justify-center gap-2 p-6"
-        >
-          <span className="text-(--secondary) text-md font-bold`">Continuar con la compra</span>
-          <ArrowRight className="text-black group-hover:translate-x-1 transition-transform" />
-        </Button>
+        <CheckoutButton />
       </div>
     </section>
   );

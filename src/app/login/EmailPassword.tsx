@@ -6,10 +6,10 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
+import { EmailIcon, EyeClose, EyeOpen, PasswordIcon } from "@/components/icons";
+import { useAuthStore } from "@/lib/store/useAuthStore";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { loginSchema } from "@/lib/validations/auth.schema";
-import { useAuthStore } from "@/lib/store/useAuthStore";
-import { EmailIcon, EyeClose, EyeOpen, PasswordIcon } from "@/components/icons";
 
 type Mode = "signup" | "signin";
 
