@@ -1,7 +1,9 @@
 "use server"
 
-import { createSupabaseServerClient } from "@/lib/supabase/server"
 import { Resend } from "resend"
+
+import { createSupabaseServerClient } from "@/lib/supabase/server"
+
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 

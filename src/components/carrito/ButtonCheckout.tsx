@@ -1,9 +1,10 @@
 "use client"
 
-import { sendOrderEmail } from "@/app/actions/order-email"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { toast } from "sonner"
+
+import { sendOrderEmail } from "@/app/actions/order-email"
 
 export default function CheckoutButton() {
   const [loading, setLoading] = useState(false)
