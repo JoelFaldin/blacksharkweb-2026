@@ -11,7 +11,7 @@ interface ServiceGridInterface {
     } | null;
     nombre: string;
     disponible: boolean;
-  }[]
+  }[];
 }
 
 const ServiceGrid = ({ servicios }: ServiceGridInterface) => {
@@ -25,7 +25,7 @@ const ServiceGrid = ({ servicios }: ServiceGridInterface) => {
         <AddService />
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default ServiceGrid
+export default ServiceGrid;

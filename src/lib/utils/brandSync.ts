@@ -10,10 +10,10 @@ const scheduleAvailableSync = async (id: number) => {
   const timeout = setTimeout(async () => {
     await updateAvailableBrand(id);
     timers.delete(id);
-  }, 500)
+  }, 500);
 
   timers.set(id, timeout);
-}
+};
 
 export default scheduleAvailableSync;
 

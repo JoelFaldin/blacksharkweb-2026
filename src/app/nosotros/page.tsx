@@ -2,17 +2,17 @@ import ContactForm from "@/components/home/ContactForm";
 import { NosotrosHero } from "@/components/nosotros/NosotrosHero";
 import { NosotrosHistory } from "@/components/nosotros/NosotrosHistory";
 import NosotrosTeam from "@/components/nosotros/NosotrosTeam";
-import { createSupabaseServerClient } from "@/lib/supabase/server"
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export interface TeamInterface {
-  id: string,
-  name: string,
-  role: string,
-  contact: string,
-  description?: string,
+  id: string;
+  name: string;
+  role: string;
+  contact: string;
+  description?: string;
   imagenes: {
-    url: string,
-  },
+    url: string;
+  };
 }
 
 const Nosotros = async () => {
@@ -25,12 +25,12 @@ const Nosotros = async () => {
 
   return (
     <>
-      <NosotrosHero/>
-      <NosotrosHistory/>
-      <NosotrosTeam team={team}/>
+      <NosotrosHero />
+      <NosotrosHistory />
+      <NosotrosTeam team={team} />
       <ContactForm />
     </>
-  )
-}
+  );
+};
 
-export default Nosotros
+export default Nosotros;

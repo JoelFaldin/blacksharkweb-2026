@@ -4,8 +4,8 @@ import { useContextStore } from "@/lib/store/useContextStore";
 import { WhatsApp } from "./icons";
 
 export default function WhatsappButton() {
-  const message = useContextStore(m => m.message);
-  const whatsappLink = useContextStore(m => m.getLink);
+  const message = useContextStore((m) => m.message);
+  const whatsappLink = useContextStore((m) => m.getLink);
 
   return (
     <div className="group fixed bottom-6 right-6 z-50">

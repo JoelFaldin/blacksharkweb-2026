@@ -1,16 +1,17 @@
 import Link from "next/link";
-import { ReactNode } from "react"
+import type { ReactNode } from "react";
 
 interface ButtonInterface {
-  type: "primary" | "secondary",
-  href?: string,
-  onClick?: () => void,
-  className?: string,
-  children: ReactNode,
+  type: "primary" | "secondary";
+  href?: string;
+  onClick?: () => void;
+  className?: string;
+  children: ReactNode;
 }
 
 const Button = ({ type, href, onClick, className, children }: ButtonInterface) => {
-  const styles = type === "primary" ? "bg-(--primary)" : "bg-transparent hover:bg-(--) border border-(--border)";
+  const styles =
+    type === "primary" ? "bg-(--primary)" : "bg-transparent hover:bg-(--) border border-(--border)";
 
   if (href) {
     return (
@@ -19,17 +20,16 @@ const Button = ({ type, href, onClick, className, children }: ButtonInterface) =
           {children}
         </Link>
       </span>
-    )
+    );
   } else if (onClick) {
     return (
       <span className={`${styles}`}>
-        <button onClick={onClick} className={`${className}`}>
+        <button type="button" onClick={onClick} className={`${className}`}>
           {children}
         </button>
       </span>
-    )
+    );
   }
+};
 
-}
-
-export default Button
+export default Button;

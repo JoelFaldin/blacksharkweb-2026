@@ -1,16 +1,16 @@
-import PortfolioHero from "@/components/portfolio/PortfolioHero";
-import PortfolioGallery from "@/components/portfolio/PortfolioGallery";
 import ContactForm from "@/components/home/ContactForm";
+import PortfolioGallery from "@/components/portfolio/PortfolioGallery";
+import PortfolioHero from "@/components/portfolio/PortfolioHero";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 interface GalleryInterface {
-  id: number,
-  desc: string,
-  cliente: string,
+  id: number;
+  desc: string;
+  cliente: string;
   imagenes: {
-    url: string,
-    categoria: string,
-  }
+    url: string;
+    categoria: string;
+  };
 }
 
 export default async function Portafolio() {
@@ -18,7 +18,7 @@ export default async function Portafolio() {
   const { data } = await supabase
     .from("galeria")
     .select(`id, desc, cliente, imagenes("url", "categoria")`);
-  
+
   const images = data as unknown as GalleryInterface[];
 
   return (

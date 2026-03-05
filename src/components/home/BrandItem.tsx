@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import Image from "next/image"
+import Image from "next/image";
 import { toast } from "sonner";
 
 import { useAuthStore } from "@/lib/store/useAuthStore";
@@ -9,7 +9,7 @@ import Confirm from "../Confirm";
 import { EyeClose, XIcon } from "../icons";
 
 interface BrandItemProps {
-  id: number,
+  id: number;
   nombre: string;
   imagen: {
     url: string;
@@ -18,26 +18,23 @@ interface BrandItemProps {
 }
 
 const BrandItem = ({ id, nombre, imagen, disponible }: BrandItemProps) => {
-  const user = useAuthStore(u => u.user);
+  const user = useAuthStore((u) => u.user);
 
   const handleChangeVisibility = async () => {
-    toast.promise(
-      scheduleAvailableSync(id),
-      {
-        loading: "Cambiando la visibilidad de la marca...",
-        success: "¡Se ha cambiado la visibilidad de la marca!",
-        error: "Error al cambiar la visibilidad de la marca",
-      }
-    )
-  }
+    toast.promise(scheduleAvailableSync(id), {
+      loading: "Cambiando la visibilidad de la marca...",
+      success: "¡Se ha cambiado la visibilidad de la marca!",
+      error: "Error al cambiar la visibilidad de la marca",
+    });
+  };
 
   return (
     <div
       className={`group flex flex-col h-80 w-80 shrink-0 items-center justify-center bg-(--background) p-2 last:border-r-0 transition-colors hover:bg-(--card)`}
     >
       <div className="relative aspect-square mb-4 w-full overflow-hidden">
-        {user?.role === "admin" && (
-          disponible ? (
+        {user?.role === "admin" &&
+          (disponible ? (
             <button
               type="button"
               onClick={handleChangeVisibility}
@@ -45,14 +42,20 @@ const BrandItem = ({ id, nombre, imagen, disponible }: BrandItemProps) => {
             >
               <XIcon />
             </button>
-          ) : <>
-            <span className="z-10 px-1 absolute top-2 left-2 flex flex-row justify-center items-center gap-2 rounded-md border border-(--border) font-semibold bg-(--background)/90 text-[10px] uppercase tracking-[0.15em] text-(--muted-foreground)">
-              <EyeClose />
-              <span>Invisible</span>
-            </span>
-            <Confirm visible={disponible} changeVisibility={handleChangeVisibility} text="esta marca" position="left" />
-          </>
-        )}
+          ) : (
+            <>
+              <span className="z-10 px-1 absolute top-2 left-2 flex flex-row justify-center items-center gap-2 rounded-md border border-(--border) font-semibold bg-(--background)/90 text-[10px] uppercase tracking-[0.15em] text-(--muted-foreground)">
+                <EyeClose />
+                <span>Invisible</span>
+              </span>
+              <Confirm
+                visible={disponible}
+                changeVisibility={handleChangeVisibility}
+                text="esta marca"
+                position="left"
+              />
+            </>
+          ))}
 
         <Image
           src={imagen?.url ?? ""}
@@ -66,7 +69,7 @@ const BrandItem = ({ id, nombre, imagen, disponible }: BrandItemProps) => {
         {nombre}
       </span>
     </div>
-  )
-}
+  );
+};
 
 export default BrandItem;
