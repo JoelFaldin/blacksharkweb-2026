@@ -1,42 +1,49 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import { toast } from "sonner"
-import { useState } from "react"
+import Image from "next/image";
+import { useState } from "react";
+import { toast } from "sonner";
 
-import Button from "../Button"
-import { useCartStore } from "@/lib/store/useCartStore"
-import { getSupabaseBrowserClient } from "@/lib/supabase/client"
-import priceFormat from "@/lib/utils/priceFormat"
-import ServiceModal from "./ServiceModal"
-import { useContextStore } from "@/lib/store/useContextStore"
-import { useAuthStore } from "@/lib/store/useAuthStore"
-import scheduleServiceSync from "@/lib/utils/serviceSync"
-import Confirm from "../Confirm"
-import { ArrowUpRight, EyeClose, Send, ShoppingCart, XIcon } from "../icons"
+import { useAuthStore } from "@/lib/store/useAuthStore";
+import { useCartStore } from "@/lib/store/useCartStore";
+import { useContextStore } from "@/lib/store/useContextStore";
+import { getSupabaseBrowserClient } from "@/lib/supabase/client";
+import priceFormat from "@/lib/utils/priceFormat";
+import scheduleServiceSync from "@/lib/utils/serviceSync";
+import Button from "../Button";
+import Confirm from "../Confirm";
+import { ArrowUpRight, EyeClose, Send, ShoppingCart, XIcon } from "../icons";
+import ServiceModal from "./ServiceModal";
 
 interface ServiceTemplateInterface {
-  id: number,
-  precio: string,
-  descripcion_corta: string,
-  nombre: string,
+  id: number;
+  precio: string;
+  descripcion_corta: string;
+  nombre: string;
   imagen: {
-    url: string,
-  } | null,
-  index: number,
-  disponible: boolean,
+    url: string;
+  } | null;
+  index: number;
+  disponible: boolean;
 }
 
-const ServiceTemplate = ({ id, precio, descripcion_corta, nombre, imagen, index, disponible }: ServiceTemplateInterface) => {
-  const [isOpen, setIsOpen] = useState(false)
+const ServiceTemplate = ({
+  id,
+  precio,
+  descripcion_corta,
+  nombre,
+  imagen,
+  index,
+  disponible,
+}: ServiceTemplateInterface) => {
+  const [isOpen, setIsOpen] = useState(false);
 
-  const supabase = getSupabaseBrowserClient();
-  
-  const addItem = useCartStore(e => e.addItem);
-  const setCustomMessage = useContextStore(m => m.resetMessage);
-  const user = useAuthStore(u => u.user);
-  
+  const addItem = useCartStore((e) => e.addItem);
+  const setCustomMessage = useContextStore((m) => m.resetMessage);
+  const user = useAuthStore((s) => s.user);
+
   const handleAddItem = async () => {
+    const supabase = await getSupabaseBrowserClient();
     const { data } = await supabase.auth.getClaims();
 
     if (!data) {
@@ -47,32 +54,29 @@ const ServiceTemplate = ({ id, precio, descripcion_corta, nombre, imagen, index,
     addItem(id, data.claims.sub);
 
     toast.success("¡Se ha agregado el servicio al carrito!");
-  }
+  };
 
   const handleChangeVisibility = async () => {
-    toast.promise(
-      scheduleServiceSync(id),
-      {
-        loading: "Cambiando la visibilidad del servicio...",
-        success: "¡Se ha cambiado la visibilidad del servicio!",
-        error: "Error al cambiar la visibilidad del servicio",
-      }
-    );
-  }
+    const loading = toast.loading("Cambiando la visibilidad del servicio...");
+
+    await scheduleServiceSync(id);
+    toast.dismiss(loading);
+    toast.success("¡Se ha cambiado la visibilidad del servicio!");
+  };
 
   const handleModal = () => {
     if (!isOpen) {
       setIsOpen(true);
       // Desactivar el scroll cuando se abre el modal:
-      document.body.classList.add('overflow-hidden');
+      document.body.classList.add("overflow-hidden");
     } else {
       setIsOpen(false);
       // Reactivar el scroll cuando se cierra el modal:
-      document.body.classList.remove('overflow-hidden');
+      document.body.classList.remove("overflow-hidden");
     }
 
     setCustomMessage();
-  }
+  };
 
   return (
     <div className="group relative flex flex-col border border-(--border) bg-(--background) transition-colors hover:border-(--primary)/40">
@@ -82,8 +86,8 @@ const ServiceTemplate = ({ id, precio, descripcion_corta, nombre, imagen, index,
           {String(index + 1).padStart(2, "0")}
         </span>
       </div>
-      {user?.role === "admin" && (
-        disponible ? (
+      {user?.role === "admin" &&
+        (disponible ? (
           <div className="absolute right-4 top-4 z-10">
             <button
               type="button"
@@ -96,13 +100,17 @@ const ServiceTemplate = ({ id, precio, descripcion_corta, nombre, imagen, index,
         ) : (
           <>
             <span className="z-10 px-1 absolute top-2 right-2 flex flex-row justify-center items-center gap-2 rounded-md border border-(--border) font-semibold bg-(--background)/90 text-[10px] uppercase tracking-[0.15em] text-(--muted-foreground)">
-                <EyeClose />
-                <span>Invisible</span>
-              </span>
-            <Confirm visible={disponible} changeVisibility={handleChangeVisibility} text="este servicio" position="right" />
+              <EyeClose />
+              <span>Invisible</span>
+            </span>
+            <Confirm
+              visible={disponible}
+              changeVisibility={handleChangeVisibility}
+              text="este servicio"
+              position="right"
+            />
           </>
-        )
-      )}
+        ))}
 
       {/* Imagen */}
       <div className="relative aspect-[4/3] overflow-hidden">
@@ -134,7 +142,7 @@ const ServiceTemplate = ({ id, precio, descripcion_corta, nombre, imagen, index,
             Precio
           </span>
           <span className="text-xl font-bold text-(--primary)">
-            {priceFormat(parseInt(precio))}
+            {priceFormat(parseInt(precio, 10))}
           </span>
         </div>
 
@@ -147,7 +155,11 @@ const ServiceTemplate = ({ id, precio, descripcion_corta, nombre, imagen, index,
             <ShoppingCart />
             <span>Añadir al carrito</span>
           </button>
-          <Button type="primary" onClick={handleModal} className="flex flex-row items-center justify-center rounded-lg p-6 gap-x-4 cursor-pointer">
+          <Button
+            type="primary"
+            onClick={handleModal}
+            className="flex flex-row items-center justify-center rounded-lg p-6 gap-x-4 cursor-pointer"
+          >
             <Send className="text-(--secondary)" />
             <span className="text-(--secondary)">Solicitar Servicio</span>
           </Button>
@@ -163,7 +175,7 @@ const ServiceTemplate = ({ id, precio, descripcion_corta, nombre, imagen, index,
         isOpen={isOpen}
       />
     </div>
-  )
-}
+  );
+};
 
-export default ServiceTemplate
+export default ServiceTemplate;

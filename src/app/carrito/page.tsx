@@ -1,9 +1,7 @@
 import CartContent from "@/components/carrito/CartContent";
 
 const Carrito = async () => {
-  return (
-    <CartContent />
-  );
+  return <CartContent />;
 };
 
 export default Carrito;

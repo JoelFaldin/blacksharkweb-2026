@@ -1,17 +1,17 @@
-"use client"
+"use client";
 
-import { useRef, useState } from "react";
 import Image from "next/image";
+import { useRef, useState } from "react";
 import { toast } from "sonner";
 
-import { useAuthStore } from "@/lib/store/useAuthStore"
-import Modal from "../Modal";
-import Button from "../Button";
 import { handleService } from "@/app/actions/service";
+import { useAuthStore } from "@/lib/store/useAuthStore";
+import Button from "../Button";
 import { ImageIcon, Plus, Upload } from "../icons";
+import Modal from "../Modal";
 
 const AddService = () => {
-  const user = useAuthStore(u => u.user);
+  const user = useAuthStore((u) => u.user);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -23,13 +23,13 @@ const AddService = () => {
   const [serviceDesc, setServiceDesc] = useState("");
   const [servicePrice, setServicePrice] = useState("");
 
-  if (user?.role !== 'admin') return;
+  if (user?.role !== "admin") return;
 
   const handleModal = () => {
     if (!showModal) {
       setShowModal(true);
       // Desactivar el scroll cuando se abre el modal:
-      document.body.classList.add('overflow-hidden');
+      document.body.classList.add("overflow-hidden");
     } else {
       setPreview(null);
       setServiceName("");
@@ -38,9 +38,9 @@ const AddService = () => {
 
       setShowModal(false);
       // Reactivar el scroll cuando se cierra el modal:
-      document.body.classList.remove('overflow-hidden');
+      document.body.classList.remove("overflow-hidden");
     }
-  }
+  };
 
   const handleDrop = (event: React.DragEvent) => {
     event.preventDefault();
@@ -48,18 +48,18 @@ const AddService = () => {
     setIsDragging(false);
     const file = event.dataTransfer.files?.[0];
     if (file) handleFile(file);
-  }
+  };
 
   const handleFile = (file: File) => {
-    if (!file.type.startsWith('image/')) return;
+    if (!file.type.startsWith("image/")) return;
 
     setFile(file);
     setFilePath(`servicios/${file.name}`);
 
     const render = new FileReader();
-    render.onload = e => setPreview(e.target?.result as string);
+    render.onload = (e) => setPreview(e.target?.result as string);
     render.readAsDataURL(file);
-  }
+  };
 
   const handleSubmit = async () => {
     if (!filePath || !file || !fileInputRef) {
@@ -68,38 +68,48 @@ const AddService = () => {
     }
 
     const loading = toast.loading("Subiendo imagen y guardando los datos del servicio...");
-    const res = await handleService(file, serviceName, serviceDesc, parseInt(servicePrice));
+    const res = await handleService(file, serviceName, serviceDesc, parseInt(servicePrice, 10));
 
     if (res?.error) {
       toast.dismiss(loading);
-      toast.error("Ocurrió un error al intentar subir los datos del servicio. Inténtalo más tarde.");
+      toast.error(
+        "Ocurrió un error al intentar subir los datos del servicio. Inténtalo más tarde.",
+      );
       console.log(res.error);
 
       return;
     } else {
       toast.dismiss(loading);
-      toast.success("¡Se han guardado con éxito los datos del servicio!")
+      toast.success("¡Se han guardado con éxito los datos del servicio!");
     }
 
     handleModal();
-  }
+  };
 
   if (showModal) {
     return (
       <Modal isOpen={showModal} onClose={handleModal} className="w-2xl">
         <section className="relative w-full border border-(--primary)/50 bg-(--card) shadow-2xl">
           <div className="flex flex-col px-6 py-5 border-b border-(--border)">
-            <p className="text-sm font-medium text-(--primary) uppercase tracking-[0.2em]">Nuevo Servicio</p>
+            <p className="text-sm font-medium text-(--primary) uppercase tracking-[0.2em]">
+              Nuevo Servicio
+            </p>
             <h1 className="text-xl font-bold text-(--foreground)">Añade un Nuevo Servicio</h1>
           </div>
           <div className="px-6 py-5 h-fit">
-            <label className="text-sm text-(--muted-foreground) uppercase tracking-[0.em]">Logo de la Marca</label>
-            <div className={`relative flex flex-col items-center justify-center rounded transition-colors ${
-              isDragging
-                ? "border-(--primary) bg-(--primary)/5"
-                : "border-(--border) hover:border-(--muted-foreground)/40"
+            <label
+              htmlFor="file-input-service"
+              className="text-sm text-(--muted-foreground) uppercase tracking-[0.em]"
+            >
+              Logo de la Marca
+            </label>
+            <div
+              className={`relative flex flex-col items-center justify-center rounded transition-colors ${
+                isDragging
+                  ? "border-(--primary) bg-(--primary)/5"
+                  : "border-(--border) hover:border-(--muted-foreground)/40"
               } ${preview ? "py-4" : "py-10 border-2 border-dashed"}`}
-              onDragOver={e => {
+              onDragOver={(e) => {
                 e.preventDefault();
                 setIsDragging(true);
               }}
@@ -133,9 +143,7 @@ const AddService = () => {
                   <p className="mb-1 text-sm text-(--foreground)">
                     Arrastra la imagen del nuevo servicio aquí
                   </p>
-                  <p className="mb-3 text-xs text-(--muted-foreground)">
-                    PNG, JPG o SVG 
-                  </p>
+                  <p className="mb-3 text-xs text-(--muted-foreground)">PNG, JPG o SVG</p>
                   <Button
                     type="secondary"
                     onClick={() => fileInputRef.current?.click()}
@@ -147,11 +155,12 @@ const AddService = () => {
                 </>
               )}
               <input
+                id="file-input-service"
                 ref={fileInputRef}
                 type="file"
                 accept="image/*"
                 className="hidden"
-                onChange={e => {
+                onChange={(e) => {
                   const file = e.target.files?.[0];
                   if (file) handleFile(file);
                 }}
@@ -159,7 +168,10 @@ const AddService = () => {
             </div>
           </div>
           <div className="px-6 py-5 h-fit flex flex-col gap-2">
-            <label htmlFor="service-name" className="mb-2 block text-xs font-medium uppercase tracking-[0.2em] text-(--muted-foreground)">
+            <label
+              htmlFor="service-name"
+              className="mb-2 block text-xs font-medium uppercase tracking-[0.2em] text-(--muted-foreground)"
+            >
               Nombre del Servicio
             </label>
             <input
@@ -167,31 +179,37 @@ const AddService = () => {
               type="text"
               placeholder="Diseño Gráfico"
               value={serviceName}
-              onChange={e => setServiceName(e.target.value)}
+              onChange={(e) => setServiceName(e.target.value)}
               className="w-full border border-(--border) bg-(--background) px-4 py-3 text-sm text-(--foreground) placeholder:text-(--muted-foreground)/50 transition-colors focus:border-(--primary) focus:outline-none"
             />
 
-            <label htmlFor="service-desc" className="mb-2 block text-xs font-medium uppercase trakcing-[0.2em] text-(--muted-foreground)">
+            <label
+              htmlFor="service-desc"
+              className="mb-2 block text-xs font-medium uppercase trakcing-[0.2em] text-(--muted-foreground)"
+            >
               Descripción
             </label>
             <textarea
               id="service-desc"
               placeholder="Detalla una descripción del servicio..."
               value={serviceDesc}
-              onChange={e => setServiceDesc(e.target.value)}
+              onChange={(e) => setServiceDesc(e.target.value)}
               className="w-full border border-(--border) bg-(--background) px-4 py-3 text-sm text-(--foreground) placeholder:text-(--muted-foreground)/50 transition-colors focus:border-(--primary) focus:outline-none"
             />
 
-            <label htmlFor="service-price" className="mb-2 block text-xs font-medium uppercase trakcing-[0.2em] text-(--muted-foreground)">
+            <label
+              htmlFor="service-price"
+              className="mb-2 block text-xs font-medium uppercase trakcing-[0.2em] text-(--muted-foreground)"
+            >
               Precio
             </label>
             <input
               id="service-price"
               type="text"
               value={servicePrice}
-              onChange={e => {
-                const int = parseInt(e.target.value);
-                if (isNaN(int) && e.target.value !== "") return;
+              onChange={(e) => {
+                const int = parseInt(e.target.value, 10);
+                if (Number.isNaN(int) && e.target.value !== "") return;
                 setServicePrice(e.target.value);
               }}
               className="w-full border border-(--border) bg-(--background) px-4 py-3 text-sm text-(--foreground) placeholder:text-(--muted-foreground)/50 transition-colors focus:border-(--primary) focus:outline-none"
@@ -202,14 +220,18 @@ const AddService = () => {
             <Button type="secondary" className="p-6 cursor-pointer" onClick={handleModal}>
               <span className="font-bold">Volver</span>
             </Button>
-            <Button type="primary" className="p-6 flex flex-row gap-2 cursor-pointer" onClick={handleSubmit}>
+            <Button
+              type="primary"
+              className="p-6 flex flex-row gap-2 cursor-pointer"
+              onClick={handleSubmit}
+            >
               <Plus className="text-(--secondary)" />
               <span className="text-(--secondary) font-bold">Añadir Servicio</span>
             </Button>
           </div>
         </section>
       </Modal>
-    )
+    );
   } else {
     return (
       <button
@@ -224,8 +246,8 @@ const AddService = () => {
           Añadir Nuevo Servicio
         </span>
       </button>
-    )
+    );
   }
-}
+};
 
 export default AddService;

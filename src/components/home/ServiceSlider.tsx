@@ -5,7 +5,7 @@ const services = [
   "Estampados",
   "Estampados x Mayor",
   "Servicios extras",
-]
+];
 
 const ServiceSlider = () => {
   // Slider de servicios
@@ -39,11 +39,11 @@ const ServiceSlider = () => {
                 </span>
               </div>
             ))}
-          </div>          
+          </div>
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default ServiceSlider
+export default ServiceSlider;

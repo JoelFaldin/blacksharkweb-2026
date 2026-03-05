@@ -11,11 +11,14 @@ const ServiceHero = () => {
           </h1>
         </span>
         <span className="text-xl text-(--muted-foreground) text-end max-w-md">
-          <p>Cada proyecto es importante. Combinamos pensamiento estratégico con diseño elegante y único que se alinea con tu marca.</p>
+          <p>
+            Cada proyecto es importante. Combinamos pensamiento estratégico con diseño elegante y
+            único que se alinea con tu marca.
+          </p>
         </span>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default ServiceHero
+export default ServiceHero;

@@ -1,7 +1,8 @@
-"use client"
+"use client";
+
+import { useEffect } from "react";
 
 import { useContextStore } from "@/lib/store/useContextStore";
-import { useEffect } from "react";
 
 export default function MessageProvider() {
   const resetMessage = useContextStore((m) => m.resetMessage);

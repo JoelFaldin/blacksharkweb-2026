@@ -13,7 +13,7 @@ const scheduleQuantitySync = async (carrito_id: number, quantity: number) => {
   }, 500);
 
   timers.set(carrito_id, timeout);
-}
+};
 
 export default scheduleQuantitySync;
 

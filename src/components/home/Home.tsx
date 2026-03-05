@@ -26,21 +26,21 @@ const Home = () => {
           tu marca
         </h1>
         <p className="max-w-2xl text-2xl text-(--muted-foreground) text-center text-pretty mb-10 mx-auto">
-          Transformamos la imagen de tu marca para capturar la atención de tus clientes.
-          Desde el concepto hasta la ejecución, traemos tus ideas a la realidad con calidad excelente.
+          Transformamos la imagen de tu marca para capturar la atención de tus clientes. Desde el
+          concepto hasta la ejecución, traemos tus ideas a la realidad con calidad excelente.
         </p>
 
         <section className="flex flex-row justify-center items-center gap-6 mb-20">
-          <Button type="primary" href="/portafolio" className="group flex flex-row items-center justify-center gap-x-2 p-6">
-            <span className="text-(--secondary) text-2xl font-bold">
-              Portafolio
-            </span>
+          <Button
+            type="primary"
+            href="/portafolio"
+            className="group flex flex-row items-center justify-center gap-x-2 p-6"
+          >
+            <span className="text-(--secondary) text-2xl font-bold">Portafolio</span>
             <ArrowRight className="text-black group-hover:translate-x-1 transition-transform" />
           </Button>
           <Button type="secondary" href="/nosotros" className="flex flex-row p-6">
-            <span className="text-(--foreground) text-2xl font-bold">
-              Contáctanos
-            </span>
+            <span className="text-(--foreground) text-2xl font-bold">Contáctanos</span>
           </Button>
         </section>
 
@@ -50,7 +50,7 @@ const Home = () => {
         </section>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
