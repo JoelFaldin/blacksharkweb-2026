@@ -33,7 +33,7 @@ export default function CheckoutButton() {
 }
 
   return (
-    <button onClick={handleCheckout} disabled={loading} className="cursor-pointer">
+    <button onClick={handleCheckout} type="button" disabled={loading} className="cursor-pointer">
       {loading ? "Enviando..." : "Finalizar compra"}
     </button>
   )

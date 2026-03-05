@@ -4,7 +4,6 @@ import { Resend } from "resend"
 
 import { createSupabaseServerClient } from "@/lib/supabase/server"
 
-
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function sendOrderEmail() {

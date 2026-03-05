@@ -4,12 +4,12 @@ import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
 
-import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { EmailIcon } from "@/components/icons";
+import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 
 export default function RecuperarContrasenaLogic() {
   const [email, setEmail] = useState("");
-  
+
   async function handleSubmit(e: React.FormEvent) {
     const supabase = await getSupabaseBrowserClient();
     e.preventDefault();
