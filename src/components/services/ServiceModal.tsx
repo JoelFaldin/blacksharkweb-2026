@@ -6,8 +6,7 @@ import { useState } from "react";
 import { useContextStore } from "@/lib/store/useContextStore";
 import priceFormat from "@/lib/utils/priceFormat";
 import Button from "../Button";
-import Alert from "../icons/Alert";
-import ArrowRight from "../icons/ArrowRight";
+import { Alert, ArrowRight } from "../icons";
 import Modal from "../Modal";
 
 type ServiceModalType = {

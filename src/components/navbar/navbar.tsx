@@ -7,8 +7,7 @@ import { toast } from "sonner";
 
 import { useAuthStore } from "@/lib/store/useAuthStore";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
-import ShoppingCart from "../icons/ShoppingCart";
-import User from "../icons/User";
+import { ShoppingCart, User } from "../icons";
 
 interface UserInterface {
   username?: string;

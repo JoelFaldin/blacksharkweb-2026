@@ -62,14 +62,12 @@ export async function updateBrandVisibility(id: number) {
 
   if (!brand) return;
 
-  const res = await supabase
+  await supabase
     .from("marcas")
     .update({
       disponible: !brand.data?.[0].disponible,
     })
     .eq("id", id);
-
-  console.log(res);
 
   revalidatePath("/");
 }

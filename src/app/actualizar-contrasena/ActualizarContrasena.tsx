@@ -3,12 +3,9 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-
-import EyeOpen from "@/components/icons/EyeOpen";
-import EyeClose from "@/components/icons/EyeOpen";
-import PasswordIcon from "@/components/icons/Password";
-import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { updatePasswordSchema } from "@/lib/validations/auth.schema";
+import { EyeClose, EyeOpen, PasswordIcon } from "@/components/icons";
+import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 
 export default async function ActualizarContrasena() {
   const supabase = await getSupabaseBrowserClient();

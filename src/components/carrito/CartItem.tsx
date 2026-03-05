@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import { useCartStore } from "@/lib/store/useCartStore";
 import priceFormat from "@/lib/utils/priceFormat";
-import TrashIcon from "../icons/Trash";
+import { TrashIcon } from "../icons";
 import CartQuantity from "./CartQuantity";
 
 type CartItem = {

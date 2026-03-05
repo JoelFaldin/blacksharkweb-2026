@@ -7,9 +7,7 @@ import { toast } from "sonner";
 import { handleService } from "@/app/actions/service";
 import { useAuthStore } from "@/lib/store/useAuthStore";
 import Button from "../Button";
-import ImageIcon from "../icons/ImageIcon";
-import Plus from "../icons/Plus";
-import Upload from "../icons/Upload";
+import { ImageIcon, Plus, Upload } from "../icons";
 import Modal from "../Modal";
 
 const AddService = () => {
@@ -33,8 +31,6 @@ const AddService = () => {
       // Desactivar el scroll cuando se abre el modal:
       document.body.classList.add("overflow-hidden");
     } else {
-      setShowModal(false);
-
       setPreview(null);
       setServiceName("");
       setServiceDesc("");

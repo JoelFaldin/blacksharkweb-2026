@@ -4,14 +4,14 @@ import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
 
-import EmailIcon from "@/components/icons/Email";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
+import { EmailIcon } from "@/components/icons";
 
 export default function RecuperarContrasenaLogic() {
   const [email, setEmail] = useState("");
-  const supabase = getSupabaseBrowserClient();
-
+  
   async function handleSubmit(e: React.FormEvent) {
+    const supabase = await getSupabaseBrowserClient();
     e.preventDefault();
 
     const loading = toast.loading("Enviando enlace...");

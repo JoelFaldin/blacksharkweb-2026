@@ -12,6 +12,7 @@ interface ServicioInterface {
     url: string;
   } | null;
   nombre: string;
+  disponible: boolean;
 }
 
 const ServiciosPage = async () => {
@@ -19,7 +20,7 @@ const ServiciosPage = async () => {
 
   const { data: serviciosData } = await supabase
     .from("servicios")
-    .select(`id, precio, descripcion_corta, imagen:imagenes(url), nombre`);
+    .select(`id, precio, descripcion_corta, imagen:imagenes(url), nombre, disponible`);
 
   const servicios = serviciosData as unknown as ServicioInterface[];
 

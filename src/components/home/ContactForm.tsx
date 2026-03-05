@@ -1,5 +1,5 @@
 import Button from "../Button";
-import ArrowRight from "../icons/ArrowRight";
+import { ArrowRight } from "../icons";
 
 const ContactForm = () => {
   return (

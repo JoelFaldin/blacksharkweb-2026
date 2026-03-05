@@ -1,7 +1,7 @@
 import { useCartStore } from "@/lib/store/useCartStore";
 import priceFormat from "@/lib/utils/priceFormat";
 import Button from "../Button";
-import ArrowRight from "../icons/ArrowRight";
+import { ArrowRight } from "../icons";
 
 type CartItemType = {
   id: number;

@@ -2,8 +2,7 @@
 
 import { useCartStore } from "@/lib/store/useCartStore";
 import Button from "../Button";
-import ArrowRight from "../icons/ArrowRight";
-import ShoppingCart from "../icons/ShoppingCart";
+import { ArrowRight, ShoppingCart } from "../icons";
 import CartItem from "./CartItem";
 import CartSummary from "./CartSummary";
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useContextStore } from "@/lib/store/useContextStore";
-import { WhatsApp } from "./icons/Whatsapp";
+import { WhatsApp } from "./icons";
 
 export default function WhatsappButton() {
   const message = useContextStore((m) => m.message);

@@ -70,7 +70,6 @@ export const useCartStore = create<CartState>((set, get) => ({
 
     if (!findItem) {
       const res: NewCartItem[] | undefined = await addCartItem(service_id, user_id);
-      console.log(res);
 
       if (!res || !Array.isArray(res) || res.length === 0) return;
 

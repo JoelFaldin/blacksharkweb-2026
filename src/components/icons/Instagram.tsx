@@ -24,4 +24,4 @@ const Instagram = ({ width, height }: InstagramInterface) => (
   </svg>
 );
 
-export { Instagram };
+export default Instagram;
