@@ -80,6 +80,15 @@ export async function sendOrderEmail() {
       text: emailContent,
     })
 
+    const { error: deleteError } = await supabase
+    .from("carrito")
+    .delete()
+    .eq("usuario_id", user.id)
+
+    if (deleteError) {
+    console.error("Error limpiando el carrito:", deleteError)
+    }
+
     return {
       success: true,
     }

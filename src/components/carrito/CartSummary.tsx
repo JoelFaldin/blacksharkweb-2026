@@ -81,7 +81,7 @@ const CartSummary = () => {
 
         <div className="my-2 border-t border-(--border)" />
 
-        <Button type="primary" href="/" className="group flex flex-row items-center justify-center gap-2 p-6">
+        <Button type="primary" href="/carrito" className="group flex flex-row items-center justify-center gap-2 p-6">
           <span className="text-(--secondary) text-md font-bold`">
             <CheckoutButton/>
           </span>

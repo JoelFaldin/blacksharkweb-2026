@@ -1,12 +1,14 @@
 "use client"
 
 import { sendOrderEmail } from "@/app/actions/order-email"
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { toast } from "sonner"
 
 export default function CheckoutButton() {
   const [loading, setLoading] = useState(false)
-
+  const router = useRouter()
+  
   const handleCheckout = async () => {
     try {
       setLoading(true)
@@ -19,6 +21,7 @@ export default function CheckoutButton() {
       }
 
       toast.success("Pedido enviado correctamente")
+      router.refresh();
 
     } catch (error) {
       console.error(error)
