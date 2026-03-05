@@ -55,19 +55,19 @@ export async function sendOrderEmail() {
     const itemsText = cartItems
       .map((item) => {
         return `
-            Servicio: ${item.servicios?.nombre}
-            Precio: $${item.servicios?.precio}
-            Cantidad: ${item.cantidad}
-            ----------------------------------
-            `
-                })
-                .join("\n")
+Servicio: ${item.servicios?.nombre}
+Precio: $${item.servicios?.precio}
+Cantidad: ${item.cantidad}
+----------------------------------
+`
+    })
+    .join("\n")
 
-                const emailContent = `
-            Nuevo pedido de: ${user.email}
+    const emailContent = `
+Nuevo pedido de: ${user.email}
 
-            ${itemsText}
-            `
+${itemsText}
+    `
 
     if (!process.env.ADMIN_EMAIL) {
       throw new Error("ADMIN_EMAIL no definido")
