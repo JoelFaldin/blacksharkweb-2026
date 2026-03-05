@@ -5,6 +5,7 @@ import { useState } from "react"
 import { toast } from "sonner"
 
 import { sendOrderEmail } from "@/app/actions/order-email"
+import { ArrowRight } from "../icons"
 
 export default function CheckoutButton() {
   const [loading, setLoading] = useState(false)
@@ -16,7 +17,7 @@ export default function CheckoutButton() {
 
       const res = await sendOrderEmail()
 
-      if (!res.success) {
+      if (!res?.success) {
         toast.error("Error al enviar pedido")
         return
       }
@@ -30,11 +31,19 @@ export default function CheckoutButton() {
     } finally {
       setLoading(false)
     }
-}
+  }
 
   return (
-    <button onClick={handleCheckout} type="button" disabled={loading} className="cursor-pointer">
-      {loading ? "Enviando..." : "Finalizar compra"}
+    <button 
+      onClick={handleCheckout} 
+      type="button" 
+      disabled={loading} 
+      className="cursor-pointer group flex flex-row items-center justify-center gap-2 w-full bg-(--primary) text-(--primary-foreground) p-6 rounded-md font-bold hover:opacity-90 transition-opacity disabled:opacity-50"
+    >
+      <span className="text-md text-(--background) font-bold">
+        {loading ? "Enviando..." : "Finalizar compra"}
+      </span>
+      {!loading && <ArrowRight className="text-black group-hover:translate-x-1 transition-transform" />}
     </button>
   )
 }

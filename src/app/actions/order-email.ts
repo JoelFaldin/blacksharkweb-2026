@@ -41,7 +41,7 @@ export async function sendOrderEmail() {
       return {
         success: false,
         error: "Error obteniendo carrito",
-        status: 500,
+        status: 400,
       }
     }
 
@@ -49,7 +49,7 @@ export async function sendOrderEmail() {
       return {
         success: false,
         error: "Carrito vacío",
-        status: 400,
+        status: 404,
       }
     }
 
@@ -87,7 +87,11 @@ ${itemsText}
     .eq("usuario_id", user.id)
 
     if (deleteError) {
-    console.error("Error limpiando el carrito:", deleteError)
+        console.error("Error limpiando el carrito:", deleteError)      
+        
+        return {
+          success: false,
+      }
     }
 
     return {
