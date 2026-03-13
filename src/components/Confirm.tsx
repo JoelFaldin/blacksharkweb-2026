@@ -2,7 +2,6 @@
 
 import { type ReactNode, useState } from "react";
 
-import { useAuthStore } from "@/lib/store/useAuthStore";
 import Button from "./Button";
 import Modal from "./Modal";
 
@@ -17,9 +16,6 @@ type ConfirmType = {
 
 const Confirm = ({ title, desc, onClick, icon, children, buttonText }: ConfirmType) => {
   const [isOpen, setIsOpen] = useState(false);
-  const user = useAuthStore((u) => u.user);
-
-  if (user?.role !== "admin") return;
 
   const handleModal = () => {
     if (!isOpen) {

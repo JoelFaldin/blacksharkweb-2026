@@ -8,8 +8,8 @@ import { EyeClose, EyeOpen, PasswordIcon } from "@/components/icons";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { updatePasswordSchema } from "@/lib/validations/auth.schema";
 
-export default async function ActualizarContrasena() {
-  const supabase = await getSupabaseBrowserClient();
+export default function ActualizarContrasena() {
+  const supabase = getSupabaseBrowserClient();
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [password, setPassword] = useState("");
