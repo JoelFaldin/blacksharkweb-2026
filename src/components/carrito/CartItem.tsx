@@ -1,7 +1,11 @@
+"use client";
+
 import Image from "next/image";
+import { toast } from "sonner";
 
 import { useCartStore } from "@/lib/store/useCartStore";
 import priceFormat from "@/lib/utils/priceFormat";
+import ConfirmTwo from "../Confirm";
 import { TrashIcon } from "../icons";
 import CartQuantity from "./CartQuantity";
 
@@ -23,15 +27,17 @@ type CartItemInterface = {
 const CartItem = ({ item }: CartItemInterface) => {
   const removeItem = useCartStore((e) => e.removeItem);
 
-  const handleRemoveItem = (id: number) => {
-    const confirm = window.confirm(
-      "¿Estas seguro de que quieres eliminar este servicio del carrito?",
-    );
+  const handleRemoveItem = async () => {
+    const loading = toast.loading("Eliminando el servicio del carrito...");
 
-    if (confirm) {
-      removeItem(id);
-    } else {
-      return;
+    try {
+      removeItem(item.id);
+      toast.dismiss(loading);
+      toast.success("¡Se ha eliminado el servicio del carrito!");
+    } catch (error) {
+      toast.dismiss(loading);
+      toast.error("Error al eliminar el servicio del carrito");
+      console.log(error);
     }
   };
 
@@ -62,13 +68,24 @@ const CartItem = ({ item }: CartItemInterface) => {
           {priceFormat(item.precio * item.cantidad)}
         </p>
       </span>
-      <button
-        type="button"
-        onClick={() => handleRemoveItem(item.id)}
-        className="block w-12 text-right cursor-pointer text-(--muted-foreground) transition-colors hover:text-(--destructive)"
+
+      <ConfirmTwo
+        title="¿Estas seguro de que quieres eliminar este servicio del carrito?"
+        desc="Puedes volver a añadir el servicio desde la página de servicios."
+        onClick={handleRemoveItem}
+        icon={<TrashIcon className="text-black" />}
+        buttonText="Eliminar servicio"
       >
-        <TrashIcon />
-      </button>
+        {(open) => (
+          <button
+            type="button"
+            onClick={open}
+            className="block text-right cursor-pointer text-(--muted-foreground) transition-colors hover:text-(--destructive)"
+          >
+            <TrashIcon />
+          </button>
+        )}
+      </ConfirmTwo>
     </div>
   );
 };

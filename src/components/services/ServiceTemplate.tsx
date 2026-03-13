@@ -12,7 +12,7 @@ import priceFormat from "@/lib/utils/priceFormat";
 import scheduleServiceSync from "@/lib/utils/serviceSync";
 import Button from "../Button";
 import Confirm from "../Confirm";
-import { ArrowUpRight, EyeClose, Send, ShoppingCart, XIcon } from "../icons";
+import { ArrowUpRight, EyeClose, EyeOpen, Refresh, Send, ShoppingCart, XIcon } from "../icons";
 import ServiceModal from "./ServiceModal";
 
 interface ServiceTemplateInterface {
@@ -104,11 +104,23 @@ const ServiceTemplate = ({
               <span>Invisible</span>
             </span>
             <Confirm
-              visible={disponible}
-              changeVisibility={handleChangeVisibility}
-              text="este servicio"
-              position="right"
-            />
+              title={`¿Quieres cambiar la visibilidad de este servicio?`}
+              desc={`Al hacer clic, el servicio "${nombre}" será cambiado a visible.`}
+              onClick={handleChangeVisibility}
+              icon={<Refresh className="text-(--secondary)" />}
+              buttonText="Cambiar Visibilidad"
+            >
+              {(open) => (
+                <button
+                  type="button"
+                  onClick={open}
+                  className={`absolute top-10 right-2 z-20 text-transparent border-transparent bg-transparent p-1 flex flex-row justify-center items-center gap-2 rounded border group-hover:border-(--primary) group-hover:text-(--primary) text-sm group-hover:bg-(--background)/90 cursor-pointer transition-all`}
+                >
+                  <EyeOpen />
+                  <span>Cambiar Visibilidad</span>
+                </button>
+              )}
+            </Confirm>
           </>
         ))}
 
