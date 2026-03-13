@@ -11,17 +11,17 @@ const ServiceSlider = () => {
   // Slider de servicios
   // La animación se encuentra en src/app/globals.css
   return (
-    <section className="border-y border-(--border) bg-(--card) py-5 overflow-hidden">
+    <section className="border-y border-border bg-card py-5 overflow-hidden">
       <div className="relative flex overflow-hidden">
         <div className="animate-loop flex w-max gap-0">
           {/* Primer set */}
           <div className="flex shrink-0">
             {services.map((service, i) => (
               <div key={`a-${i}`} className="flex items-center">
-                <span className="text-(--muted-foreground) whitespace-nowrap px-6 text-sm font-medium tracking-[0.2em] uppercase">
+                <span className="text-muted-foreground whitespace-nowrap px-6 text-sm font-medium tracking-[0.2em] uppercase">
                   {service}
                 </span>
-                <span aria-hidden className="text-(--primary)">
+                <span aria-hidden className="text-primary">
                   {"///"}
                 </span>
               </div>
@@ -31,10 +31,10 @@ const ServiceSlider = () => {
           <div className="flex shrink-0">
             {services.map((service, i) => (
               <div key={`b-${i}`} className="flex items-center">
-                <span className="text-(--muted-foreground) whitespace-nowrap px-6 text-sm font-medium tracking-[0.2em] uppercase">
+                <span className="text-muted-foreground whitespace-nowrap px-6 text-sm font-medium tracking-[0.2em] uppercase">
                   {service}
                 </span>
-                <span aria-hidden className="text-(--primary)">
+                <span aria-hidden className="text-primary">
                   {"///"}
                 </span>
               </div>

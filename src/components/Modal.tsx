@@ -19,11 +19,11 @@ const Modal = ({ children, isOpen, onClose, className }: ModalProps) => {
 
   return ReactDOM.createPortal(
     <div
-      className="fixed inset-0 z-[60] flex items-center justify-center bg-(--background)/80 backdrop-blur-sm p-4"
+      className="fixed inset-0 z-60 flex items-center justify-center bg-background/80 backdrop-blur-sm p-4"
       onClick={onClose}
       role="presentation"
     >
-      <div onClick={(e) => e.stopPropagation()} role="none" className={`z-[70] ${className}`}>
+      <div onClick={(e) => e.stopPropagation()} role="none" className={`z-70 ${className}`}>
         {children}
       </div>
     </div>,

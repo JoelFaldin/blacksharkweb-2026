@@ -3,7 +3,8 @@
 import { createClient } from "@supabase/supabase-js";
 import { revalidatePath } from "next/cache";
 
-import { createSupabaseServerClient, getEnvironmentVariables } from "@/lib/supabase/server";
+import { getEnvironmentVariables } from "@/lib/supabase/config";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { uploadOptimizedImage } from "./upload";
 
 export async function handleService(file: File, name: string, desc: string, price: number) {
@@ -13,7 +14,7 @@ export async function handleService(file: File, name: string, desc: string, pric
     return { success: false, error: optimizedBuffer.error };
   }
 
-  const { supabaseUrl, supabaseAnonKey } = await getEnvironmentVariables();
+  const { supabaseUrl, supabaseAnonKey } = getEnvironmentVariables();
   const supabaseAdmin = createClient(supabaseUrl, supabaseAnonKey);
 
   const serviceName = `${file.name.replace(/\.[^/.]+$/, "")}.webp`;

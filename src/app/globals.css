@@ -1,16 +1,19 @@
 @import "tailwindcss";
 
-:root {
+@theme {
   --background: #0a0a0a;
   --foreground: #fafafa;
-  --card: #121212;
 
-  --primary: #e8c468;
-  --secondary: #171717;
+  --color-background: #0a0a0a;
+  --color-foreground: #fafafa;
+  --color-card: #121212;
 
-  --muted-foreground: #8f8f8f;
-  --border: #262626;
-  --destructive: #ef4444;
+  --color-primary: #e8c468;
+  --color-secondary: #171717;
+
+  --color-muted-foreground: #8f8f8f;
+  --color-border: #262626;
+  --color-destructive: #ef4444;
 }
 
 @media (prefers-color-scheme: dark) {

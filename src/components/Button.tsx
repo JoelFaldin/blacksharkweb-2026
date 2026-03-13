@@ -11,7 +11,7 @@ interface ButtonInterface {
 
 const Button = ({ type, href, onClick, className, children }: ButtonInterface) => {
   const styles =
-    type === "primary" ? "bg-(--primary)" : "bg-transparent hover:bg-(--) border border-(--border)";
+    type === "primary" ? "bg-primary" : "bg-transparent hover:bg-(--) border border-border";
 
   if (href) {
     return (

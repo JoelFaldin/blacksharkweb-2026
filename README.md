@@ -49,16 +49,22 @@ cd blacksharkweb-2025
 2- Instala las dependencias:
 
 ```bash
-npm install
+pnpm install
 ```
 
 3- Levanta el proyecto en modo desarrollo:
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 4- ¡Ahora el proyecto está funcionando en tu equipo! Dirígete a `http://localhost:3000` para visualizarlo.
+
+5- Ejecuta `biome` para verificar que todo el proyecto está formateado correctamente:
+
+```bash
+pnpm dlx @biomejs/biome format
+```
 
 ---
 

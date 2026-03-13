@@ -20,7 +20,8 @@ const ServiciosPage = async () => {
 
   const { data: serviciosData } = await supabase
     .from("servicios")
-    .select(`id, precio, descripcion_corta, imagen:imagenes(url), nombre, disponible`);
+    .select(`id, precio, descripcion_corta, imagen:imagenes(url), nombre, disponible`)
+    .order("id", { ascending: true });
 
   const servicios = serviciosData as unknown as ServicioInterface[];
 

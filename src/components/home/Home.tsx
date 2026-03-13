@@ -15,17 +15,17 @@ const Home = () => {
           className="object-cover opacity-30"
           loading="eager"
         />
-        <div className="absolute inset-0 bg-(--background)/70" />
+        <div className="absolute inset-0 bg-black/70" />
       </div>
 
       <div className="relative z-10 mx-auto">
-        <p className="text-2xl text-(--primary) text-center mb-5">Agencia Publicitaria</p>
-        <h1 className="text-8xl font-bold text-center mb-10">
+        <p className="text-2xl text-primary text-center mb-5">Agencia Publicitaria</p>
+        <h1 className="text-8xl font-bold text-center text-foreground mb-10">
           Diseños que <br />
-          <span className="text-(--primary)"> impulsan </span>
+          <span className="text-primary"> impulsan </span>
           tu marca
         </h1>
-        <p className="max-w-2xl text-2xl text-(--muted-foreground) text-center text-pretty mb-10 mx-auto">
+        <p className="max-w-2xl text-2xl text-muted-foreground text-center text-pretty mb-10 mx-auto">
           Transformamos la imagen de tu marca para capturar la atención de tus clientes. Desde el
           concepto hasta la ejecución, traemos tus ideas a la realidad con calidad excelente.
         </p>
@@ -36,17 +36,17 @@ const Home = () => {
             href="/portafolio"
             className="group flex flex-row items-center justify-center gap-x-2 p-6"
           >
-            <span className="text-(--secondary) text-2xl font-bold">Portafolio</span>
+            <span className="text-secondary text-2xl font-bold">Portafolio</span>
             <ArrowRight className="text-black group-hover:translate-x-1 transition-transform" />
           </Button>
           <Button type="secondary" href="/nosotros" className="flex flex-row p-6">
-            <span className="text-(--foreground) text-2xl font-bold">Contáctanos</span>
+            <span className="text-foreground text-2xl font-bold">Contáctanos</span>
           </Button>
         </section>
 
         <section className="flex flex-col justify-center items-center gap-5">
-          <div className="h-10 w-[2px] bg-(--primary)" />
-          <p className="text-2xl text-center text-(--muted-foreground)">Sigue bajando</p>
+          <div className="h-10 w-0.5 bg-primary" />
+          <p className="text-2xl text-center text-muted-foreground">Sigue bajando</p>
         </section>
       </div>
     </section>

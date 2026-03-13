@@ -2,20 +2,20 @@ import Image from "next/image";
 
 export function NosotrosHistory() {
   return (
-    <section className="bg-background py-24 md:py-32 w-full border-b border-(--border)">
+    <section className="bg-background py-24 md:py-32 w-full border-b border-border">
       <div className="mx-auto max-w-7xl px-6">
         {/* Section label */}
-        <p className="mb-4 text-sm font-medium uppercase tracking-[0.3em] text-(--primary)">
+        <p className="mb-4 text-sm font-medium uppercase tracking-[0.3em] text-primary">
           Nuestra historia
         </p>
 
         <div className="grid gap-24 md:grid-cols-2 md:items-center">
           {/* Text content */}
           <div>
-            <h2 className="text-(--foreground) text-3xl font-bold md:text-4xl lg:text-5xl text-balance">
+            <h2 className="text-foreground text-3xl font-bold md:text-4xl lg:text-5xl text-balance">
               Nacidos de una pasión por el diseño audaz y significativo
             </h2>
-            <div className="mt-8 flex flex-col gap-6 text-(--muted-foreground) leading-relaxed">
+            <div className="mt-8 flex flex-col gap-6 text-muted-foreground leading-relaxed">
               <p>
                 BlackSharkStudios fue fundada con una sola convicción: el diseño no es decoración.
                 Es estrategia hecha visible. Cada trazo, color y composición debe cumplir un
@@ -35,7 +35,7 @@ export function NosotrosHistory() {
             </div>
 
             {/* Values row */}
-            <div className="mt-12 grid grid-cols-3 gap-6 text-(--primary)">
+            <div className="mt-12 grid grid-cols-3 gap-6 text-primary">
               {[
                 { number: "01", label: "Precisión" },
                 { number: "02", label: "Audacia" },
@@ -52,7 +52,7 @@ export function NosotrosHistory() {
           </div>
 
           {/* Studio image */}
-          <div className="relative aspect-[4/5] text-(--primary) overflow-hidden">
+          <div className="relative aspect-4/5 text-primary overflow-hidden">
             <Image
               src="/images/history.jpg"
               alt="BlackSharkStudios creative workspace"

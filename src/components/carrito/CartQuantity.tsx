@@ -14,17 +14,17 @@ const CartQuantity = ({ item_id, cantidad }: CartQuantityProps) => {
       <button
         onClick={() => updateQuantity(item_id, cantidad - 1)}
         type="button"
-        className="flex h-10 w-12 justify-center items-center border border-(--border) text-(--muted-foreground) transition-colors hover:border-(--primary) hover:text-(--primary) cursor-pointer"
+        className="flex h-10 w-12 justify-center items-center border border-border text-muted-foreground transition-colors hover:border-primary hover:text-primary cursor-pointer"
       >
         <Minus />
       </button>
-      <div className="flex h-10 w-12 items-center justify-center border-y border-(--border) text-sm font-semibold text-(--foreground)">
+      <div className="flex h-10 w-12 items-center justify-center border-y border-border text-sm font-semibold text-foreground">
         {cantidad}
       </div>
       <button
         onClick={() => updateQuantity(item_id, cantidad + 1)}
         type="button"
-        className="flex h-10 w-12 justify-center items-center border border-(--border) text-(--muted-foreground) transition-colors hover:border-(--primary) hover:text-(--primary) cursor-pointer"
+        className="flex h-10 w-12 justify-center items-center border border-border text-muted-foreground transition-colors hover:border-primary hover:text-primary cursor-pointer"
       >
         <Plus />
       </button>
