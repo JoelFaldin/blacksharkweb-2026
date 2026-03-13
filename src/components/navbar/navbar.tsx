@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 import { useAuthStore } from "@/lib/store/useAuthStore";
-import { getSupabaseBrowserClient } from "@/lib/supabase/client";
+import { useSupabaseStore } from "@/lib/store/useSupabaseStore";
 import { ShoppingCart, User } from "../icons";
 
 interface UserInterface {
@@ -25,9 +25,9 @@ const Navbar = () => {
 
   const user: UserInterface | null = useAuthStore((s) => s.user);
   const clearUser = useAuthStore((s) => s.clearUser);
+  const supabase = useSupabaseStore((s) => s.supabase);
 
   const handleLogout = async () => {
-    const supabase = await getSupabaseBrowserClient();
     const loading = toast.loading("Cerrando sesión...");
 
     await supabase.auth.signOut();

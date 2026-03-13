@@ -8,7 +8,7 @@ import { toast } from "sonner";
 
 import { EmailIcon, EyeClose, EyeOpen, PasswordIcon } from "@/components/icons";
 import { useAuthStore } from "@/lib/store/useAuthStore";
-import { getSupabaseBrowserClient } from "@/lib/supabase/client";
+import { useSupabaseStore } from "@/lib/store/useSupabaseStore";
 import { loginSchema } from "@/lib/validations/auth.schema";
 
 type Mode = "signup" | "signin";
@@ -27,6 +27,7 @@ export default function EmailPasswordDemo() {
   const [showPassword, setShowPassword] = useState(false);
 
   const saveUser = useAuthStore((s) => s.setUser);
+  const supabase = useSupabaseStore((s) => s.supabase);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -38,8 +39,6 @@ export default function EmailPasswordDemo() {
       toast.error(firstError);
       return;
     }
-
-    const supabase = await getSupabaseBrowserClient();
 
     const loading = toast.loading(mode === "signup" ? "Creando cuenta..." : "Iniciando sesión...");
 

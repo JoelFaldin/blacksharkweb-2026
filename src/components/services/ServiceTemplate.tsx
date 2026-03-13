@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { useAuthStore } from "@/lib/store/useAuthStore";
 import { useCartStore } from "@/lib/store/useCartStore";
 import { useContextStore } from "@/lib/store/useContextStore";
-import { getSupabaseBrowserClient } from "@/lib/supabase/client";
+import { useSupabaseStore } from "@/lib/store/useSupabaseStore";
 import priceFormat from "@/lib/utils/priceFormat";
 import scheduleServiceSync from "@/lib/utils/serviceSync";
 import Button from "../Button";
@@ -41,9 +41,9 @@ const ServiceTemplate = ({
   const addItem = useCartStore((e) => e.addItem);
   const setCustomMessage = useContextStore((m) => m.resetMessage);
   const user = useAuthStore((s) => s.user);
+  const supabase = useSupabaseStore((s) => s.supabase);
 
   const handleAddItem = async () => {
-    const supabase = await getSupabaseBrowserClient();
     const { data } = await supabase.auth.getClaims();
 
     if (!data) {

@@ -5,11 +5,11 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import { EyeClose, EyeOpen, PasswordIcon } from "@/components/icons";
-import { getSupabaseBrowserClient } from "@/lib/supabase/client";
+import { useSupabaseStore } from "@/lib/store/useSupabaseStore";
 import { updatePasswordSchema } from "@/lib/validations/auth.schema";
 
 export default function ActualizarContrasena() {
-  const supabase = getSupabaseBrowserClient();
+  const supabase = useSupabaseStore((s) => s.supabase);
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [password, setPassword] = useState("");
