@@ -52,7 +52,7 @@ export function NosotrosHistory() {
           </div>
 
           {/* Studio image */}
-          <div className="relative aspect-[4/5] text-(--primary) overflow-hidden">
+          <div className="relative aspect-4/5 text-(--primary) overflow-hidden">
             <Image
               src="/images/history.jpg"
               alt="BlackSharkStudios creative workspace"

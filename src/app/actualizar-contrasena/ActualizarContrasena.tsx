@@ -68,7 +68,7 @@ export default async function ActualizarContrasena() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="relative mx-auto w-full bg-(--card) max-w-xl overflow-hidden rounded-[32px] border border-(--primary) px-10 py-12 text-slate-100"
+      className="relative mx-auto w-full bg-(--card) max-w-xl overflow-hidden rounded-4xl border border-(--primary) px-10 py-12 text-slate-100"
     >
       <div className="pointer-events-none absolute -left-4 -top-4 -z-10 h-20 w-28 rounded-full blur-lg" />
       <div className="pointer-events-none absolute -bottom-10 right-2 -z-10 h-28 w-40 rounded-full blur-xl" />

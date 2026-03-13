@@ -98,7 +98,7 @@ export default function EmailPasswordDemo() {
 
   return (
     <form
-      className="relative mx-auto w-full bg-(--card) max-w-xl overflow-hidden rounded-[32px] border border-(--primary) px-10 py-12 text-slate-100"
+      className="relative mx-auto w-full bg-(--card) max-w-xl overflow-hidden rounded-4xl border border-(--primary) px-10 py-12 text-slate-100"
       onSubmit={handleSubmit}
     >
       <div

@@ -92,7 +92,7 @@ const ServiceTemplate = ({
             <button
               type="button"
               onClick={handleChangeVisibility}
-              className="z-10 absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full border-transparent text-transparent transition-all group-hover:border-(--border) group-hover:text-(--foreground) hover:!border-(destructive) hover:!text-(--destructive) cursor-pointer"
+              className="z-10 absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full border-transparent text-transparent transition-all group-hover:border-(--border) group-hover:text-(--foreground) hover:!border-(destructive) hover:text-(--destructive)! cursor-pointer"
             >
               <XIcon />
             </button>
@@ -125,7 +125,7 @@ const ServiceTemplate = ({
         ))}
 
       {/* Imagen */}
-      <div className="relative aspect-[4/3] overflow-hidden">
+      <div className="relative aspect-4/3 overflow-hidden">
         <Image
           src={imagen?.url || ""}
           alt={`Servicio ${nombre}`}

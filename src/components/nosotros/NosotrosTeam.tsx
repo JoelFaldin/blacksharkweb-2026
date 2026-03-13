@@ -36,7 +36,7 @@ const NosotrosTeam = ({ team }: Props) => {
                         border border-(--primary) bg-card"
             >
               {/* Imagen */}
-              <div className="relative aspect-[3/4] w-full shrink-0 overflow-hidden sm:aspect-square sm:w-56 md:w-64">
+              <div className="relative aspect-3/4 w-full shrink-0 overflow-hidden sm:aspect-square sm:w-56 md:w-64">
                 <Image
                   src={member.imagenes?.url || "/placeholder.png"}
                   alt={`Retrato de ${member.name}`}

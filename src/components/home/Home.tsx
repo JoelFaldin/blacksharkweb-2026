@@ -45,7 +45,7 @@ const Home = () => {
         </section>
 
         <section className="flex flex-col justify-center items-center gap-5">
-          <div className="h-10 w-[2px] bg-(--primary)" />
+          <div className="h-10 w-0.5 bg-(--primary)" />
           <p className="text-2xl text-center text-(--muted-foreground)">Sigue bajando</p>
         </section>
       </div>

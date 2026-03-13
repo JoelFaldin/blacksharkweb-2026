@@ -41,7 +41,7 @@ const ServiceModal = ({
   return (
     <Modal isOpen={isOpen} onClose={handleModal}>
       <section className="relative w-full max-w-2xl border border-(--primary)/50 bg-(--card) shadow-2xl">
-        <div className="relative aspect-[16/7] w-full overflow-hidden">
+        <div className="relative aspect-16/7 w-full overflow-hidden">
           <Image
             src={url ?? ""}
             alt={`Imagen del servicio ${nombre}`}
@@ -49,7 +49,7 @@ const ServiceModal = ({
             className="object-cover"
             sizes="(max-width: 768px) 100vw, 30vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-(--card) via-(--card)/40 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-t from-(--card) via-(--card)/40 to-transparent" />
           <div className="absolute bottom-4 left-6 right-6">
             <p className="mb-1 text-xs font-medium uppercase tracking-[0.2em] text-(--primary)">
               Solicitar Servicio

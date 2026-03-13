@@ -1,26 +1,26 @@
-"use server"
+"use server";
 
-import { Resend } from "resend"
+import { Resend } from "resend";
 
-import { createSupabaseServerClient } from "@/lib/supabase/server"
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function sendOrderEmail() {
   try {
-    const supabase = await createSupabaseServerClient()
+    const supabase = await createSupabaseServerClient();
 
     const {
       data: { user },
       error: userError,
-    } = await supabase.auth.getUser()
+    } = await supabase.auth.getUser();
 
     if (userError || !user) {
       return {
         success: false,
         error: "No autenticado",
         status: 401,
-      }
+      };
     }
 
     const { data: cartItems, error: cartError } = await supabase
@@ -33,16 +33,16 @@ export async function sendOrderEmail() {
           descripcion_corta
         )
       `)
-      .eq("usuario_id", user.id)
+      .eq("usuario_id", user.id);
 
     if (cartError) {
-      console.error(cartError)
+      console.error(cartError);
 
       return {
         success: false,
         error: "Error obteniendo carrito",
         status: 400,
-      }
+      };
     }
 
     if (!cartItems || cartItems.length === 0) {
@@ -50,7 +50,7 @@ export async function sendOrderEmail() {
         success: false,
         error: "Carrito vacío",
         status: 404,
-      }
+      };
     }
 
     const itemsText = cartItems
@@ -60,18 +60,18 @@ Servicio: ${item.servicios?.nombre}
 Precio: $${item.servicios?.precio}
 Cantidad: ${item.cantidad}
 ----------------------------------
-`
-    })
-    .join("\n")
+`;
+      })
+      .join("\n");
 
     const emailContent = `
 Nuevo pedido de: ${user.email}
 
 ${itemsText}
-    `
+    `;
 
     if (!process.env.ADMIN_EMAIL) {
-      throw new Error("ADMIN_EMAIL no definido")
+      throw new Error("ADMIN_EMAIL no definido");
     }
 
     await resend.emails.send({
@@ -79,32 +79,31 @@ ${itemsText}
       to: process.env.ADMIN_EMAIL,
       subject: "Nuevo pedido recibido",
       text: emailContent,
-    })
+    });
 
     const { error: deleteError } = await supabase
-    .from("carrito")
-    .delete()
-    .eq("usuario_id", user.id)
+      .from("carrito")
+      .delete()
+      .eq("usuario_id", user.id);
 
     if (deleteError) {
-        console.error("Error limpiando el carrito:", deleteError)      
-        
-        return {
-          success: false,
-      }
+      console.error("Error limpiando el carrito:", deleteError);
+
+      return {
+        success: false,
+      };
     }
 
     return {
       success: true,
-    }
-
+    };
   } catch (error) {
-    console.error(error)
+    console.error(error);
 
     return {
       success: false,
       error: "Error interno del servidor",
       status: 500,
-    }
+    };
   }
 }
