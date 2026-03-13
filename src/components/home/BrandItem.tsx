@@ -5,7 +5,7 @@ import { toast } from "sonner";
 
 import { useAuthStore } from "@/lib/store/useAuthStore";
 import scheduleAvailableSync from "@/lib/utils/brandSync";
-import ConfirmTwo from "../Confirm";
+import Confirm from "../Confirm";
 import { EyeClose, EyeOpen, Refresh, XIcon } from "../icons";
 
 interface BrandItemProps {
@@ -48,7 +48,7 @@ const BrandItem = ({ id, nombre, imagen, disponible }: BrandItemProps) => {
                 <EyeClose />
                 <span>Invisible</span>
               </span>
-              <ConfirmTwo
+              <Confirm
                 title={`¿Quieres cambiar la visibilidad de esta marca?`}
                 desc={`Al hacer clic, la marca ${nombre} será cambiada a visible.`}
                 onClick={handleChangeVisibility}
@@ -65,7 +65,7 @@ const BrandItem = ({ id, nombre, imagen, disponible }: BrandItemProps) => {
                     <span>Cambiar Visibilidad</span>
                   </button>
                 )}
-              </ConfirmTwo>
+              </Confirm>
             </>
           ))}
 

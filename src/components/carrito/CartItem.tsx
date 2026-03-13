@@ -5,7 +5,7 @@ import { toast } from "sonner";
 
 import { useCartStore } from "@/lib/store/useCartStore";
 import priceFormat from "@/lib/utils/priceFormat";
-import ConfirmTwo from "../Confirm";
+import Confirm from "../Confirm";
 import { TrashIcon } from "../icons";
 import CartQuantity from "./CartQuantity";
 
@@ -67,7 +67,7 @@ const CartItem = ({ item }: CartItemInterface) => {
         </p>
       </span>
 
-      <ConfirmTwo
+      <Confirm
         title="¿Estas seguro de que quieres eliminar este servicio del carrito?"
         desc="Puedes volver a añadir el servicio desde la página de servicios."
         onClick={handleRemoveItem}
@@ -83,7 +83,7 @@ const CartItem = ({ item }: CartItemInterface) => {
             <TrashIcon />
           </button>
         )}
-      </ConfirmTwo>
+      </Confirm>
     </div>
   );
 };
