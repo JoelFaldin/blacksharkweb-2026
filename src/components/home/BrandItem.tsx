@@ -30,7 +30,7 @@ const BrandItem = ({ id, nombre, imagen, disponible }: BrandItemProps) => {
 
   return (
     <div
-      className={`group flex flex-col h-80 w-80 shrink-0 items-center justify-center bg-(--background) p-2 last:border-r-0 transition-colors hover:bg-(--card)`}
+      className={`group flex flex-col h-80 w-80 shrink-0 items-center justify-center bg-background p-2 last:border-r-0 transition-colors hover:bg-card`}
     >
       <div className="relative aspect-square mb-4 w-full overflow-hidden">
         {user?.role === "admin" &&
@@ -38,13 +38,13 @@ const BrandItem = ({ id, nombre, imagen, disponible }: BrandItemProps) => {
             <button
               type="button"
               onClick={handleChangeVisibility}
-              className="z-10 absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full border-transparent text-transparent transition-all group-hover:border-(--border) group-hover:text-(--muted-foreground) hover:!border-(destructive) hover:text-(--destructive)! cursor-pointer"
+              className="z-10 absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full border-transparent text-transparent transition-all group-hover:border-border group-hover:text-muted-foreground hover:!border-(destructive) hover:text-destructive! cursor-pointer"
             >
               <XIcon />
             </button>
           ) : (
             <>
-              <span className="z-10 px-1 absolute top-2 left-2 flex flex-row justify-center items-center gap-2 rounded-md border border-(--border) font-semibold bg-(--background)/90 text-[10px] uppercase tracking-[0.15em] text-(--muted-foreground)">
+              <span className="z-10 px-1 absolute top-2 left-2 flex flex-row justify-center items-center gap-2 rounded-md border border-border font-semibold bg-background/90 text-[10px] uppercase tracking-[0.15em] text-muted-foreground">
                 <EyeClose />
                 <span>Invisible</span>
               </span>
@@ -52,14 +52,14 @@ const BrandItem = ({ id, nombre, imagen, disponible }: BrandItemProps) => {
                 title={`¿Quieres cambiar la visibilidad de esta marca?`}
                 desc={`Al hacer clic, la marca ${nombre} será cambiada a visible.`}
                 onClick={handleChangeVisibility}
-                icon={<Refresh className="text-(--secondary)" />}
+                icon={<Refresh className="text-secondary" />}
                 buttonText="Cambiar Visibilidad"
               >
                 {(open) => (
                   <button
                     type="button"
                     onClick={open}
-                    className={`absolute top-10 left-2 z-20 text-transparent border-transparent bg-transparent p-1 flex flex-row justify-center items-center gap-2 rounded border group-hover:border-(--primary) group-hover:text-(--primary) text-sm group-hover:bg-(--background)/90 cursor-pointer transition-all`}
+                    className={`absolute top-10 left-2 z-20 text-transparent border-transparent bg-transparent p-1 flex flex-row justify-center items-center gap-2 rounded border group-hover:border-primary group-hover:text-primary text-sm group-hover:bg-background/90 cursor-pointer transition-all`}
                   >
                     <EyeOpen />
                     <span>Cambiar Visibilidad</span>
@@ -77,7 +77,7 @@ const BrandItem = ({ id, nombre, imagen, disponible }: BrandItemProps) => {
           className="object-cover"
         />
       </div>
-      <span className="relative text-xs uppercase tracking-[0.2em] text-(--muted-foreground)/60 transition-colors group-hover:text-(--foreground)">
+      <span className="relative text-xs uppercase tracking-[0.2em] text-muted-foreground/60 transition-colors group-hover:text-foreground">
         {nombre}
       </span>
     </div>

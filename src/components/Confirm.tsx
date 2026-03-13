@@ -40,12 +40,12 @@ const Confirm = ({ title, desc, onClick, icon, children, buttonText }: ConfirmTy
 
   return isOpen ? (
     <Modal isOpen={isOpen} onClose={handleModal}>
-      <div className="px-6 py-5 border border-(--border) bg-(--background)">
-        <h4 className="text-2xl font-medium text-(--foreground)">{title}</h4>
-        <p className="text-md text-(--foreground)/70 mt-2">{desc}</p>
+      <div className="px-6 py-5 border border-border bg-background">
+        <h4 className="text-2xl font-medium text-foreground">{title}</h4>
+        <p className="text-md text-foreground/70 mt-2">{desc}</p>
         <span className="flex flex-row items-center justify-center gap-3 px-6 py-5">
           <Button type="secondary" onClick={handleModal} className="p-6 cursor-pointer">
-            <span className="font-bold">Volver</span>
+            <span className="font-bold text-foreground">Volver</span>
           </Button>
           <Button
             type="primary"
@@ -53,7 +53,7 @@ const Confirm = ({ title, desc, onClick, icon, children, buttonText }: ConfirmTy
             className="p-6 flex flex-row gap-2 cursor-pointer"
           >
             {icon}
-            <span className="text-(--secondary) font-bold">{buttonText}</span>
+            <span className="text-secondary font-bold">{buttonText}</span>
           </Button>
         </span>
       </div>

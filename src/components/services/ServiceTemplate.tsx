@@ -79,10 +79,10 @@ const ServiceTemplate = ({
   };
 
   return (
-    <div className="group relative flex flex-col border border-(--border) bg-(--background) transition-colors hover:border-(--primary)/40">
+    <div className="group relative flex flex-col border border-border bg-background transition-colors hover:border-primary/40">
       {/* Index */}
       <div className="absolute left-4 top-4 z-10">
-        <span className="text-md font-medium tracking-widest text-(--foreground)/40">
+        <span className="text-md font-medium tracking-widest text-foreground/40">
           {String(index + 1).padStart(2, "0")}
         </span>
       </div>
@@ -92,14 +92,14 @@ const ServiceTemplate = ({
             <button
               type="button"
               onClick={handleChangeVisibility}
-              className="z-10 absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full border-transparent text-transparent transition-all group-hover:border-(--border) group-hover:text-(--foreground) hover:!border-(destructive) hover:text-(--destructive)! cursor-pointer"
+              className="z-10 absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full border-transparent text-transparent transition-all group-hover:border-border group-hover:text-foreground hover:!border-(destructive) hover:text-destructive! cursor-pointer"
             >
               <XIcon />
             </button>
           </div>
         ) : (
           <>
-            <span className="z-10 px-1 absolute top-2 right-2 flex flex-row justify-center items-center gap-2 rounded-md border border-(--border) font-semibold bg-(--background)/90 text-[10px] uppercase tracking-[0.15em] text-(--muted-foreground)">
+            <span className="z-10 px-1 absolute top-2 right-2 flex flex-row justify-center items-center gap-2 rounded-md border border-border font-semibold bg-background/90 text-[10px] uppercase tracking-[0.15em] text-muted-foreground">
               <EyeClose />
               <span>Invisible</span>
             </span>
@@ -107,14 +107,14 @@ const ServiceTemplate = ({
               title={`¿Quieres cambiar la visibilidad de este servicio?`}
               desc={`Al hacer clic, el servicio "${nombre}" será cambiado a visible.`}
               onClick={handleChangeVisibility}
-              icon={<Refresh className="text-(--secondary)" />}
+              icon={<Refresh className="text-secondary" />}
               buttonText="Cambiar Visibilidad"
             >
               {(open) => (
                 <button
                   type="button"
                   onClick={open}
-                  className={`absolute top-10 right-2 z-20 text-transparent border-transparent bg-transparent p-1 flex flex-row justify-center items-center gap-2 rounded border group-hover:border-(--primary) group-hover:text-(--primary) text-sm group-hover:bg-(--background)/90 cursor-pointer transition-all`}
+                  className={`absolute top-10 right-2 z-20 text-transparent border-transparent bg-transparent p-1 flex flex-row justify-center items-center gap-2 rounded border group-hover:border-primary group-hover:text-primary text-sm group-hover:bg-background/90 cursor-pointer transition-all`}
                 >
                   <EyeOpen />
                   <span>Cambiar Visibilidad</span>
@@ -139,21 +139,19 @@ const ServiceTemplate = ({
       {/* Contenido */}
       <div className="flex flex-1 flex-col justify-center p-6">
         <span className="mb-4 flex items-center justify-between gap-4">
-          <h3 className="text-xl font-bold text-(--foreground) transition-colors group-hover:text-(--primary)">
+          <h3 className="text-xl font-bold text-foreground transition-colors group-hover:text-primary">
             {nombre}
           </h3>
-          <ArrowUpRight className="text-(--foreground) transition-colors group-hover:text-(--primary)" />
+          <ArrowUpRight className="text-foreground transition-colors group-hover:text-primary" />
         </span>
 
-        <p className="flex-1 text-md leading-relaxed text-(--muted-foreground)">
-          {descripcion_corta}
-        </p>
+        <p className="flex-1 text-md leading-relaxed text-muted-foreground">{descripcion_corta}</p>
 
-        <div className="flex items-center justify-between border-t border-(--border) pt-4">
-          <span className="text-md font-medium uppercase tracking-[0.2em] text-(--muted-foreground)">
+        <div className="flex items-center justify-between border-t border-border pt-4">
+          <span className="text-md font-medium uppercase tracking-[0.2em] text-muted-foreground">
             Precio
           </span>
-          <span className="text-xl font-bold text-(--primary)">
+          <span className="text-xl font-bold text-primary">
             {priceFormat(parseInt(precio, 10))}
           </span>
         </div>
@@ -162,18 +160,18 @@ const ServiceTemplate = ({
           <button
             type="button"
             onClick={() => handleAddItem()}
-            className="flex flex-row items-center justify-center border border-(--border) p-6 gap-x-4 cursor-pointer"
+            className="flex flex-row items-center justify-center border border-border p-6 gap-x-4 cursor-pointer"
           >
-            <ShoppingCart />
-            <span>Añadir al carrito</span>
+            <ShoppingCart className="text-foreground" />
+            <span className="text-foreground">Añadir al carrito</span>
           </button>
           <Button
             type="primary"
             onClick={handleModal}
             className="flex flex-row items-center justify-center rounded-lg p-6 gap-x-4 cursor-pointer"
           >
-            <Send className="text-(--secondary)" />
-            <span className="text-(--secondary)">Solicitar Servicio</span>
+            <Send className="text-secondary" />
+            <span className="text-secondary">Solicitar Servicio</span>
           </Button>
         </div>
       </div>

@@ -31,7 +31,7 @@ export default function RecuperarContrasenaLogic() {
 
   return (
     <form
-      className="relative mx-auto w-full bg-(--card) max-w-xl overflow-hidden rounded-4xl border border-(--primary) px-10 py-12 text-slate-100"
+      className="relative mx-auto w-full bg-card max-w-xl overflow-hidden rounded-4xl border border-primary px-10 py-12 text-slate-100"
       onSubmit={handleSubmit}
     >
       <div
@@ -45,8 +45,8 @@ export default function RecuperarContrasenaLogic() {
 
       {/* Header */}
       <div className="space-y-3">
-        <p className="text-xs uppercase tracking-[0.2em] text-(--foreground)">Recuperación</p>
-        <h3 className="text-2xl font-semibold text-(--foreground)">Recuperar contraseña</h3>
+        <p className="text-xs uppercase tracking-[0.2em] text-foreground">Recuperación</p>
+        <h3 className="text-2xl font-semibold text-foreground">Recuperar contraseña</h3>
         <p className="text-sm text-white/60 leading-relaxed max-w-md">
           Ingresa tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.
         </p>
@@ -54,7 +54,7 @@ export default function RecuperarContrasenaLogic() {
 
       {/* Input */}
       <div className="mt-10 space-y-6">
-        <label className="block text-sm font-medium text-(--foreground)">
+        <label className="block text-sm font-medium text-foreground">
           Email
           <div className="relative mt-3">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-white/50">
@@ -66,7 +66,7 @@ export default function RecuperarContrasenaLogic() {
               onChange={(event) => setEmail(event.target.value)}
               title="Ejemplo: usuario@correo.com"
               required
-              className="w-full rounded-xl border border-(--border) bg-black pl-12 pr-4 py-3 text-sm text-white placeholder:text-white/70 transition-colors duration-200 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+              className="w-full rounded-xl border border-border bg-black pl-12 pr-4 py-3 text-sm text-white placeholder:text-white/70 transition-colors duration-200 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               placeholder="you@email.com"
             />
           </div>
@@ -77,9 +77,9 @@ export default function RecuperarContrasenaLogic() {
       <div className="mt-10">
         <button
           type="submit"
-          className="group relative w-full overflow-hidden rounded-xl bg-(--primary) py-3.5 text-sm font-semibold text-(--foreground) shadow-lg shadow-primary/20 transition-all duration-200 hover:shadow-xl hover:shadow-(--primary)/80 hover:brightness-110 active:scale-[0.98] cursor-pointer"
+          className="group relative w-full overflow-hidden rounded-xl bg-primary py-3.5 text-sm font-semibold text-foreground shadow-lg shadow-primary/20 transition-all duration-200 hover:shadow-xl hover:shadow-primary/80 hover:brightness-110 active:scale-[0.98] cursor-pointer"
         >
-          <span className="relative z-10 text-(--background)">Enviar enlace</span>
+          <span className="relative z-10 text-background">Enviar enlace</span>
         </button>
       </div>
 
@@ -87,7 +87,7 @@ export default function RecuperarContrasenaLogic() {
       <div className="mt-8 text-center">
         <Link
           href="/login"
-          className="text-sm text-(--primary) hover:text-(--primary)/80 transition-colors"
+          className="text-sm text-primary hover:text-primary/80 transition-colors"
         >
           Volver al inicio de sesión
         </Link>

@@ -89,25 +89,25 @@ const AddService = () => {
   if (showModal) {
     return (
       <Modal isOpen={showModal} onClose={handleModal} className="w-2xl">
-        <section className="relative w-full border border-(--primary)/50 bg-(--card) shadow-2xl">
-          <div className="flex flex-col px-6 py-5 border-b border-(--border)">
-            <p className="text-sm font-medium text-(--primary) uppercase tracking-[0.2em]">
+        <section className="relative w-full border border-primary/50 bg-card shadow-2xl">
+          <div className="flex flex-col px-6 py-5 border-b border-border">
+            <p className="text-sm font-medium text-primary uppercase tracking-[0.2em]">
               Nuevo Servicio
             </p>
-            <h1 className="text-xl font-bold text-(--foreground)">Añade un Nuevo Servicio</h1>
+            <h1 className="text-xl font-bold text-foreground">Añade un Nuevo Servicio</h1>
           </div>
           <div className="px-6 py-5 h-fit">
             <label
               htmlFor="file-input-service"
-              className="text-sm text-(--muted-foreground) uppercase tracking-[0.em]"
+              className="text-sm text-muted-foreground uppercase tracking-[0.em]"
             >
               Logo de la Marca
             </label>
             <div
               className={`relative flex flex-col items-center justify-center rounded transition-colors ${
                 isDragging
-                  ? "border-(--primary) bg-(--primary)/5"
-                  : "border-(--border) hover:border-(--muted-foreground)/40"
+                  ? "border-primary bg-primary/5"
+                  : "border-border hover:border-muted-foreground/40"
               } ${preview ? "py-4" : "py-10 border-2 border-dashed"}`}
               onDragOver={(e) => {
                 e.preventDefault();
@@ -118,7 +118,7 @@ const AddService = () => {
             >
               {preview ? (
                 <div className="relative flex flex-col items-center gap-3">
-                  <div className="relative h-60 w-60 overflow-hidden border border-(--border)">
+                  <div className="relative h-60 w-60 overflow-hidden border border-border">
                     <Image
                       src={preview}
                       alt="Preview del logo de la marca"
@@ -129,7 +129,7 @@ const AddService = () => {
                     <button
                       type="button"
                       onClick={() => setPreview(null)}
-                      className="text-xs text-(--muted-foreground) underline underline-offset-2 transition-colors hover:text-(--primary)"
+                      className="text-xs text-muted-foreground underline underline-offset-2 transition-colors hover:text-primary"
                     >
                       Quitar Imagen
                     </button>
@@ -137,17 +137,17 @@ const AddService = () => {
                 </div>
               ) : (
                 <>
-                  <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full border border-(--border) text-(--muted-foreground)">
+                  <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full border border-border text-muted-foreground">
                     <ImageIcon />
                   </div>
-                  <p className="mb-1 text-sm text-(--foreground)">
+                  <p className="mb-1 text-sm text-foreground">
                     Arrastra la imagen del nuevo servicio aquí
                   </p>
-                  <p className="mb-3 text-xs text-(--muted-foreground)">PNG, JPG o SVG</p>
+                  <p className="mb-3 text-xs text-muted-foreground">PNG, JPG o SVG</p>
                   <Button
                     type="secondary"
                     onClick={() => fileInputRef.current?.click()}
-                    className="flex p-2 gap-2 border-(--border) bg-transparent text-(--foreground) hover:border-(--primary) hover:text-(--primary) cursor-pointer"
+                    className="flex p-2 gap-2 border-border bg-transparent text-foreground hover:border-primary hover:text-primary cursor-pointer"
                   >
                     <Upload />
                     <span>Buscar Archivos</span>
@@ -170,7 +170,7 @@ const AddService = () => {
           <div className="px-6 py-5 h-fit flex flex-col gap-2">
             <label
               htmlFor="service-name"
-              className="mb-2 block text-xs font-medium uppercase tracking-[0.2em] text-(--muted-foreground)"
+              className="mb-2 block text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground"
             >
               Nombre del Servicio
             </label>
@@ -180,12 +180,12 @@ const AddService = () => {
               placeholder="Diseño Gráfico"
               value={serviceName}
               onChange={(e) => setServiceName(e.target.value)}
-              className="w-full border border-(--border) bg-(--background) px-4 py-3 text-sm text-(--foreground) placeholder:text-(--muted-foreground)/50 transition-colors focus:border-(--primary) focus:outline-none"
+              className="w-full border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 transition-colors focus:border-primary focus:outline-none"
             />
 
             <label
               htmlFor="service-desc"
-              className="mb-2 block text-xs font-medium uppercase trakcing-[0.2em] text-(--muted-foreground)"
+              className="mb-2 block text-xs font-medium uppercase trakcing-[0.2em] text-muted-foreground"
             >
               Descripción
             </label>
@@ -194,12 +194,12 @@ const AddService = () => {
               placeholder="Detalla una descripción del servicio..."
               value={serviceDesc}
               onChange={(e) => setServiceDesc(e.target.value)}
-              className="w-full border border-(--border) bg-(--background) px-4 py-3 text-sm text-(--foreground) placeholder:text-(--muted-foreground)/50 transition-colors focus:border-(--primary) focus:outline-none"
+              className="w-full border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 transition-colors focus:border-primary focus:outline-none"
             />
 
             <label
               htmlFor="service-price"
-              className="mb-2 block text-xs font-medium uppercase trakcing-[0.2em] text-(--muted-foreground)"
+              className="mb-2 block text-xs font-medium uppercase trakcing-[0.2em] text-muted-foreground"
             >
               Precio
             </label>
@@ -212,7 +212,7 @@ const AddService = () => {
                 if (Number.isNaN(int) && e.target.value !== "") return;
                 setServicePrice(e.target.value);
               }}
-              className="w-full border border-(--border) bg-(--background) px-4 py-3 text-sm text-(--foreground) placeholder:text-(--muted-foreground)/50 transition-colors focus:border-(--primary) focus:outline-none"
+              className="w-full border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 transition-colors focus:border-primary focus:outline-none"
               min={0}
             />
           </div>
@@ -225,8 +225,8 @@ const AddService = () => {
               className="p-6 flex flex-row gap-2 cursor-pointer"
               onClick={handleSubmit}
             >
-              <Plus className="text-(--secondary)" />
-              <span className="text-(--secondary) font-bold">Añadir Servicio</span>
+              <Plus className="text-secondary" />
+              <span className="text-secondary font-bold">Añadir Servicio</span>
             </Button>
           </div>
         </section>
@@ -237,12 +237,12 @@ const AddService = () => {
       <button
         type="button"
         onClick={handleModal}
-        className="group relative flex min-h-162.5 flex-col items-center justify-center border-2 border-dashed border-(--border) bg-(--background) transition-colors hover:border-(--primary)/40 hover:bg-(--card) cursor-pointer"
+        className="group relative flex min-h-162.5 flex-col items-center justify-center border-2 border-dashed border-border bg-background transition-colors hover:border-primary/40 hover:bg-card cursor-pointer"
       >
-        <span className="mb-4 flex h-16 w-16 items-center justify-center rounded-full border-2 border-dashed border-(--muted-foreground)/30 text-(--muted-foreground) transition-colors group-hover:border-(--primary) group-hover:text-(--primary)">
+        <span className="mb-4 flex h-16 w-16 items-center justify-center rounded-full border-2 border-dashed border-muted-foreground/30 text-muted-foreground transition-colors group-hover:border-primary group-hover:text-primary">
           <Plus />
         </span>
-        <span className="text-sm font-medium uppercase tracking-[0.2em] text-(--muted-foreground) transition-colors group-hover:text-(--foreground)">
+        <span className="text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground transition-colors group-hover:text-foreground">
           Añadir Nuevo Servicio
         </span>
       </button>

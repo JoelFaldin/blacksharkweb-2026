@@ -85,25 +85,25 @@ const AddBrand = () => {
   if (isOpen) {
     return (
       <Modal isOpen={isOpen} onClose={handleModal} className="w-2xl">
-        <section className="relative w-full border border-(--primary)/50 bg-(--card) shadow-2xl">
-          <div className="flex flex-col px-6 py-5 border-b border-(--border)">
-            <p className="text-sm font-medium text-(--primary) uppercase tracking-[0.2em]">
+        <section className="relative w-full border border-primary/50 bg-card shadow-2xl">
+          <div className="flex flex-col px-6 py-5 border-b border-border">
+            <p className="text-sm font-medium text-primary uppercase tracking-[0.2em]">
               Nueva Marca
             </p>
-            <h1 className="text-xl font-bold text-(--foreground)">Añadir una nueva marca</h1>
+            <h1 className="text-xl font-bold text-foreground">Añadir una nueva marca</h1>
           </div>
           <div className="px-6 py-5 h-fit">
             <label
               htmlFor="image-input"
-              className="text-sm text-(--muted-foreground) uppercase tracking-[0.em]"
+              className="text-sm text-muted-foreground uppercase tracking-[0.em]"
             >
               Logo de la Marca
             </label>
             <div
               className={`relative flex flex-col items-center justify-center rounded transition-colors ${
                 isDragging
-                  ? "border-(--primary) bg-(--primary)/5"
-                  : "border-(--border) hover:border-(--muted-foreground)/40"
+                  ? "border-primary bg-primary/5"
+                  : "border-border hover:border-muted-foreground/40"
               } ${preview ? "py-4" : "py-10 border-2 border-dashed"}`}
               onDragOver={(e) => {
                 e.preventDefault();
@@ -114,7 +114,7 @@ const AddBrand = () => {
             >
               {preview ? (
                 <div className="relative flex flex-col items-center gap-3">
-                  <div className="relative h-60 w-60 overflow-hidden border border-(--border)">
+                  <div className="relative h-60 w-60 overflow-hidden border border-border">
                     <Image
                       src={preview}
                       alt="Preview del logo de la marca"
@@ -125,7 +125,7 @@ const AddBrand = () => {
                     <button
                       type="button"
                       onClick={() => setPreview(null)}
-                      className="text-xs text-(--muted-foreground) underline underline-offset-2 transition-colors hover:text-(--primary)"
+                      className="text-xs text-muted-foreground underline underline-offset-2 transition-colors hover:text-primary"
                     >
                       Quitar Imagen
                     </button>
@@ -133,15 +133,15 @@ const AddBrand = () => {
                 </div>
               ) : (
                 <>
-                  <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full border border-(--border) text-(--muted-foreground)">
+                  <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full border border-border text-muted-foreground">
                     <ImageIcon />
                   </div>
-                  <p className="mb-1 text-sm text-(--foreground)">Arrastra tu logo aquí</p>
-                  <p className="mb-3 text-xs text-(--muted-foreground)">PNG, JPG o SVG</p>
+                  <p className="mb-1 text-sm text-foreground">Arrastra tu logo aquí</p>
+                  <p className="mb-3 text-xs text-muted-foreground">PNG, JPG o SVG</p>
                   <Button
                     type="secondary"
                     onClick={() => fileInputRef.current?.click()}
-                    className="flex p-2 gap-2 border-(--border) bg-transparent text-(--foreground) hover:border-(--primary) hover:text-(--primary) cursor-pointer"
+                    className="flex p-2 gap-2 border-border bg-transparent text-foreground hover:border-primary hover:text-primary cursor-pointer"
                   >
                     <Upload />
                     <span>Buscar Archivos</span>
@@ -164,7 +164,7 @@ const AddBrand = () => {
           <div className="px-6 py-5 h-fit">
             <label
               htmlFor="brand-name"
-              className="mb-2 block text-xs font-medium uppercase tracking-[0.2em] text-(--muted-foreground)"
+              className="mb-2 block text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground"
             >
               Nombre de la Marca
             </label>
@@ -177,7 +177,7 @@ const AddBrand = () => {
               onKeyDown={(e) => {
                 if (e.key === "Enter") handleSubmit();
               }}
-              className="w-full border border-(--border) bg-(--background) px-4 py-3 text-sm text-(--foreground) placeholder:text-(--muted-foreground)/50 transition-colors focus:border-(--primary) focus:outline-none"
+              className="w-full border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 transition-colors focus:border-primary focus:outline-none"
             />
           </div>
 
@@ -190,8 +190,8 @@ const AddBrand = () => {
               className="p-6 flex flex-row gap-2 cursor-pointer"
               onClick={handleSubmit}
             >
-              <Plus className="text-(--secondary)" />
-              <span className="text-(--secondary) font-bold">Añadir Marca</span>
+              <Plus className="text-secondary" />
+              <span className="text-secondary font-bold">Añadir Marca</span>
             </Button>
           </div>
         </section>
@@ -202,16 +202,16 @@ const AddBrand = () => {
       <button
         type="button"
         onClick={handleModal}
-        className="group max-h-80 max-w-80 flex flex-col p-5 justify-center items-center gap-2 cursor-pointer hover:bg-(--border) transition-colors"
+        className="group max-h-80 max-w-80 flex flex-col p-5 justify-center items-center gap-2 cursor-pointer hover:bg-border transition-colors"
       >
-        <span className="border-2 border-(--muted-foreground) border-dashed rounded-full p-4 group-hover:border-(--primary) transition-colors">
+        <span className="border-2 border-muted-foreground border-dashed rounded-full p-4 group-hover:border-primary transition-colors">
           <Plus
-            className="text-(--muted-foreground) group-hover:text-(--primary) transition-colors"
+            className="text-muted-foreground group-hover:text-primary transition-colors"
             width={80}
             height={80}
           />
         </span>
-        <span className="text-2xl text-(--muted-foreground) group-hover:text-(--primary) transition-colors">
+        <span className="text-2xl text-muted-foreground group-hover:text-primary transition-colors">
           Añadir Marca
         </span>
       </button>

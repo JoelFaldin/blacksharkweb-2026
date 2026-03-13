@@ -8,20 +8,20 @@ interface Props {
 
 const NosotrosTeam = ({ team }: Props) => {
   return (
-    <section className="border-b border-(--border) bg-card py-24 md:py-32">
+    <section className="border-b border-border bg-card py-24 md:py-32">
       <div className="mx-auto px-6">
         {/* Section header */}
         <div className="mb-16 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="mb-10 text-sm font-medium uppercase tracking-[0.3em] text-(--primary)">
+            <p className="mb-10 text-sm font-medium uppercase tracking-[0.3em] text-primary">
               Nuestro Equipo
             </p>
-            <h2 className="text-(--foreground) text-3xl font-bold md:text-4xl lg:text-5xl text-balance">
+            <h2 className="text-foreground text-3xl font-bold md:text-4xl lg:text-5xl text-balance">
               El talento detrás de cada proyecto
             </h2>
           </div>
 
-          <p className="max-w-sm text-xl text-(--muted-foreground) leading-relaxed md:text-right">
+          <p className="max-w-sm text-xl text-muted-foreground leading-relaxed md:text-right">
             Un equipo creativo y estratégico que combina diseño, marketing y tecnología para
             construir marcas con identidad y resultados reales.
           </p>
@@ -33,7 +33,7 @@ const NosotrosTeam = ({ team }: Props) => {
             <div
               key={`team-member-${member.id}`}
               className="group flex flex-col sm:flex-row 
-                        border border-(--primary) bg-card"
+                        border border-primary bg-card"
             >
               {/* Imagen */}
               <div className="relative aspect-3/4 w-full shrink-0 overflow-hidden sm:aspect-square sm:w-56 md:w-64">
@@ -65,7 +65,7 @@ const NosotrosTeam = ({ team }: Props) => {
                 </div>
 
                 <div className="mt-6">
-                  <p className="text-(--muted-foreground)">Contacto</p>
+                  <p className="text-muted-foreground">Contacto</p>
                   <a
                     href={`mailto:${member.contact}`}
                     className="text-sm text-muted-foreground transition-colors hover:text-primary"
