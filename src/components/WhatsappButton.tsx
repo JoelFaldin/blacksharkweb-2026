@@ -9,7 +9,7 @@ export default function WhatsappButton() {
 
   return (
     <div className="group fixed bottom-6 right-6 z-50">
-      <span className="pointer-events-none absolute bottom-full right-0 mb-22 whitespace-nowrap rounded-md bg-card px-3 py-1.5 text-xs border border-border opacity-0 transition-opacity group-hover:opacity-100">
+      <span className="pointer-events-none absolute bottom-full right-0 mb-22 whitespace-nowrap rounded-md bg-card px-3 py-1.5 text-xs border border-border text-foreground opacity-0 transition-opacity group-hover:opacity-100">
         ¡Háblanos por WhatsApp!
       </span>
       <a
