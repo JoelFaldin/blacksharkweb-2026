@@ -4,6 +4,9 @@ Playwright es una herramienta para trabajar con automatización de código de ma
 
 Revisa la documentación de playwright [aquí](https://playwright.dev/).
 
+> [!IMPORTANT]  
+Asegúrate de iniciar el servidor de desarrollo antes de correr los tests.
+
 A continuación, se detallan algunos comandos útiles para trabajar con esta herramienta.
 
 * `pnpm exec playwright test`
