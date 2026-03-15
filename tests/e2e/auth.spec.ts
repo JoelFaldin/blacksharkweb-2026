@@ -1,11 +1,39 @@
 import { expect, test } from "@playwright/test";
 
+// Nota: mockear la decodificación del jwt:
+const createFakeJwt = (payload: { sub: string; exp: number; app_metadata: { role: string } }) => {
+  const header = btoa(JSON.stringify({ alg: "HS256", typ: "JWT" }));
+  const body = btoa(JSON.stringify(payload));
+  return `${header}.${body}.fake-signature`;
+};
+
 test.describe("auth page", async () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("http://localhost:3000/login");
   });
 
   test("should login successfully", async ({ page }) => {
+    // Interceptar la solicitud de inicio de sesión de supabase:
+    await page.route("**/auth/v1/token?grant_type=password", async (route) => {
+      const mockToken = createFakeJwt({
+        sub: "user_id",
+        exp: Math.floor(Date.now() / 1000) + 3600,
+        app_metadata: { role: "user" },
+      });
+
+      const json = {
+        access_token: mockToken,
+        token_type: "bearer",
+        expires_in: 3600,
+        refresh_token: "fake_refresh_token",
+        user: {
+          id: "user_id",
+          email: "test@example.com",
+        },
+      };
+      await route.fulfill({ json });
+    });
+
     await page.getByRole("button", { name: "Iniciar Sesión" }).click();
 
     await page.getByPlaceholder("Ingresa tu email").fill("test@example.com");
@@ -13,6 +41,10 @@ test.describe("auth page", async () => {
 
     await page.getByRole("button", { name: "Iniciar sesión" }).nth(1).click();
 
-    expect(page.getByRole("heading", { name: "Bienvenido" })).toBeVisible();
+    await expect(page.getByText("Iniciando sesión...")).toBeVisible();
+
+    await page.waitForURL("http://localhost:3000/");
+
+    await expect(page.getByText("Bienvenido")).toBeVisible();
   });
 });
