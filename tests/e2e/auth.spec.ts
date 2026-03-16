@@ -1,11 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-// Nota: mockear la decodificación del jwt:
-const createFakeJwt = (payload: { sub: string; exp: number; app_metadata: { role: string } }) => {
-  const header = btoa(JSON.stringify({ alg: "HS256", typ: "JWT" }));
-  const body = btoa(JSON.stringify(payload));
-  return `${header}.${body}.fake-signature`;
-};
+import createFakeJwt from "../utils/createFakeJwt";
 
 test.describe("auth page", async () => {
   test.beforeEach(async ({ page }) => {
@@ -63,6 +58,7 @@ test.describe("auth page", async () => {
 
     await page.getByRole("button", { name: "Iniciar sesión" }).nth(1).click();
 
+    // Cambiar el mensaje de error esperado:
     await expect(page.getByText("Invalid login credentials")).toBeVisible();
   });
 
