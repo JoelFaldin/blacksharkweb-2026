@@ -1,13 +1,20 @@
 "use client";
 
 import { useState } from "react";
+import { toast } from "sonner";
 
+import sendContactForm from "@/app/actions/contact";
 import Button from "../Button";
 import { ArrowRight, EmailIcon, Message, Send, User } from "../icons";
 import Modal from "../Modal";
 
 const ContactForm = () => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleModal = () => {
     if (!isOpen) {
@@ -18,6 +25,21 @@ const ContactForm = () => {
       setIsOpen(false);
       // Reactivar el scroll:
       document.body.classList.remove("overflow-hidden");
+    }
+  };
+
+  const handleSubmitForm = async () => {
+    const loading = toast.loading("Enviando mensaje...");
+
+    try {
+      await sendContactForm(name, email, subject, message);
+
+      toast.dismiss(loading);
+      toast.success("Mensaje enviado correctamente.");
+    } catch (error) {
+      toast.dismiss(loading);
+      toast.error("Error al enviar el mensaje.");
+      console.log(error);
     }
   };
 
@@ -60,6 +82,8 @@ const ContactForm = () => {
                     id="name"
                     type="text"
                     title="Ejemplo: usuario@correo.com"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     required
                     className="w-full rounded-xl border border-border bg-black pl-12 pr-4 py-3 text-sm text-white placeholder:text-muted-foreground transition-colors duration-200 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                     placeholder="Tu nombre completo"
@@ -82,6 +106,8 @@ const ContactForm = () => {
                     id="email"
                     type="email"
                     title="Ejemplo: usuario@correo.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                     className="w-full rounded-xl border border-border bg-black pl-12 pr-4 py-3 text-sm text-white placeholder:text-muted-foreground transition-colors duration-200 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                     placeholder="usuario@correo.com"
@@ -101,6 +127,9 @@ const ContactForm = () => {
                     id="subject"
                     type="text"
                     title="Ejemplo: Consulta sobre servicios"
+                    value={subject}
+                    onChange={(e) => setSubject(e.target.value)}
+                    required
                     className="w-full rounded-xl border border-border bg-black pl-4 pr-4 py-3 text-sm text-white placeholder:text-muted-foreground transition-colors duration-200 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                     placeholder="Asunto del mensaje"
                   />
@@ -120,6 +149,8 @@ const ContactForm = () => {
                   </div>
                   <textarea
                     id="contact-message"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
                     placeholder="Háblanos sobre tu proyecto..."
                     rows={4}
                     className="w-full rounded-xl resize-none border border-border bg-black py-3 pl-10 pr-4 text-sm leading-relaxed text-foreground placeholder:text-muted-foreground/50 transition-colors focus:border-primary focus:outline-none"
@@ -135,7 +166,7 @@ const ContactForm = () => {
             </Button>
             <Button
               type="primary"
-              onClick={() => ""}
+              onClick={handleSubmitForm}
               className="p-6 flex flex-row gap-2 cursor-pointer"
             >
               <Send className="text-secondary" />
