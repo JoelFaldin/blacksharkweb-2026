@@ -1,16 +1,6 @@
 import { create } from "zustand";
 
-type User = {
-  email: string;
-  username?: string;
-  role: string;
-};
-
-type AuthState = {
-  user: User | null;
-  setUser: (user: AuthState["user"] | null) => void;
-  clearUser: () => void;
-};
+import type { AuthState, User } from "@/types";
 
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,

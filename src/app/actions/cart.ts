@@ -3,20 +3,7 @@
 import { revalidatePath } from "next/cache";
 
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-
-type NewCartItem = {
-  id: number;
-  usuario_id: string;
-  servicio_id: number;
-  cantidad: number;
-  servicios: {
-    precio: number;
-    nombre: string;
-    imagen: {
-      url: string;
-    } | null;
-  } | null;
-};
+import type { NewCartItem } from "@/types";
 
 export async function addCartItem(service_id: number, user_id: string) {
   const supabase = await createSupabaseServerClient();

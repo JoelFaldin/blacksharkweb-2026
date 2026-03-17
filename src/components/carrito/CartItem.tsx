@@ -5,23 +5,13 @@ import { toast } from "sonner";
 
 import { useCartStore } from "@/lib/store/useCartStore";
 import priceFormat from "@/lib/utils/priceFormat";
+import type { CartItemType } from "@/types";
 import Confirm from "../Confirm";
 import { TrashIcon } from "../icons";
 import CartQuantity from "./CartQuantity";
 
-type CartItem = {
-  id: number;
-  usuario_id: string;
-  servicio_id: number;
-  precio: number;
-  nombre: string;
-  cantidad: number;
-  img_url: string;
-  desc?: string;
-};
-
 type CartItemInterface = {
-  item: CartItem;
+  item: CartItemType;
 };
 
 const CartItem = ({ item }: CartItemInterface) => {

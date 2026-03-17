@@ -3,20 +3,10 @@
 import { useEffect } from "react";
 
 import { useCartStore } from "@/lib/store/useCartStore";
-
-type CartData = {
-  id: number;
-  usuario_id: string;
-  servicio_id: number;
-  precio: number;
-  nombre: string;
-  cantidad: number;
-  img_url: string;
-  desc?: string;
-};
+import type { CartItemType } from "@/types";
 
 type Props = {
-  initialCartItems: CartData[];
+  initialCartItems: CartItemType[];
 };
 
 export default function CartProvider({ initialCartItems }: Props) {

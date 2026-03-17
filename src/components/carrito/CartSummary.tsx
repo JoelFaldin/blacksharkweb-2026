@@ -1,17 +1,7 @@
 import { useCartStore } from "@/lib/store/useCartStore";
 import priceFormat from "@/lib/utils/priceFormat";
+import type { CartItemType } from "@/types";
 import CheckoutButton from "./ButtonCheckout";
-
-type CartItemType = {
-  id: number;
-  usuario_id: string;
-  servicio_id: number;
-  precio: number;
-  nombre: string;
-  cantidad: number;
-  img_url: string;
-  desc?: string;
-};
 
 const CartSummary = () => {
   const items: CartItemType[] = useCartStore((s) => s.items);

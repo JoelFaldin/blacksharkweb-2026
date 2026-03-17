@@ -41,6 +41,8 @@ const ContactForm = () => {
       toast.error("Error al enviar el mensaje.");
       console.log(error);
     }
+
+    handleModal();
   };
 
   return (
@@ -120,7 +122,7 @@ const ContactForm = () => {
                   htmlFor="subject"
                   className="block text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground"
                 >
-                  Asunto <span className="text-xs text-muted-foreground/60">(opcional)</span>
+                  Asunto
                 </label>
                 <div className="relative mt-1">
                   <input

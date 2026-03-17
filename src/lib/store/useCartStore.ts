@@ -1,40 +1,16 @@
 import { create } from "zustand";
 
 import { addCartItem, removeCartItem } from "@/app/actions/cart";
+import type { CartItemType, NewCartItem } from "@/types";
 import scheduleQuantitySync from "../utils/cartSync";
 
-interface CartItem {
-  id: number;
-  usuario_id: string;
-  servicio_id: number;
-  precio: number;
-  nombre: string;
-  cantidad: number;
-  img_url: string;
-  desc?: string;
-}
-
-type NewCartItem = {
-  id: number;
-  usuario_id: string;
-  servicio_id: number;
-  cantidad: number;
-  servicios: {
-    precio: number;
-    nombre: string;
-    imagen: {
-      url: string;
-    } | null;
-  } | null;
-};
-
 type CartState = {
-  items: CartItem[];
+  items: CartItemType[];
   updateQuantity: (carrito_id: number, newQuantity: number) => void;
   addItem: (service_id: number, user_id: string) => void;
   removeItem: (service_id: number) => void;
   clearCart: () => void;
-  setCart: (items: CartItem[]) => void;
+  setCart: (items: CartItemType[]) => void;
 };
 
 export const useCartStore = create<CartState>((set, get) => ({
@@ -74,7 +50,7 @@ export const useCartStore = create<CartState>((set, get) => ({
       if (!res || !Array.isArray(res) || res.length === 0) return;
 
       const cartItem = res[0];
-      const newItem: CartItem = {
+      const newItem: CartItemType = {
         id: cartItem.id,
         usuario_id: cartItem.usuario_id,
         servicio_id: cartItem.servicio_id,

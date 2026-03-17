@@ -1,10 +1,6 @@
-type MessageType = {
-  className?: string;
-  width?: number;
-  height?: number;
-};
+import type { IconType } from "@/types";
 
-const Message = ({ className, width = 24, height = 24 }: MessageType) => {
+const Message = ({ className, width = 24, height = 24 }: IconType) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

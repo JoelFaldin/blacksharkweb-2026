@@ -1,10 +1,6 @@
-type EyeOpenType = {
-  width?: number;
-  height?: number;
-  className?: string;
-};
+import type { IconType } from "@/types";
 
-const EyeOpen = ({ width = 24, height = 24, className }: EyeOpenType) => {
+const EyeOpen = ({ width = 24, height = 24, className }: IconType) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
