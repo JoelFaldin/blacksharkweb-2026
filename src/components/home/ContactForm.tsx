@@ -31,16 +31,23 @@ const ContactForm = () => {
   const handleSubmitForm = async () => {
     const loading = toast.loading("Enviando mensaje...");
 
-    try {
-      await sendContactForm(name, email, subject, message);
+    const res = await sendContactForm(name, email, subject, message);
 
+    if (res.status === "error") {
       toast.dismiss(loading);
-      toast.success("Mensaje enviado correctamente.");
-    } catch (error) {
-      toast.dismiss(loading);
-      toast.error("Error al enviar el mensaje.");
-      console.log(error);
+      toast.error(res.message);
+
+      console.log(res.errors);
+      return;
     }
+
+    toast.dismiss(loading);
+    toast.success(res.message);
+
+    setName("");
+    setEmail("");
+    setSubject("");
+    setMessage("");
 
     handleModal();
   };
@@ -87,7 +94,7 @@ const ContactForm = () => {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
-                    className="w-full rounded-xl border border-border bg-black pl-12 pr-4 py-3 text-sm text-white placeholder:text-muted-foreground transition-colors duration-200 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                    className="w-full rounded-xl border border-border bg-black pl-12 pr-4 py-3 text-sm text-white placeholder:text-muted-foreground/50 transition-colors duration-200 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                     placeholder="Tu nombre completo"
                   />
                 </div>
@@ -111,7 +118,7 @@ const ContactForm = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="w-full rounded-xl border border-border bg-black pl-12 pr-4 py-3 text-sm text-white placeholder:text-muted-foreground transition-colors duration-200 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                    className="w-full rounded-xl border border-border bg-black pl-12 pr-4 py-3 text-sm text-white placeholder:text-muted-foreground/50 transition-colors duration-200 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                     placeholder="usuario@correo.com"
                   />
                 </div>
@@ -132,7 +139,7 @@ const ContactForm = () => {
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
                     required
-                    className="w-full rounded-xl border border-border bg-black pl-4 pr-4 py-3 text-sm text-white placeholder:text-muted-foreground transition-colors duration-200 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                    className="w-full rounded-xl border border-border bg-black pl-4 pr-4 py-3 text-sm text-white placeholder:text-muted-foreground/50 transition-colors duration-200 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                     placeholder="Asunto del mensaje"
                   />
                 </div>
