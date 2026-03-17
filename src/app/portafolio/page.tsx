@@ -1,4 +1,4 @@
-import ContactForm from "@/components/home/ContactForm";
+import Contact from "@/components/home/Contact";
 import PortfolioGallery from "@/components/portfolio/PortfolioGallery";
 import PortfolioHero from "@/components/portfolio/PortfolioHero";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
@@ -25,7 +25,7 @@ export default async function Portafolio() {
     <>
       <PortfolioHero />
       <PortfolioGallery imagenes={images} />
-      <ContactForm />
+      <Contact />
     </>
   );
 }

@@ -1,4 +1,4 @@
-import ContactForm from "@/components/home/ContactForm";
+import Contact from "@/components/home/Contact";
 import ServiceGrid from "@/components/services/ServiceGrid";
 import ServiceHero from "@/components/services/ServiceHero";
 import ServiceProcess from "@/components/services/ServiceProcess";
@@ -30,7 +30,7 @@ const ServiciosPage = async () => {
       <ServiceHero />
       <ServiceGrid servicios={servicios} />
       <ServiceProcess />
-      <ContactForm />
+      <Contact />
     </>
   );
 };
