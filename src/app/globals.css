@@ -78,3 +78,9 @@ input:-webkit-autofill:active {
   -webkit-text-fill-color: #fafafa;
   transition: background-color 5000s ease-in-out 0s;
 }
+
+@supports (scrollbar-color: auto) {
+  .custom-scrollbar {
+    scrollbar-color: var(--color-muted-foreground) var(--color-card);
+  }
+}

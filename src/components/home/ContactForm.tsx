@@ -63,14 +63,14 @@ const ContactForm = () => {
         <ArrowRight className="text-black group-hover:translate-x-1 transition-transform" />
       </Button>
       <Modal isOpen={isOpen} onClose={handleModal} className="w-2xl">
-        <form className="border border-border bg-background">
+        <form className="border border-border bg-background max-h-[90vh] flex flex-col">
           <span className="px-6 py-5 flex flex-col gap-y-1 border-b border-border">
             <h4 className="text-sm font-medium text-primary uppercase tracking-[0.2em]">
               Contáctanos
             </h4>
             <p className="text-2xl text-foreground mt-2">Ponte en Contacto</p>
           </span>
-          <span className="px-6 pb-5 flex flex-col gap-1">
+          <span className="px-6 pb-5 flex flex-col gap-1 overflow-y-auto flex-1 custom-scrollbar">
             <p className="text-muted-foreground my-2">
               Completa tus datos y nos podremos en contacto contigo lo más pronto posible.
             </p>
@@ -169,7 +169,7 @@ const ContactForm = () => {
             </div>
           </span>
 
-          <span className="flex flex-row justify-center gap-8 mb-4">
+          <span className="flex flex-row justify-center gap-8 py-4 px-6 border-t border-border shrink-0">
             <Button type="secondary" onClick={handleModal} className="p-6 cursor-pointer">
               <span className="font-bold text-foreground">Volver</span>
             </Button>

@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 
 import { getEnvironmentVariables } from "@/lib/supabase/config";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { getServerEnvironmentVariables } from "@/lib/supabase/server-config";
 import { brandSchema } from "@/lib/validations/brand.schema";
 import type { ActionState } from "@/types/actions";
 import { uploadOptimizedImage } from "./upload";
@@ -44,7 +45,8 @@ export async function handleBrand(file: File, name: string): Promise<ActionState
   }
 
   try {
-    const { supabaseUrl, supabaseServiceRoleKey } = getEnvironmentVariables();
+    const { supabaseUrl } = getEnvironmentVariables();
+    const { supabaseServiceRoleKey } = getServerEnvironmentVariables();
 
     if (!supabaseServiceRoleKey) throw new Error("Service role key is required for admin client.");
 

@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 
 import { getEnvironmentVariables } from "@/lib/supabase/config";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { getServerEnvironmentVariables } from "@/lib/supabase/server-config";
 import { uploadOptimizedImage } from "./upload";
 
 export async function handleService(file: File, name: string, desc: string, price: number) {
@@ -14,7 +15,8 @@ export async function handleService(file: File, name: string, desc: string, pric
     return { success: false, error: optimizedBuffer.error };
   }
 
-  const { supabaseUrl, supabaseServiceRoleKey } = getEnvironmentVariables();
+  const { supabaseUrl } = getEnvironmentVariables();
+  const { supabaseServiceRoleKey } = getServerEnvironmentVariables();
 
   if (!supabaseServiceRoleKey) throw new Error("Service role key is required for admin client.");
 
