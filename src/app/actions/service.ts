@@ -14,8 +14,11 @@ export async function handleService(file: File, name: string, desc: string, pric
     return { success: false, error: optimizedBuffer.error };
   }
 
-  const { supabaseUrl, supabaseAnonKey } = getEnvironmentVariables();
-  const supabaseAdmin = createClient(supabaseUrl, supabaseAnonKey);
+  const { supabaseUrl, supabaseServiceRoleKey } = getEnvironmentVariables();
+
+  if (!supabaseServiceRoleKey) throw new Error("Service role key is required for admin client.");
+
+  const supabaseAdmin = createClient(supabaseUrl, supabaseServiceRoleKey);
 
   const serviceName = `${file.name.replace(/\.[^/.]+$/, "")}.webp`;
   const { data, error } = await supabaseAdmin.storage

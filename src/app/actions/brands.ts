@@ -44,8 +44,11 @@ export async function handleBrand(file: File, name: string): Promise<ActionState
   }
 
   try {
-    const { supabaseUrl, supabaseAnonKey } = getEnvironmentVariables();
-    const supabaseAdmin = createClient(supabaseUrl, supabaseAnonKey);
+    const { supabaseUrl, supabaseServiceRoleKey } = getEnvironmentVariables();
+
+    if (!supabaseServiceRoleKey) throw new Error("Service role key is required for admin client.");
+
+    const supabaseAdmin = createClient(supabaseUrl, supabaseServiceRoleKey);
 
     const brandName = `${file.name.replace(/\.[^/.]+$/, "")}.webp`;
     const { data, error } = await supabaseAdmin.storage
