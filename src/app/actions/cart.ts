@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import type { NewCartItem } from "@/types";
-import type { AddCartItemInterface } from "@/types/actions";
+import type { ActionState, AddCartItemInterface } from "@/types/actions";
 
 export async function addCartItem(
   service_id: number,
@@ -40,24 +40,66 @@ export async function addCartItem(
   }
 }
 
-export async function removeCartItem(carrito_id: number) {
-  const supabase = await createSupabaseServerClient();
-  const { data } = await supabase.auth.getClaims();
+export async function removeCartItem(carrito_id: number): Promise<ActionState> {
+  try {
+    const supabase = await createSupabaseServerClient();
+    const { data } = await supabase.auth.getClaims();
 
-  if (data?.claims) {
-    await supabase.from("carrito").delete().eq("id", carrito_id).eq("usuario_id", data.claims.sub);
+    if (data?.claims) {
+      const res = await supabase
+        .from("carrito")
+        .delete()
+        .eq("id", carrito_id)
+        .eq("usuario_id", data.claims.sub);
+
+      if (res.error) throw res.error;
+
+      revalidatePath("/carrito");
+      return {
+        status: "success",
+        message: "Se ha actualizado la cantidad.",
+      };
+    } else {
+      throw new Error("No se ha encontrado el usuario.");
+    }
+  } catch (error) {
+    console.log(error);
+
+    return {
+      status: "error",
+      message: "Ocurrió un error al actualizar la cantidad.",
+      ...(error ? error : null),
+    };
   }
-
-  revalidatePath("/carrito");
 }
 
-export async function updateItemQuantity(carrito_id: number, quantity: number) {
-  const supabase = await createSupabaseServerClient();
-  const { data } = await supabase.auth.getClaims();
+export async function updateItemQuantity(
+  carrito_id: number,
+  quantity: number,
+): Promise<ActionState> {
+  try {
+    const supabase = await createSupabaseServerClient();
+    const { data } = await supabase.auth.getClaims();
 
-  if (data) {
-    await supabase.from("carrito").update({ cantidad: quantity }).eq("id", carrito_id);
+    if (!data) throw new Error("No se ha encontrado el usuario.");
+
+    const res = await supabase.from("carrito").update({ cantidad: quantity }).eq("id", carrito_id);
+
+    if (res.error) throw res.error;
+
+    revalidatePath("/carrito");
+
+    return {
+      status: "success",
+      message: "¡Se ha actualizado la cantidad!",
+    };
+  } catch (error) {
+    console.log(error);
+
+    return {
+      status: "error",
+      message: "Ocurrió un error al actualizar la cantidad.",
+      ...(error ? error : null),
+    };
   }
-
-  revalidatePath("/carrito");
 }

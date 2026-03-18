@@ -1,9 +1,8 @@
 import { create } from "zustand";
 
-import { addCartItem, removeCartItem } from "@/app/actions/cart";
+import { addCartItem, removeCartItem, updateItemQuantity } from "@/app/actions/cart";
 import type { CartItemType } from "@/types";
 import type { AddCartItemInterface } from "@/types/actions";
-import scheduleQuantitySync from "../utils/cartSync";
 
 type CartState = {
   items: CartItemType[];
@@ -27,8 +26,6 @@ export const useCartStore = create<CartState>((set, get) => ({
         const result = state.items.filter((i) => i.id !== carrito_id);
         return { items: result };
       });
-
-      await scheduleQuantitySync(carrito_id, 0);
     } else {
       set((state) => {
         return {
@@ -37,8 +34,6 @@ export const useCartStore = create<CartState>((set, get) => ({
           ),
         };
       });
-
-      await scheduleQuantitySync(carrito_id, newQuantity);
     }
   },
   addItem: async (service_id, user_id) => {
@@ -75,7 +70,7 @@ export const useCartStore = create<CartState>((set, get) => ({
         };
       });
 
-      await scheduleQuantitySync(findItem.id, findItem.cantidad + 1);
+      await updateItemQuantity(findItem.id, findItem.cantidad + 1);
     }
   },
   removeItem: async (carrito_id) => {

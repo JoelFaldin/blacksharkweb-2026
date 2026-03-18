@@ -36,7 +36,7 @@ export async function handleService(file: File, name: string, desc: string, pric
   await handleAddService(data.path, name, desc, price);
 }
 
-export async function handleAddService(path: string, name: string, desc: string, price: number) {
+async function handleAddService(path: string, name: string, desc: string, price: number) {
   const supabase = await createSupabaseServerClient();
 
   const { data: urlData } = supabase.storage.from("images").getPublicUrl(path);
