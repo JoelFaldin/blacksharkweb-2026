@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache";
 import { getEnvironmentVariables } from "@/lib/supabase/config";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getServerEnvironmentVariables } from "@/lib/supabase/server-config";
+import type { ActionState } from "@/types/actions";
 import { uploadOptimizedImage } from "./upload";
 
 export async function handleService(file: File, name: string, desc: string, price: number) {
@@ -63,19 +64,36 @@ export async function handleAddService(path: string, name: string, desc: string,
   return { success: true };
 }
 
-export async function updateServiceVisibility(service_id: number) {
-  const supabase = await createSupabaseServerClient();
-  const service = await supabase.from("servicios").select("disponible").eq("id", service_id);
+export async function updateServiceVisibility(service_id: number): Promise<ActionState> {
+  try {
+    const supabase = await createSupabaseServerClient();
+    const service = await supabase.from("servicios").select("disponible").eq("id", service_id);
 
-  if (!service) return { success: false, error: "No service found with that id." };
+    if (!service) throw new Error("Servicio no encontrado.");
 
-  await supabase
-    .from("servicios")
-    .update({
-      disponible: !service.data?.[0].disponible,
-    })
-    .eq("id", service_id);
+    const res = await supabase
+      .from("servicios")
+      .update({
+        disponible: !service.data?.[0].disponible,
+      })
+      .eq("id", service_id);
 
-  revalidatePath("/servicios");
-  return { success: true };
+    if (res.error) {
+      return {
+        status: "error",
+        error: res.error.message,
+        message: "Ocurrió un error al actualizar la visibilidad del servicio. Inténtalo más tarde.",
+      };
+    }
+
+    revalidatePath("/servicios");
+    return { status: "success", message: "¡Visibilidad actualizada!" };
+  } catch (error) {
+    console.log(error);
+
+    return {
+      status: "error",
+      message: "Ocurrió un error en el servidor, inténtalo más tarde.",
+    };
+  }
 }

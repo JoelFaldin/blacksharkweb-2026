@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import { toast } from "sonner";
+import { useDebouncedCallback } from "use-debounce";
 
+import { updateBrandVisibility } from "@/app/actions/brands";
 import { useAuthStore } from "@/lib/store/useAuthStore";
-import scheduleAvailableSync from "@/lib/utils/brandSync";
 import Confirm from "../Confirm";
 import { EyeClose, EyeOpen, Refresh, XIcon } from "../icons";
 
@@ -20,12 +21,18 @@ interface BrandItemProps {
 const BrandItem = ({ id, nombre, imagen, disponible }: BrandItemProps) => {
   const user = useAuthStore((u) => u.user);
 
+  const debouncedSync = useDebouncedCallback(async () => {
+    const res = await updateBrandVisibility(id);
+
+    if (res.status === "error") {
+      toast.error(res.message);
+    } else {
+      toast.success(res.message);
+    }
+  }, 500);
+
   const handleChangeVisibility = async () => {
-    toast.promise(scheduleAvailableSync(id), {
-      loading: "Cambiando la visibilidad de la marca...",
-      success: "¡Se ha cambiado la visibilidad de la marca!",
-      error: "Error al cambiar la visibilidad de la marca",
-    });
+    debouncedSync();
   };
 
   return (

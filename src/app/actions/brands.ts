@@ -111,30 +111,39 @@ async function handleAddBrand(path: string, name: string) {
   return { status: "success" };
 }
 
-export async function updateBrandVisibility(id: number) {
-  const supabase = await createSupabaseServerClient();
-  const brand = await supabase.from("marcas").select("disponible").eq("id", id);
+export async function updateBrandVisibility(id: number): Promise<ActionState> {
+  try {
+    const supabase = await createSupabaseServerClient();
+    const brand = await supabase.from("marcas").select("disponible").eq("id", id);
 
-  if (!brand) {
+    if (!brand) throw new Error("Marca no encontrada.");
+
+    const res = await supabase
+      .from("marcas")
+      .update({
+        disponible: !brand.data?.[0].disponible,
+      })
+      .eq("id", id);
+
+    if (res.error) {
+      return {
+        status: "error",
+        error: res.error.message,
+        message: "Ocurrió un error al actualizar la visibilidad de la marca. Inténtalo más tarde.",
+      };
+    }
+
+    revalidatePath("/");
+    return {
+      status: "success",
+      message: "¡Visibilidad actualizada!",
+    };
+  } catch (error) {
+    console.log(error);
+
     return {
       status: "error",
-      message: "Marca no encontrada.",
+      message: "Ocurrió un error en el servidor, inténtalo más tarde.",
     };
   }
-
-  const res = await supabase
-    .from("marcas")
-    .update({
-      disponible: !brand.data?.[0].disponible,
-    })
-    .eq("id", id);
-
-  if (res.error) {
-    return {
-      status: "error",
-      error: res.error.message,
-    };
-  }
-
-  revalidatePath("/");
 }
