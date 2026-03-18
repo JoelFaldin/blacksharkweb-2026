@@ -7,9 +7,7 @@ import { toast } from "sonner";
 import { handleBrand } from "@/app/actions/brands";
 import { useAuthStore } from "@/lib/store/useAuthStore";
 import Button from "../Button";
-import ImageIcon from "../icons/ImageIcon";
-import Plus from "../icons/Plus";
-import Upload from "../icons/Upload";
+import { ImageIcon, Plus, Upload } from "../icons";
 import Modal from "../Modal";
 
 const AddBrand = () => {
@@ -68,15 +66,15 @@ const AddBrand = () => {
     const loading = toast.loading("Subiendo imagen y guardando sus datos...");
     const res = await handleBrand(selectedFile, brandName);
 
-    if (res?.error) {
+    if (res.status === "error") {
       toast.dismiss(loading);
-      toast.error("Ocurrió un error al intentar subir los datos de la marca. Inténtalo más tarde.");
+      toast.error(res.message);
       console.log(res.error);
 
       return;
     } else {
       toast.dismiss(loading);
-      toast.success("¡Se han guardado con éxito los datos de la marca!");
+      toast.success(res.message);
     }
 
     handleModal();
@@ -137,7 +135,8 @@ const AddBrand = () => {
                     <ImageIcon />
                   </div>
                   <p className="mb-1 text-sm text-foreground">Arrastra tu logo aquí</p>
-                  <p className="mb-3 text-xs text-muted-foreground">PNG, JPG o SVG</p>
+                  <p className="mb-1 text-xs text-muted-foreground">PNG, JPG, JPEG o WEBP</p>
+                  <p className="mb-3 text-xs text-muted-foreground">(5MB Máximo)</p>
                   <Button
                     type="secondary"
                     onClick={() => fileInputRef.current?.click()}

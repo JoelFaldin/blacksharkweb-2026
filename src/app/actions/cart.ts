@@ -4,8 +4,12 @@ import { revalidatePath } from "next/cache";
 
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import type { NewCartItem } from "@/types";
+import type { AddCartItemInterface } from "@/types/actions";
 
-export async function addCartItem(service_id: number, user_id: string) {
+export async function addCartItem(
+  service_id: number,
+  user_id: string,
+): Promise<AddCartItemInterface> {
   const supabase = await createSupabaseServerClient();
   const { data } = await supabase.auth.getClaims();
 
@@ -22,10 +26,18 @@ export async function addCartItem(service_id: number, user_id: string) {
 
     const data = res.data as unknown as NewCartItem[];
 
-    return data;
+    revalidatePath("/carrito");
+    return {
+      data: data,
+      status: "success",
+      message: "Servicio guardado con éxito.",
+    };
+  } else {
+    return {
+      status: "error",
+      message: "Usuario no autorizado.",
+    };
   }
-
-  revalidatePath("/carrito");
 }
 
 export async function removeCartItem(carrito_id: number) {

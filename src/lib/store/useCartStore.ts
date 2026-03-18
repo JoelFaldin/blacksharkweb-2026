@@ -1,7 +1,8 @@
 import { create } from "zustand";
 
 import { addCartItem, removeCartItem } from "@/app/actions/cart";
-import type { CartItemType, NewCartItem } from "@/types";
+import type { CartItemType } from "@/types";
+import type { AddCartItemInterface } from "@/types/actions";
 import scheduleQuantitySync from "../utils/cartSync";
 
 type CartState = {
@@ -45,7 +46,7 @@ export const useCartStore = create<CartState>((set, get) => ({
     const findItem = items.find((i) => i.servicio_id === service_id);
 
     if (!findItem) {
-      const res: NewCartItem[] | undefined = await addCartItem(service_id, user_id);
+      const res: AddCartItemInterface | undefined = await addCartItem(service_id, user_id);
 
       if (!res || !Array.isArray(res) || res.length === 0) return;
 
