@@ -3,10 +3,11 @@
 import { Resend } from "resend";
 
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import type { ActionState } from "@/types/actions";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export async function sendOrderEmail() {
+export async function sendOrderEmail(): Promise<ActionState> {
   try {
     const supabase = await createSupabaseServerClient();
 
@@ -15,13 +16,7 @@ export async function sendOrderEmail() {
       error: userError,
     } = await supabase.auth.getUser();
 
-    if (userError || !user) {
-      return {
-        success: false,
-        error: "No autenticado",
-        status: 401,
-      };
-    }
+    if (userError || !user) throw new Error("Usuario no autenticado.");
 
     const { data: cartItems, error: cartError } = await supabase
       .from("carrito")
@@ -35,23 +30,9 @@ export async function sendOrderEmail() {
       `)
       .eq("usuario_id", user.id);
 
-    if (cartError) {
-      console.error(cartError);
+    if (cartError) throw cartError;
 
-      return {
-        success: false,
-        error: "Error obteniendo carrito",
-        status: 400,
-      };
-    }
-
-    if (!cartItems || cartItems.length === 0) {
-      return {
-        success: false,
-        error: "Carrito vacío",
-        status: 404,
-      };
-    }
+    if (!cartItems || cartItems.length === 0) throw new Error("El carrito está vacío.");
 
     const itemsText = cartItems
       .map((item) => {
@@ -86,24 +67,19 @@ ${itemsText}
       .delete()
       .eq("usuario_id", user.id);
 
-    if (deleteError) {
-      console.error("Error limpiando el carrito:", deleteError);
-
-      return {
-        success: false,
-      };
-    }
+    if (deleteError) throw deleteError;
 
     return {
-      success: true,
+      status: "success",
+      message: "Se ha realizado el pedido.",
     };
   } catch (error) {
     console.error(error);
 
     return {
-      success: false,
-      error: "Error interno del servidor",
-      status: 500,
+      status: "error",
+      message: "Ocurrió un error en el servidor, inténtalo más tarde.",
+      ...(error ? error : null),
     };
   }
 }

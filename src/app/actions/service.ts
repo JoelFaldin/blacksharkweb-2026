@@ -9,31 +9,51 @@ import { getServerEnvironmentVariables } from "@/lib/supabase/server-config";
 import type { ActionState } from "@/types/actions";
 import { uploadOptimizedImage } from "./upload";
 
-export async function handleService(file: File, name: string, desc: string, price: number) {
-  const optimizedBuffer = await uploadOptimizedImage(file);
+export async function handleService(
+  file: File,
+  name: string,
+  desc: string,
+  price: number,
+): Promise<ActionState> {
+  try {
+    const optimizedBuffer = await uploadOptimizedImage(file);
 
-  if ("error" in optimizedBuffer) {
-    return { success: false, error: optimizedBuffer.error };
+    if ("error" in optimizedBuffer) throw optimizedBuffer.error;
+
+    const { supabaseUrl } = getEnvironmentVariables();
+    const { supabaseServiceRoleKey } = getServerEnvironmentVariables();
+
+    if (!supabaseServiceRoleKey) throw new Error("Service role key is required for admin client.");
+
+    const supabaseAdmin = createClient(supabaseUrl, supabaseServiceRoleKey);
+
+    const serviceName = `${file.name.replace(/\.[^/.]+$/, "")}.webp`;
+    const { data, error } = await supabaseAdmin.storage
+      .from("images")
+      .upload(`servicios/${serviceName}`, optimizedBuffer, {
+        contentType: "image/webp",
+        upsert: true,
+      });
+
+    if (error) throw error;
+
+    const res = await handleAddService(data.path, name, desc, price);
+
+    if (res.error) throw res.error;
+
+    return {
+      status: "success",
+      message: "¡Se han guardado con éxito los datos del servicio!",
+    };
+  } catch (error) {
+    console.log(error);
+
+    return {
+      status: "error",
+      message: "Ocurrió un error guardando el servicio. Inténtalo más tarde.",
+      ...(error ? error : null),
+    };
   }
-
-  const { supabaseUrl } = getEnvironmentVariables();
-  const { supabaseServiceRoleKey } = getServerEnvironmentVariables();
-
-  if (!supabaseServiceRoleKey) throw new Error("Service role key is required for admin client.");
-
-  const supabaseAdmin = createClient(supabaseUrl, supabaseServiceRoleKey);
-
-  const serviceName = `${file.name.replace(/\.[^/.]+$/, "")}.webp`;
-  const { data, error } = await supabaseAdmin.storage
-    .from("images")
-    .upload(`servicios/${serviceName}`, optimizedBuffer, {
-      contentType: "image/webp",
-      upsert: true,
-    });
-
-  if (error) return { success: false, error: error.message };
-
-  await handleAddService(data.path, name, desc, price);
 }
 
 async function handleAddService(path: string, name: string, desc: string, price: number) {

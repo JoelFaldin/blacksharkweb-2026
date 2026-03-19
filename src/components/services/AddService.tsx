@@ -70,7 +70,7 @@ const AddService = () => {
     const loading = toast.loading("Subiendo imagen y guardando los datos del servicio...");
     const res = await handleService(file, serviceName, serviceDesc, parseInt(servicePrice, 10));
 
-    if (res?.error) {
+    if (res.status === "error") {
       toast.dismiss(loading);
       toast.error(
         "Ocurrió un error al intentar subir los datos del servicio. Inténtalo más tarde.",

@@ -17,8 +17,8 @@ export default function CheckoutButton() {
 
       const res = await sendOrderEmail();
 
-      if (!res?.success) {
-        toast.error("Error al enviar pedido");
+      if (res.status === "error") {
+        toast.error(res.message);
         return;
       }
 
