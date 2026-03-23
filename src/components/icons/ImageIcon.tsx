@@ -1,10 +1,6 @@
-type ImageIconType = {
-  className?: string;
-  width?: number;
-  height?: number;
-};
+import type { IconType } from "@/types";
 
-const ImageIcon = ({ className, width = 24, height = 24 }: ImageIconType) => {
+const ImageIcon = ({ className, width = 24, height = 24 }: IconType) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

@@ -1,10 +1,6 @@
-type XIconType = {
-  className?: string;
-  width?: number;
-  height?: number;
-};
+import type { IconType } from "@/types";
 
-const XIcon = ({ className, height = 24, width = 24 }: XIconType) => {
+const XIcon = ({ className, height = 24, width = 24 }: IconType) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

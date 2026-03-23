@@ -1,4 +1,4 @@
-import ContactForm from "@/components/home/ContactForm";
+import Contact from "@/components/home/Contact";
 import { NosotrosHero } from "@/components/nosotros/NosotrosHero";
 import { NosotrosHistory } from "@/components/nosotros/NosotrosHistory";
 import NosotrosTeam from "@/components/nosotros/NosotrosTeam";
@@ -28,7 +28,7 @@ const Nosotros = async () => {
       <NosotrosHero />
       <NosotrosHistory />
       <NosotrosTeam team={team} />
-      <ContactForm />
+      <Contact />
     </>
   );
 };

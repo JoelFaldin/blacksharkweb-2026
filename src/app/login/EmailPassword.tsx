@@ -1,5 +1,6 @@
 "use client";
 
+import { isAuthApiError } from "@supabase/supabase-js";
 import { type JwtPayload, jwtDecode } from "jwt-decode";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -76,7 +77,23 @@ export default function EmailPasswordDemo() {
 
       if (error) {
         toast.dismiss(loading);
-        toast.error(error.message);
+
+        if (isAuthApiError(error)) {
+          switch (error.status) {
+            case 400:
+              toast.error("Correo o contraseña incorrectos.");
+              break;
+            case 422:
+              toast.error("El formato del correo es inválido.");
+              break;
+            case 429:
+              toast.error("Demasiados intentos. Por favor, inténtalo de nuevo más tarde.");
+              break;
+            default:
+              toast.error("Error al iniciar sesión. Por favor, inténtalo de nuevo.");
+          }
+        }
+        console.log(error);
       } else {
         const jwt = jwtDecode<CustomJwtPayload>(data.session.access_token);
 

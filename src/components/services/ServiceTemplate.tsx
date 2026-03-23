@@ -3,13 +3,14 @@
 import Image from "next/image";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useDebouncedCallback } from "use-debounce";
 
+import { updateServiceVisibility } from "@/app/actions/service";
 import { useAuthStore } from "@/lib/store/useAuthStore";
 import { useCartStore } from "@/lib/store/useCartStore";
 import { useContextStore } from "@/lib/store/useContextStore";
 import { useSupabaseStore } from "@/lib/store/useSupabaseStore";
 import priceFormat from "@/lib/utils/priceFormat";
-import scheduleServiceSync from "@/lib/utils/serviceSync";
 import Button from "../Button";
 import Confirm from "../Confirm";
 import { ArrowUpRight, EyeClose, EyeOpen, Refresh, Send, ShoppingCart, XIcon } from "../icons";
@@ -56,12 +57,18 @@ const ServiceTemplate = ({
     toast.success("¡Se ha agregado el servicio al carrito!");
   };
 
-  const handleChangeVisibility = async () => {
-    const loading = toast.loading("Cambiando la visibilidad del servicio...");
+  const debouncedSync = useDebouncedCallback(async () => {
+    const res = await updateServiceVisibility(id);
 
-    await scheduleServiceSync(id);
-    toast.dismiss(loading);
-    toast.success("¡Se ha cambiado la visibilidad del servicio!");
+    if (res.status === "error") {
+      toast.error(res.message);
+    } else {
+      toast.success(res.message);
+    }
+  }, 500);
+
+  const handleChangeVisibility = async () => {
+    debouncedSync();
   };
 
   const handleModal = () => {

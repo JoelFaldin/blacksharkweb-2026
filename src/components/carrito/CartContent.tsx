@@ -1,21 +1,11 @@
 "use client";
 
 import { useCartStore } from "@/lib/store/useCartStore";
+import type { CartItemType } from "@/types";
 import Button from "../Button";
 import { ArrowRight, ShoppingCart } from "../icons";
 import CartItem from "./CartItem";
 import CartSummary from "./CartSummary";
-
-type CartItemType = {
-  id: number;
-  usuario_id: string;
-  servicio_id: number;
-  precio: number;
-  nombre: string;
-  cantidad: number;
-  img_url: string;
-  desc?: string;
-};
 
 const CartContent = () => {
   const items: CartItemType[] = useCartStore((s) => s.items);

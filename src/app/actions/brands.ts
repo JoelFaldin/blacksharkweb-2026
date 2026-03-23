@@ -5,29 +5,79 @@ import { revalidatePath } from "next/cache";
 
 import { getEnvironmentVariables } from "@/lib/supabase/config";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { getServerEnvironmentVariables } from "@/lib/supabase/server-config";
+import { brandSchema } from "@/lib/validations/brand.schema";
+import type { ActionState } from "@/types/actions";
 import { uploadOptimizedImage } from "./upload";
 
-export async function handleBrand(file: File, name: string) {
+export async function handleBrand(file: File, name: string): Promise<ActionState> {
+  const validateData = brandSchema.safeParse({
+    file,
+    name,
+  });
+
+  if (!validateData.success) {
+    const formattedErrors = validateData.error.issues.reduce(
+      (acc, issue) => {
+        const path = issue.path[0] as string;
+        acc[path] = issue.message;
+        return acc;
+      },
+      {} as Record<string, string>,
+    );
+
+    return {
+      status: "error",
+      errors: formattedErrors,
+      message:
+        "Revisa el tipo y tamaño de la imagen, y que el nombre no supere los 500 caracteres.",
+    };
+  }
+
   const optimizedBuffer = await uploadOptimizedImage(file);
 
   if ("error" in optimizedBuffer) {
-    return { success: false, error: optimizedBuffer.error };
+    return {
+      status: "error",
+      error: optimizedBuffer.error,
+      message: "Ha ocurrido un error al subir la imagen, inténtalo más tarde.",
+    };
   }
 
-  const { supabaseUrl, supabaseAnonKey } = getEnvironmentVariables();
-  const supabaseAdmin = createClient(supabaseUrl, supabaseAnonKey);
+  try {
+    const { supabaseUrl } = getEnvironmentVariables();
+    const { supabaseServiceRoleKey } = getServerEnvironmentVariables();
 
-  const brandName = `${file.name.replace(/\.[^/.]+$/, "")}.webp`;
-  const { data, error } = await supabaseAdmin.storage
-    .from("images")
-    .upload(`marcas/${brandName}`, optimizedBuffer, {
-      contentType: "image/webp",
-      upsert: true,
-    });
+    if (!supabaseServiceRoleKey) throw new Error("Service role key is required for admin client.");
 
-  if (error) return { success: false, error: error.message };
+    const supabaseAdmin = createClient(supabaseUrl, supabaseServiceRoleKey);
 
-  await handleAddBrand(data.path, name);
+    const brandName = `${file.name.replace(/\.[^/.]+$/, "")}.webp`;
+    const { data, error } = await supabaseAdmin.storage
+      .from("images")
+      .upload(`marcas/${brandName}`, optimizedBuffer, {
+        contentType: "image/webp",
+        upsert: true,
+      });
+
+    if (error) throw error;
+
+    const res = await handleAddBrand(data.path, name);
+
+    if (res.status === "error") throw new Error("Error al guardar la marca.");
+
+    return {
+      status: "success",
+      message: "Se han guardado con éxito los datos de la marca!",
+    };
+  } catch (error) {
+    console.log(error);
+
+    return {
+      status: "error",
+      message: "Hubo un error al guardar los datos, inténtalo más tarde.",
+    };
+  }
 }
 
 async function handleAddBrand(path: string, name: string) {
@@ -35,7 +85,11 @@ async function handleAddBrand(path: string, name: string) {
 
   const { data: urlData } = supabase.storage.from("images").getPublicUrl(path);
 
-  if (!urlData) return { success: false, error: "No image url found." };
+  if (!urlData)
+    return {
+      status: "error",
+      error: "No public url found.",
+    };
 
   const { data, error } = await supabase
     .from("imagenes")
@@ -45,7 +99,7 @@ async function handleAddBrand(path: string, name: string) {
     })
     .select("id");
 
-  if (!data) return { success: false, error: error };
+  if (!data) return { status: "error", error: error };
 
   await supabase.from("marcas").insert({
     nombre: name,
@@ -54,21 +108,42 @@ async function handleAddBrand(path: string, name: string) {
   });
 
   revalidatePath("/");
-  return { success: true };
+  return { status: "success" };
 }
 
-export async function updateBrandVisibility(id: number) {
-  const supabase = await createSupabaseServerClient();
-  const brand = await supabase.from("marcas").select("disponible").eq("id", id);
+export async function updateBrandVisibility(id: number): Promise<ActionState> {
+  try {
+    const supabase = await createSupabaseServerClient();
+    const brand = await supabase.from("marcas").select("disponible").eq("id", id);
 
-  if (!brand) return;
+    if (!brand) throw new Error("Marca no encontrada.");
 
-  await supabase
-    .from("marcas")
-    .update({
-      disponible: !brand.data?.[0].disponible,
-    })
-    .eq("id", id);
+    const res = await supabase
+      .from("marcas")
+      .update({
+        disponible: !brand.data?.[0].disponible,
+      })
+      .eq("id", id);
 
-  revalidatePath("/");
+    if (res.error) {
+      return {
+        status: "error",
+        error: res.error.message,
+        message: "Ocurrió un error al actualizar la visibilidad de la marca. Inténtalo más tarde.",
+      };
+    }
+
+    revalidatePath("/");
+    return {
+      status: "success",
+      message: "¡Visibilidad actualizada!",
+    };
+  } catch (error) {
+    console.log(error);
+
+    return {
+      status: "error",
+      message: "Ocurrió un error en el servidor, inténtalo más tarde.",
+    };
+  }
 }
