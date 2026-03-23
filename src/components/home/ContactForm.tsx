@@ -90,7 +90,6 @@ const ContactForm = () => {
                   <input
                     id="name"
                     type="text"
-                    title="Ejemplo: usuario@correo.com"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
