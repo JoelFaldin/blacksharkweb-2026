@@ -16,7 +16,7 @@ const NosotrosTeam = ({ team }: Props) => {
             <p className="mb-10 text-sm font-medium uppercase tracking-[0.3em] text-primary">
               Nuestro Equipo
             </p>
-            <h2 className="text-foreground text-3xl font-bold md:text-4xl lg:text-5xl text-balance">
+            <h2 className="text-foreground text-3xl font-bold md:text-4xl lg:text-5xl text-pretty">
               El talento detrás de cada proyecto
             </h2>
           </div>

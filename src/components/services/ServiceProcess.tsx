@@ -27,7 +27,7 @@ const ServiceProcess = () => {
         <h2 className="text-5xl ">Un proceso diseñado con claridad y calidad</h2>
       </div>
 
-      <div className="grid gap-px md:grid-cols-4">
+      <div className="grid gap-px grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
         {procesos.map((proceso, index) => {
           const style = index !== 3 ? "border-r border-px border-border" : "";
           return (

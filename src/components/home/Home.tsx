@@ -31,7 +31,7 @@ const Home = () => {
           concepto hasta la ejecución, traemos tus ideas a la realidad con calidad excelente.
         </p>
 
-        <section className="flex flex-row justify-center items-center gap-6 mb-20">
+        <section className="flex flex-col md:flex-row justify-center items-center gap-6 mb-20">
           <Button
             type="primary"
             href="/portafolio"

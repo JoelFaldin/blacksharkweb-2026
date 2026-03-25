@@ -127,7 +127,7 @@ export default function EmailPasswordDemo() {
       />
 
       {/* Header */}
-      <div className="flex items-start justify-between gap-6">
+      <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-6">
         <div className="space-y-2">
           <p className="text-xs uppercase tracking-[0.2em] text-foreground">Credenciales</p>
           <h3 className="text-2xl font-semibold text-foreground">
