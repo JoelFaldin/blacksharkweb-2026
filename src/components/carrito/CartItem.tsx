@@ -32,7 +32,7 @@ const CartItem = ({ item }: CartItemInterface) => {
   };
 
   return (
-    <div className="group h-fit max-w-lg md:max-w-2xl flex flex-col gap-6 border border-border bg-card p-4 transition-colors hover:border-primary/30 lg:flex-row lg:items-center md:p-6">
+    <div className="group h-fit max-w-lg md:max-w-3xl flex flex-col gap-6 border border-border bg-card p-4 transition-colors hover:border-primary/30 lg:flex-row lg:items-center md:p-6">
       <div className="flex flex-1 gap-5 items-center">
         <div className="relative h-24 w-24 shrink-0 overflow-hidden md:h-28 md:w-28">
           <Image
