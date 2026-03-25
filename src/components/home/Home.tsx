@@ -14,6 +14,7 @@ const Home = () => {
           fill
           className="object-cover opacity-30"
           loading="eager"
+          fetchPriority="high"
         />
         <div className="absolute inset-0 bg-black/70" />
       </div>

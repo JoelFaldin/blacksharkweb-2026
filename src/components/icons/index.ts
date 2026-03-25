@@ -6,6 +6,7 @@ export { default as EyeClose } from "./EyeClose";
 export { default as EyeOpen } from "./EyeOpen";
 export { default as ImageIcon } from "./ImageIcon";
 export { default as Instagram } from "./Instagram";
+export { default as Menu } from "./Menu";
 export { default as Message } from "./Message";
 export { default as Minus } from "./Minus";
 export { default as PasswordIcon } from "./Password";
