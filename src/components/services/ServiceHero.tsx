@@ -6,7 +6,7 @@ const ServiceHero = () => {
           <p className="text-xl text-center md:text-start text-primary uppercase tracking-[0.2em] mb-4">
             Nuestro trabajo
           </p>
-          <h1 className="text-8xl text-foreground text-balance text-center md:text-start">
+          <h1 className="text-6xl md:text-8xl text-foreground text-balance text-center md:text-start">
             Servicios de alto <span className="text-primary">impacto</span>
           </h1>
         </span>
