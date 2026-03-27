@@ -58,7 +58,7 @@ const Navbar = () => {
       <header className="grid grid-cols-3 md:grid md:grid-cols-3 flex-row items-center w-full backdrop-blur-md py-3 border-b border-b-border bg-background">
         <Link href="/" className="flex flex-row justify-center items-center gap-x-1">
           <Image src="/images/bsw_logo_icon.webp" alt="Logo de la empresa" width={97} height={85} />
-          <p className="hidden md:block font-semibold text-xl tracking-tight text-foreground">
+          <p className="hidden min-[1060px]:block font-semibold text-xl tracking-tight text-foreground">
             <span>Black</span>
             <span>Shark</span>
             <span>Studios</span>

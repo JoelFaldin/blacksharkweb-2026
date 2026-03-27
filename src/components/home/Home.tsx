@@ -21,7 +21,7 @@ const Home = () => {
 
       <div className="relative z-10 mx-auto">
         <p className="text-2xl text-primary text-center mb-5">Agencia Publicitaria</p>
-        <h1 className="text-8xl font-bold text-center text-foreground mb-10">
+        <h1 className="text-6xl md:text-8xl font-bold text-center text-foreground mb-10">
           Diseños que <br />
           <span className="text-primary"> impulsan </span>
           tu marca
