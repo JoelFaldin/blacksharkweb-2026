@@ -12,7 +12,7 @@ const PortfolioHero = () => {
           <p className="text-xl text-primary text-center mt-4 md:text-end uppercase tracking-[0.2em] mb-4">
             Nuestro trabajo
           </p>
-          <h1 className="text-8xl text-foreground text-balance text-center md:text-end">
+          <h1 className="text-6xl md:text-8xl text-foreground text-balance text-center md:text-end">
             Diseños con <span className="text-primary">personalidad</span>
           </h1>
         </span>
