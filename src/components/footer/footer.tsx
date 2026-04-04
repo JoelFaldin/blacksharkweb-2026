@@ -25,19 +25,19 @@ const Footer = () => {
             Trabajamos para que tu marca crezca con estrategia, identidad y estilo.
           </p>
         </section>
-        <section className="flex flex-row items-center gap-x-8">
+        <section className="mt-12 md:mt-16 flex flex-wrap items-center justify-center gap-6 sm:gap-x-10">
           {links.map((link) => (
             <Link key={`footer-link-${link.href}`} href={link.href}>
-              <span className="text-lg hover:text-primary text-muted-foreground transition-colors">
+              <span className="text-xl sm:text-lg hover:text-primary text-muted-foreground transition-colors font-medium">
                 {link.name}
               </span>
             </Link>
           ))}
           <Link
             href="https://www.instagram.com/blackshark.studios/"
-            className="bg-primary/80 rounded-full p-2 cursor-pointer"
+            className="bg-primary/80 rounded-full p-3 cursor-pointer ml-2"
           >
-            <Instagram width={30} height={30} />
+            <Instagram width={32} height={32} />
           </Link>
         </section>
       </div>

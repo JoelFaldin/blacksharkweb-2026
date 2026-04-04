@@ -14,13 +14,14 @@ const Home = () => {
           fill
           className="object-cover opacity-30"
           loading="eager"
+          fetchPriority="high"
         />
         <div className="absolute inset-0 bg-black/70" />
       </div>
 
       <div className="relative z-10 mx-auto">
         <p className="text-2xl text-primary text-center mb-5">Agencia Publicitaria</p>
-        <h1 className="text-8xl font-bold text-center text-foreground mb-10">
+        <h1 className="text-6xl md:text-8xl font-bold text-center text-foreground mb-10">
           Diseños que <br />
           <span className="text-primary"> impulsan </span>
           tu marca
@@ -30,7 +31,7 @@ const Home = () => {
           concepto hasta la ejecución, traemos tus ideas a la realidad con calidad excelente.
         </p>
 
-        <section className="flex flex-row justify-center items-center gap-6 mb-20">
+        <section className="flex flex-col md:flex-row justify-center items-center gap-6 mb-20">
           <Button
             type="primary"
             href="/portafolio"

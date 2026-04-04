@@ -11,7 +11,7 @@ const CartSummary = () => {
   const total = subtotal + fee;
 
   return (
-    <section className="sticky top-24 w-md border border-border bg-card">
+    <section className="sticky top-24 max-w-lg md:max-w-fit border border-border bg-card">
       <div className="border-b border-border p-6">
         <h2 className="text-xl font-bold text-foreground md:text-2xl">Resumen del pedido</h2>
       </div>
@@ -21,12 +21,12 @@ const CartSummary = () => {
             <div className="flex-1">
               <p className="text-md font-medium text-foreground">{item.nombre}</p>
               {item.cantidad > 1 && (
-                <p className="text-xs font-medium text-foreground">
+                <p className="text-xs font-medium text-muted-foreground">
                   {priceFormat(item.precio)} x {item.cantidad}
                 </p>
               )}
             </div>
-            <span className="text-sm font-medium text-foreground">
+            <span className="text-sm font-medium text-muted-foreground">
               {priceFormat(item.precio * item.cantidad)}
             </span>
           </div>
@@ -36,12 +36,12 @@ const CartSummary = () => {
 
         <div className="flex items-center justify-between">
           <span className="text-sm text-foreground">Subtotal</span>
-          <span className="text-sm font-medium text-foreground">{priceFormat(subtotal)}</span>
+          <span className="text-sm font-medium text-muted-foreground">{priceFormat(subtotal)}</span>
         </div>
 
         <div className="flex items-center justify-between">
           <span className="text-sm text-muted-foreground">Impuesto (5%)</span>
-          <span className="text-sm font-medium text-foreground">{priceFormat(fee)}</span>
+          <span className="text-sm font-medium text-muted-foreground">{priceFormat(fee)}</span>
         </div>
 
         <div className="my-2 border-t border-border" />

@@ -163,11 +163,11 @@ const ServiceTemplate = ({
           </span>
         </div>
 
-        <div className="flex items-center justify-center gap-4 pt-8">
+        <div className="flex items-center justify-center gap-4 pt-8 max-[945px]:flex-col">
           <button
             type="button"
             onClick={() => handleAddItem()}
-            className="flex flex-row items-center justify-center border border-border p-6 gap-x-4 cursor-pointer"
+            className="flex flex-row items-center justify-center border border-border p-6 gap-x-4 cursor-pointer max-[945px]:w-full max-[945px]:p-4"
           >
             <ShoppingCart className="text-foreground" />
             <span className="text-foreground">Añadir al carrito</span>
@@ -175,7 +175,7 @@ const ServiceTemplate = ({
           <Button
             type="primary"
             onClick={handleModal}
-            className="flex flex-row items-center justify-center rounded-lg p-6 gap-x-4 cursor-pointer"
+            className="flex flex-row items-center justify-center rounded-lg p-6 gap-x-4 cursor-pointer max-[945px]:w-full max-[945px]:p-4"
           >
             <Send className="text-secondary" />
             <span className="text-secondary">Solicitar Servicio</span>
