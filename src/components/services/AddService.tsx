@@ -239,7 +239,7 @@ const AddService = () => {
       <button
         type="button"
         onClick={handleModal}
-        className="group relative flex min-h-162.5 flex-col items-center justify-center border-2 border-dashed border-border bg-background transition-colors hover:border-primary/40 hover:bg-card cursor-pointer"
+        className="group relative flex min-h-162.5 w-full flex-col items-center justify-center border-2 border-dashed border-border bg-background transition-colors hover:border-primary/40 hover:bg-card cursor-pointer"
       >
         <span className="mb-4 flex h-16 w-16 items-center justify-center rounded-full border-2 border-dashed border-muted-foreground/30 text-muted-foreground transition-colors group-hover:border-primary group-hover:text-primary">
           <Plus />
