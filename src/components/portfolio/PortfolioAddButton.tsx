@@ -10,6 +10,14 @@ import Button from "../Button";
 import { ImageIcon, Plus, Upload } from "../icons";
 import Modal from "../Modal";
 
+const category = [
+  "Fotografía Profesional",
+  "Diseño Gráfico",
+  "Servicios Extra",
+  "Paisaje",
+  "Matrimonio",
+];
+
 const PortfolioAddButton = () => {
   const user = useAuthStore((u) => u.user);
 
@@ -20,6 +28,7 @@ const PortfolioAddButton = () => {
   const [file, setFile] = useState<File | null>(null);
   const [filePath, setFilePath] = useState<string | null>(null);
   const [imageDesc, setImageDesc] = useState<string>("");
+  const [imageCategory, setImageCategory] = useState<string>("");
   const [imageClient, setImageClient] = useState<string>("");
 
   if (user?.role !== "admin") return;
@@ -31,6 +40,7 @@ const PortfolioAddButton = () => {
       document.body.classList.add("overflow-hidden");
     } else {
       setImageDesc("");
+      setImageCategory("");
       setImageClient("");
 
       setShowModal(false);
@@ -51,7 +61,7 @@ const PortfolioAddButton = () => {
     if (!file.type.startsWith("image/")) return;
 
     setFile(file);
-    setFilePath(`servicios/${file.name}`);
+    setFilePath(`gallery/${file.name}`);
 
     const render = new FileReader();
     render.onload = (e) => setPreview(e.target?.result as string);
@@ -64,20 +74,18 @@ const PortfolioAddButton = () => {
       return;
     }
 
-    const loading = toast.loading("Subiendo imagen y guardando los datos del servicio...");
-    const res = await handlePorfolio(file, imageDesc, imageClient);
+    const loading = toast.loading("Subiendo imagen...");
+    const res = await handlePorfolio(file, imageDesc, imageCategory, imageClient);
 
     if (res.status === "error") {
       toast.dismiss(loading);
-      toast.error(
-        "Ocurrió un error al intentar subir los datos del servicio. Inténtalo más tarde.",
-      );
+      toast.error("Ocurrió un error al intentar subir la imagen. Inténtalo más tarde.");
       console.log(res.error);
 
       return;
     } else {
       toast.dismiss(loading);
-      toast.success("¡Se han guardado con éxito los datos del servicio!");
+      toast.success("¡Se ha guardado con éxito la imagen!");
     }
 
     handleModal();
@@ -181,6 +189,29 @@ const PortfolioAddButton = () => {
               />
 
               <label
+                htmlFor="pic-category"
+                className="mb-2 block text-xs font-medium uppercase trakcing-[0.2em] text-muted-foreground"
+              >
+                Categoría
+              </label>
+              <select
+                name="category"
+                id="pic-category"
+                value={imageCategory}
+                onChange={(e) => setImageCategory(e.target.value)}
+                className="w-full border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 transition-colors focus:border-primary focus:outline-none"
+              >
+                <option value="" disabled>
+                  -- Selecciona una Opción
+                </option>
+                {category.map((c) => (
+                  <option key={`option-key-${c}`} value={c}>
+                    {c}
+                  </option>
+                ))}
+              </select>
+
+              <label
                 htmlFor="pic-client"
                 className="mb-2 block text-xs font-medium uppercase trakcing-[0.2em] text-muted-foreground"
               >
@@ -205,7 +236,7 @@ const PortfolioAddButton = () => {
               onClick={handleSubmit}
             >
               <Plus className="text-secondary" />
-              <span className="text-secondary font-bold">Añadir Servicio</span>
+              <span className="text-secondary font-bold">Añadir Image</span>
             </Button>
           </div>
         </section>

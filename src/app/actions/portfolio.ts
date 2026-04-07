@@ -12,6 +12,7 @@ import { uploadOptimizedImage } from "./upload";
 export async function handlePorfolio(
   file: File,
   desc: string,
+  category: string,
   client: string,
 ): Promise<ActionState> {
   try {
@@ -36,7 +37,7 @@ export async function handlePorfolio(
 
     if (error) throw error;
 
-    const res = await handleAddPortfolioImage(data.path, desc, client);
+    const res = await handleAddPortfolioImage(data.path, desc, category, client);
 
     if (res.error) throw res.error;
 
@@ -55,7 +56,12 @@ export async function handlePorfolio(
   }
 }
 
-async function handleAddPortfolioImage(path: string, desc: string, client: string) {
+async function handleAddPortfolioImage(
+  path: string,
+  desc: string,
+  category: string,
+  client: string,
+) {
   const supabase = await createSupabaseServerClient();
 
   const { data: urlData } = supabase.storage.from("images").getPublicUrl(path);
@@ -66,7 +72,7 @@ async function handleAddPortfolioImage(path: string, desc: string, client: strin
     .from("imagenes")
     .insert({
       url: urlData.publicUrl,
-      categoria: "Fotografía Profesional",
+      categoria: category,
     })
     .select("id");
 
