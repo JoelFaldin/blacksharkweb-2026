@@ -4,6 +4,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { useState } from "react";
 
+import PortfolioAddButton from "./PortfolioAddButton";
+
 const categorias = [
   "Todo",
   "Fotografía Profesional",
@@ -67,6 +69,9 @@ const PortfolioGallery = ({ imagenes }: PortfolioGalleryInterface) => {
       {/* Grid de imágenes */}
       <div className="w-[90%] mx-auto">
         <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
+          <div className="w-full max-[945px]:max-w-95 mb-4">
+            <PortfolioAddButton />
+          </div>
           <AnimatePresence mode="popLayout">
             {filteredItems.map((item) => (
               <motion.div
