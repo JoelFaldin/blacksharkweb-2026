@@ -7,6 +7,7 @@ interface GalleryInterface {
   id: number;
   desc: string;
   cliente: string;
+  disponible: boolean;
   imagenes: {
     url: string;
     categoria: string;
@@ -17,7 +18,8 @@ export default async function Portafolio() {
   const supabase = await createSupabaseServerClient();
   const { data } = await supabase
     .from("galeria")
-    .select(`id, desc, cliente, imagenes("url", "categoria")`);
+    .select(`id, desc, cliente, disponible, imagenes("url", "categoria")`)
+    .order("id", { ascending: true });
 
   const images = data as unknown as GalleryInterface[];
 

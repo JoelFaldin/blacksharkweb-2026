@@ -113,3 +113,37 @@ async function handleAddPortfolioImage(
   revalidatePath("/portafolio");
   return { success: true };
 }
+
+export async function updateImageVisibility(id: number): Promise<ActionState> {
+  try {
+    const supabase = await createSupabaseServerClient();
+    const image = await supabase.from("galeria").select("disponible").eq("id", id);
+
+    if (!image) throw new Error("Imagen no encontrada.");
+
+    const res = await supabase
+      .from("galeria")
+      .update({
+        disponible: !image.data?.[0].disponible,
+      })
+      .eq("id", id);
+
+    if (res.error) {
+      return {
+        status: "error",
+        error: res.error.message,
+        message: "Ocurrió un error al actualizar la visibilidad de la imagen. Inténtalo más tarde.",
+      };
+    }
+
+    revalidatePath("/portafolio");
+    return { status: "success", message: "¡Visibilidad actualizada!" };
+  } catch (error) {
+    console.log(error);
+
+    return {
+      status: "error",
+      message: "Ocurrió un error en el servidor, inténtalo más tarde.",
+    };
+  }
+}
