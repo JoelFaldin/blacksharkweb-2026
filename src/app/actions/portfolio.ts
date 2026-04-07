@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache";
 import { getEnvironmentVariables } from "@/lib/supabase/config";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getServerEnvironmentVariables } from "@/lib/supabase/server-config";
+import { portolioSchema } from "@/lib/validations/portfolio.schema";
 import type { ActionState } from "@/types/actions";
 import { uploadOptimizedImage } from "./upload";
 
@@ -16,6 +17,31 @@ export async function handlePorfolio(
   client: string,
 ): Promise<ActionState> {
   try {
+    const validateData = portolioSchema.safeParse({
+      file,
+      description: desc,
+      category: category,
+      client: client,
+    });
+
+    if (!validateData.success) {
+      const formattedErrors = validateData.error.issues.reduce(
+        (acc, issue) => {
+          const path = issue.path[0] as string;
+          acc[path] = issue.message;
+          return acc;
+        },
+        {} as Record<string, string>,
+      );
+
+      return {
+        status: "error",
+        errors: formattedErrors,
+        message:
+          "Revisa el tipo y tamaño de la imagen, y que la descripción tenga al menos 3 carácteres.",
+      };
+    }
+
     const optimizedBuffer = await uploadOptimizedImage(file);
 
     if ("error" in optimizedBuffer) throw optimizedBuffer.error;

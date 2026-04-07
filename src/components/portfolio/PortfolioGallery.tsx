@@ -100,10 +100,10 @@ const PortfolioGallery = ({ imagenes }: PortfolioGalleryInterface) => {
 
                   {/* Descripción */}
                   <div className="relative bg-card p-4">
-                    <div className="flex flex-col items-start ">
-                      <span className="flex">
+                    <div className="flex flex-col items-start gap-4 ">
+                      <span className="flex flex-col">
                         <h3 className="text-xl font-semibold text-foreground">{item.desc}</h3>
-                        <p className="mt-1 text-md text-muted-foreground">{item.cliente}</p>
+                        <p className="text-sm text-muted-foreground">{item.cliente}</p>
                       </span>
 
                       <p className="text-left text-sm font-medium uppercase tracking-[0.2em] text-primary">
