@@ -55,7 +55,7 @@ const PortfolioImage = ({ item }: PortfolioImageType) => {
           (item.disponible ? (
             <div className="absolute right-4 top-4">
               <Confirm
-                title={`¿Quieres cambiar la visibilidad de este servicio?`}
+                title={`¿Quieres cambiar la visibilidad de esta imagen?`}
                 desc={`Al confirmar, la visibilidad de la imagen será cambiada a invisible.`}
                 onClick={handleChangeVisibility}
                 icon={<Refresh className="text-secondary" />}
@@ -79,7 +79,7 @@ const PortfolioImage = ({ item }: PortfolioImageType) => {
                 <span>Invisible</span>
               </span>
               <Confirm
-                title={`¿Quieres cambiar la visibilidad de este servicio?`}
+                title={`¿Quieres cambiar la visibilidad de esta imagen?`}
                 desc={`Al confirmar, la visibilidad de la imagen será cambiada a visible.`}
                 onClick={handleChangeVisibility}
                 icon={<Refresh className="text-secondary" />}

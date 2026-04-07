@@ -43,7 +43,7 @@ const BrandItem = ({ id, nombre, imagen, disponible }: BrandItemProps) => {
         {user?.role === "admin" &&
           (disponible ? (
             <Confirm
-              title={`¿Quieres cambiar la visibilidad de este servicio?`}
+              title={`¿Quieres cambiar la visibilidad de esta marca?`}
               desc={`Al confirmar, la visibilidad de la marca será cambiada a invisible.`}
               onClick={handleChangeVisibility}
               icon={<Refresh className="text-secondary" />}
