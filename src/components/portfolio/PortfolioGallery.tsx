@@ -1,8 +1,10 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
-import Image from "next/image";
+import { AnimatePresence } from "framer-motion";
 import { useState } from "react";
+
+import PortfolioAddButton from "./PortfolioAddButton";
+import PortfolioImage from "./PortfolioImage";
 
 const categorias = [
   "Todo",
@@ -20,6 +22,7 @@ interface PortfolioGalleryInterface {
     id: number;
     desc: string;
     cliente: string;
+    disponible: boolean;
     imagenes: {
       url: string;
       categoria: string;
@@ -67,47 +70,12 @@ const PortfolioGallery = ({ imagenes }: PortfolioGalleryInterface) => {
       {/* Grid de imágenes */}
       <div className="w-[90%] mx-auto">
         <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
+          <div className="w-full max-[945px]:max-w-95 mb-4">
+            <PortfolioAddButton />
+          </div>
           <AnimatePresence mode="popLayout">
             {filteredItems.map((item) => (
-              <motion.div
-                key={item.id}
-                layout
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3 }}
-                className="mb-4 break-inside-avoid"
-              >
-                <button
-                  type="button"
-                  className="group block w-full border border-border bg-card text-left transition-colors"
-                >
-                  {/* Imagen */}
-                  <div className="relative overflow-hidden">
-                    <Image
-                      src={item.imagenes.url}
-                      alt={item.desc}
-                      width={700}
-                      height={500}
-                      className="w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                  </div>
-
-                  {/* Descripción */}
-                  <div className="relative bg-card p-4">
-                    <div className="flex items-center justify-between">
-                      <span>
-                        <h3 className="text-xl font-semibold text-foreground">{item.desc}</h3>
-                        <p className="mt-1 text-md text-muted-foreground">{item.cliente}</p>
-                      </span>
-
-                      <p className="text-right text-sm font-medium uppercase tracking-[0.2em] text-primary">
-                        {item.imagenes.categoria}
-                      </p>
-                    </div>
-                  </div>
-                </button>
-              </motion.div>
+              <PortfolioImage key={`item-portfolio-${item.imagenes.url}`} item={item} />
             ))}
           </AnimatePresence>
         </div>

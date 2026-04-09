@@ -42,13 +42,23 @@ const BrandItem = ({ id, nombre, imagen, disponible }: BrandItemProps) => {
       <div className="relative aspect-square mb-4 w-full overflow-hidden">
         {user?.role === "admin" &&
           (disponible ? (
-            <button
-              type="button"
+            <Confirm
+              title={`¿Quieres cambiar la visibilidad de esta marca?`}
+              desc={`Al confirmar, la visibilidad de la marca será cambiada a invisible.`}
               onClick={handleChangeVisibility}
-              className="z-10 absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full border-transparent text-transparent transition-all group-hover:border-border group-hover:text-muted-foreground hover:!border-(destructive) hover:text-destructive! cursor-pointer"
+              icon={<Refresh className="text-secondary" />}
+              buttonText="Cambiar Visibilidad"
             >
-              <XIcon />
-            </button>
+              {(open) => (
+                <button
+                  type="button"
+                  onClick={open}
+                  className={`z-10 absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full border-transparent text-transparent transition-all group-hover:border-border group-hover:text-foreground hover:!border-(destructive) hover:text-destructive! cursor-pointer`}
+                >
+                  <XIcon />
+                </button>
+              )}
+            </Confirm>
           ) : (
             <>
               <span className="z-10 px-1 absolute top-2 left-2 flex flex-row justify-center items-center gap-2 rounded-md border border-border font-semibold bg-background/90 text-[10px] uppercase tracking-[0.15em] text-muted-foreground">

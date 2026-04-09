@@ -95,14 +95,24 @@ const ServiceTemplate = ({
       </div>
       {user?.role === "admin" &&
         (disponible ? (
-          <div className="absolute right-4 top-4 z-10">
-            <button
-              type="button"
+          <div className="absolute right-4 top-4">
+            <Confirm
+              title={`¿Quieres cambiar la visibilidad de este servicio?`}
+              desc={`Al confirmar, la visibilidad del servicio será cambiada a invisible.`}
               onClick={handleChangeVisibility}
-              className="z-10 absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full border-transparent text-transparent transition-all group-hover:border-border group-hover:text-foreground hover:!border-(destructive) hover:text-destructive! cursor-pointer"
+              icon={<Refresh className="text-secondary" />}
+              buttonText="Cambiar Visibilidad"
             >
-              <XIcon />
-            </button>
+              {(open) => (
+                <button
+                  type="button"
+                  onClick={open}
+                  className={`z-10 absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full border-transparent text-transparent transition-all group-hover:border-border group-hover:text-foreground hover:!border-(destructive) hover:text-destructive! cursor-pointer`}
+                >
+                  <XIcon />
+                </button>
+              )}
+            </Confirm>
           </div>
         ) : (
           <>
